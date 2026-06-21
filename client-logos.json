@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:16:27.027Z",
+  "updatedAt": "2026-06-21T03:29:22.008Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -25,27 +25,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:16:26.231Z"
-    },
-    {
-      "name": "ChickFilA",
-      "slug": "chickfila",
-      "alt": "ChickFilA logo — GlassFire client",
-      "title": "ChickFilA logo",
-      "source": "backfill",
-      "variants": [
-        "black",
-        "white"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-21T02:45:08.406Z"
     },
     {
       "name": "Intuit",

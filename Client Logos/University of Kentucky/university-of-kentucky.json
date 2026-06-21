@@ -1,0 +1,24 @@
+{
+  "name": "University of Kentucky",
+  "slug": "university-of-kentucky",
+  "domain": "bluegrasssmiles.com",
+  "alt": "University of Kentucky logo — GlassFire client",
+  "title": "University of Kentucky logo",
+  "source": "upload",
+  "sourceUrl": "university_of_kentucky.svg",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-21T03:34:35.178Z"
+}

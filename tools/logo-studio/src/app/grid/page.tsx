@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { imageToCanvas, loadImage, trimBounds, cropToBounds, canvasToBase64, canvasToDataUrl } from "@/lib/image";
 import { renderGrid, type GridItem } from "@/lib/grid";
 import { slugify } from "@/lib/slug";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
-import type { ClientEntry, RenderedFile, VariantName } from "@/lib/types";
+import { gridMarkup, liveEmbedCode, rawUrl, type EmbedLogo, type HoverStyle } from "@/lib/embed";
+import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
 
 type WatermarkVariant = "none" | "color" | "white" | "black";
 
@@ -35,7 +36,7 @@ const BG_PRESETS: { label: string; value: string }[] = [
 ];
 
 export default function GridPage() {
-  const { clients, branch, error } = useClients();
+  const { clients, branch, repo, error } = useClients();
   const [order, setOrder] = useState<string[]>([]);
   const initialized = useRef(false);
   const [variant, setVariant] = useState<VariantName>("white");
@@ -68,6 +69,16 @@ export default function GridPage() {
 
   const [publishing, setPublishing] = useState(false);
   const [publishResult, setPublishResult] = useState<{ htmlUrl?: string; error?: string } | null>(null);
+
+  // HTML / live embed (CSS grid, separate from the raster PNG export)
+  const [embedHover, setEmbedHover] = useState<HoverStyle>("none");
+  const [embedCols, setEmbedCols] = useState(5);
+  const [embedCellH, setEmbedCellH] = useState(56);
+  const [embedName, setEmbedName] = useState("");
+  const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  const [savingEmbed, setSavingEmbed] = useState(false);
+  const [embedSaved, setEmbedSaved] = useState<{ slug?: string; error?: string } | null>(null);
+  const [copied, setCopied] = useState("");
 
   // Seed the order with all clients once they load.
   useEffect(() => {
@@ -175,6 +186,60 @@ export default function GridPage() {
       setPublishing(false);
     }
   }
+
+  // Load a saved grid embed for editing (?embed=slug).
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("embed");
+    if (!slug) return;
+    (async () => {
+      const res = await fetch(`/api/asset?path=${encodeURIComponent(`Embeds/${slug}.json`)}`);
+      if (!res.ok) return;
+      const cfg: EmbedConfig = await res.json();
+      const o = cfg.options as Record<string, unknown>;
+      setOrder(cfg.logos.map((l) => l.name));
+      initialized.current = true;
+      setEmbedName(cfg.name);
+      setEditingSlug(cfg.slug);
+      if (typeof o.variant === "string") setVariant(o.variant as VariantName);
+      if (typeof o.columns === "number") setEmbedCols(o.columns);
+      if (typeof o.gap === "number") setGap(o.gap);
+      if (typeof o.padding === "number") setOuterPad(o.padding);
+      if (typeof o.cellHeight === "number") setEmbedCellH(o.cellHeight);
+      if (typeof o.background === "string") setBackground(o.background);
+      if (typeof o.hoverStyle === "string") setEmbedHover(o.hoverStyle as HoverStyle);
+    })();
+  }, []);
+
+  const chosen = useMemo(() => order.map((n) => clients.find((c) => c.name === n)).filter(Boolean) as ClientEntry[], [order, clients]);
+  const evp = (c: ClientEntry) => c.variants[variant] || c.variants.white || c.variants.color || c.variants.black;
+  const ecp = (c: ClientEntry) => c.variants.color || c.variants.white || c.variants.black;
+  const embedLogos = (urlFor: (p: string) => string): EmbedLogo[] =>
+    chosen.map((c) => { const v = evp(c); const col = ecp(c); return v ? { url: urlFor(v), colorUrl: col ? urlFor(col) : undefined, alt: c.alt || `${c.name} logo` } : null; }).filter(Boolean) as EmbedLogo[];
+  const gridEmbedOpts = { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background: bgImageName ? "transparent" : background, hoverStyle: embedHover };
+  const embedPreviewHtml = useMemo(() => gridMarkup(embedLogos((p) => `/api/asset?path=${encodeURIComponent(p)}`), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName]); // eslint-disable-line react-hooks/exhaustive-deps
+  const embedStaticCode = useMemo(() => gridMarkup(embedLogos((p) => rawUrl(repo, branch, p)), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, repo, branch]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function copyText(text: string, key: string) { await navigator.clipboard.writeText(text); setCopied(key); setTimeout(() => setCopied(""), 1500); }
+
+  async function saveEmbed() {
+    const slug = slugify(embedName || "grid");
+    if (!slug || !chosen.length) return;
+    setSavingEmbed(true); setEmbedSaved(null);
+    try {
+      const cfg: EmbedConfig = {
+        type: "grid", name: embedName || slug, slug,
+        logos: chosen.map((c) => { const v = evp(c)!; const col = ecp(c); return { name: c.name, url: v, colorUrl: col, alt: c.alt || `${c.name} logo` }; }),
+        options: { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background, hoverStyle: embedHover, variant },
+        updatedAt: new Date().toISOString(),
+      };
+      const file: RenderedFile = { path: `Embeds/${slug}.json`, base64: btoa(unescape(encodeURIComponent(JSON.stringify(cfg, null, 2)))) };
+      const res = await fetch("/api/publish", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ files: [file], message: `${editingSlug ? "Update" : "Add"} grid embed: ${slug}`, branch, createBranch: false }) });
+      const data = await res.json();
+      if (res.ok) { setEmbedSaved({ slug }); setEditingSlug(slug); } else setEmbedSaved({ error: data.error });
+    } catch (e) { setEmbedSaved({ error: e instanceof Error ? e.message : "Save failed" }); }
+    finally { setSavingEmbed(false); }
+  }
+  const liveGridCode = embedSaved?.slug ? liveEmbedCode(embedSaved.slug, repo, branch) : null;
 
   return (
     <div className="space-y-6">
@@ -284,6 +349,40 @@ export default function GridPage() {
           </div>
           {publishResult?.htmlUrl && <p className="text-sm text-green-400">Published · <a className="underline" href={publishResult.htmlUrl} target="_blank" rel="noreferrer">view commit</a></p>}
           {publishResult?.error && <p className="text-sm text-fire">{publishResult.error}</p>}
+
+          {/* HTML / LIVE EMBED (responsive CSS grid) */}
+          <div className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <p className="font-medium">Embed as live HTML grid</p>
+            <p className="text-xs text-zinc-500">A responsive CSS grid for the web (separate from the PNG above). Auto-updates when re-saved.</p>
+            <div className="flex flex-wrap items-center gap-3 text-sm">
+              <span className="text-zinc-500">Hover:</span>
+              {(["none", "grayscale", "white", "black"] as HoverStyle[]).map((h) => (
+                <button key={h} onClick={() => setEmbedHover(h)} className={`rounded-lg border px-2 py-1 text-xs capitalize ${embedHover === h ? "border-glass bg-glass/10" : "border-zinc-700 text-zinc-400"}`}>{h}</button>
+              ))}
+              <label className="flex items-center gap-1 text-xs text-zinc-400">Cols <input type="number" value={embedCols} onChange={(e) => setEmbedCols(Number(e.target.value))} className="w-14 rounded border border-zinc-700 bg-zinc-900 px-1.5 py-1" /></label>
+              <label className="flex items-center gap-1 text-xs text-zinc-400">Logo h <input type="number" value={embedCellH} onChange={(e) => setEmbedCellH(Number(e.target.value))} className="w-16 rounded border border-zinc-700 bg-zinc-900 px-1.5 py-1" /></label>
+            </div>
+            <div className="checker overflow-hidden rounded-lg border border-zinc-800">
+              {chosen.length ? <div dangerouslySetInnerHTML={{ __html: embedPreviewHtml }} /> : <p className="p-4 text-sm text-zinc-500">Select logos.</p>}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <input value={embedName} onChange={(e) => setEmbedName(e.target.value)} placeholder="Name e.g. RFP grid — Acme" className="flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" />
+              <button onClick={saveEmbed} disabled={savingEmbed || !chosen.length || !embedName} className="rounded-lg bg-fire px-4 py-2 text-sm font-medium text-white disabled:opacity-50">{savingEmbed ? "Saving…" : editingSlug ? "Update embed" : "Save embed"}</button>
+            </div>
+            {embedSaved?.error && <p className="text-sm text-fire">{embedSaved.error}</p>}
+            {liveGridCode && (
+              <div className="space-y-2">
+                <p className="text-sm text-green-400">Saved as <code>{embedSaved!.slug}</code>.</p>
+                <textarea readOnly value={liveGridCode} className="h-20 w-full rounded-lg border border-zinc-800 bg-black p-3 font-mono text-xs text-zinc-300" />
+                <button onClick={() => copyText(liveGridCode, "live")} className="rounded-lg bg-glass px-3 py-1.5 text-sm font-medium text-black">{copied === "live" ? "Copied!" : "Copy live embed"}</button>
+              </div>
+            )}
+            <details>
+              <summary className="cursor-pointer text-sm text-zinc-400">Static HTML snippet</summary>
+              <textarea readOnly value={embedStaticCode} className="mt-2 h-40 w-full rounded-lg border border-zinc-800 bg-black p-3 font-mono text-xs text-zinc-300" />
+              <button onClick={() => copyText(embedStaticCode, "static")} className="mt-2 rounded-lg border border-zinc-700 px-3 py-1.5 text-sm hover:border-glass">{copied === "static" ? "Copied!" : "Copy static HTML"}</button>
+            </details>
+          </div>
         </div>
       </div>
     </div>

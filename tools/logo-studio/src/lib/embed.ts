@@ -1,51 +1,66 @@
-// Generates a self-contained, embeddable logo carousel (auto-scrolling marquee).
-// The same markup powers the in-app live preview (with proxied image URLs) and
-// the copy-paste embed snippet (with public raw URLs).
+// Generates embeddable logo carousels & grids. The same CSS powers the in-app
+// live preview, the static (frozen) copy-paste snippet, and the public embed.js
+// loader used for live/auto-updating embeds.
 
-export interface CarouselLogo {
-  url: string;
+export type HoverStyle = "none" | "grayscale" | "white" | "black";
+
+export interface EmbedLogo {
+  url: string; // resting-variant image URL (or repo path for live configs)
+  colorUrl?: string; // color image URL, used when a hover style reveals color
   alt: string;
 }
 
 export interface CarouselOptions {
-  height: number; // logo height in px
-  gap: number; // spacing between logos in px
-  duration: number; // seconds for one full loop
+  height: number;
+  gap: number;
+  duration: number;
   direction: "left" | "right";
-  grayscale: boolean; // grayscale, color on hover
+  hoverStyle: HoverStyle;
   pauseOnHover: boolean;
-  background: string; // CSS color or "transparent"
-  edgeFade: boolean; // fade the left/right edges
-  padding: number; // vertical padding in px
+  background: string;
+  edgeFade: boolean;
+  padding: number;
+}
+
+export interface GridEmbedOptions {
+  columns: number;
+  gap: number;
+  padding: number;
+  cellHeight: number;
+  background: string;
+  hoverStyle: HoverStyle;
 }
 
 function escapeAttr(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-/** Build a raw.githubusercontent.com URL for a repo file path. */
 export function rawUrl(repo: string, branch: string, path: string): string {
   const enc = path.split("/").map(encodeURIComponent).join("/");
   return `https://raw.githubusercontent.com/${repo}/${branch}/${enc}`;
 }
 
-export function carouselMarkup(logos: CarouselLogo[], opts: CarouselOptions): string {
-  // Each logo is duplicated so the -50% translate loops seamlessly. Spacing uses
-  // margin-right (not flex gap) so the two copies line up exactly.
+// Shared hover-effect CSS (matches embed.js).
+const HOVER_CSS =
+  ".gf-fx img{transition:filter .35s ease,opacity .35s ease}" +
+  ".gf-fx[data-hover=grayscale] img{filter:grayscale(1);opacity:.7}" +
+  ".gf-fx[data-hover=white] img{filter:brightness(0) invert(1)}" +
+  ".gf-fx[data-hover=black] img{filter:brightness(0)}" +
+  ".gf-fx[data-hover=grayscale] img:hover,.gf-fx[data-hover=white] img:hover,.gf-fx[data-hover=black] img:hover{filter:none;opacity:1}";
+
+function src(l: EmbedLogo, hover: HoverStyle): string {
+  return hover !== "none" && l.colorUrl ? l.colorUrl : l.url;
+}
+
+export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
   const imgs = [...logos, ...logos]
-    .map((l, i) => `    <img src="${escapeAttr(l.url)}" alt="${escapeAttr(l.alt)}"${i >= logos.length ? ' aria-hidden="true"' : ""} />`)
+    .map((l, i) => `    <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= logos.length ? ' aria-hidden="true"' : ""} />`)
     .join("\n");
 
-  const wrapperStyle = [
-    `--gf-h:${opts.height}px`,
-    `--gf-gap:${opts.gap}px`,
-    `--gf-dur:${opts.duration}s`,
-    `--gf-pad:${opts.padding}px`,
-    `background:${opts.background}`,
-  ].join(";");
+  const wrapperStyle = `--gf-h:${o.height}px;--gf-gap:${o.gap}px;--gf-dur:${o.duration}s;--gf-pad:${o.padding}px;background:${o.background}`;
 
   return `<!-- GlassFire client logo carousel -->
-<div class="gf-logos" style="${wrapperStyle}" data-gray="${opts.grayscale}" data-fade="${opts.edgeFade}" data-dir="${opts.direction}" data-pause="${opts.pauseOnHover}" aria-label="Trusted by">
+<div class="gf-logos gf-fx" style="${wrapperStyle}" data-fade="${o.edgeFade}" data-dir="${o.direction}" data-pause="${o.pauseOnHover}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
   <div class="gf-logos__track">
 ${imgs}
   </div>
@@ -57,9 +72,31 @@ ${imgs}
 .gf-logos[data-dir="right"] .gf-logos__track{animation-direction:reverse}
 .gf-logos[data-pause="true"]:hover .gf-logos__track{animation-play-state:paused}
 .gf-logos img{height:var(--gf-h);width:auto;flex:0 0 auto;margin-right:var(--gf-gap);object-fit:contain;display:block}
-.gf-logos[data-gray="true"] img{filter:grayscale(1);opacity:.7;transition:filter .3s,opacity .3s}
-.gf-logos[data-gray="true"] img:hover{filter:none;opacity:1}
 @media (prefers-reduced-motion:reduce){.gf-logos__track{animation:none}}
 @keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+${HOVER_CSS}
 </style>`;
+}
+
+export function gridMarkup(logos: EmbedLogo[], o: GridEmbedOptions): string {
+  const cells = logos
+    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" /></div>`)
+    .join("\n");
+  const wrapperStyle = `--gf-cols:${o.columns};--gf-gap:${o.gap}px;--gf-pad:${o.padding}px;--gf-h:${o.cellHeight}px;background:${o.background}`;
+  return `<!-- GlassFire client logo grid -->
+<div class="gf-grid gf-fx" style="${wrapperStyle}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
+${cells}
+</div>
+<style>
+.gf-grid{display:grid;gap:var(--gf-gap);padding:var(--gf-pad);box-sizing:border-box;grid-template-columns:repeat(var(--gf-cols),1fr)}
+.gf-grid__cell{display:flex;align-items:center;justify-content:center}
+.gf-grid img{height:var(--gf-h);max-width:100%;width:auto;object-fit:contain;display:block}
+${HOVER_CSS}
+</style>`;
+}
+
+/** The live (auto-updating) embed snippet that references a saved config. */
+export function liveEmbedCode(slug: string, repo: string, branch = "main"): string {
+  return `<div class="gf-embed" data-embed="${slug}"></div>
+<script src="https://cdn.jsdelivr.net/gh/${repo}@${branch}/embed.js" defer></script>`;
 }

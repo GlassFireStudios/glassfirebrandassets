@@ -63,6 +63,17 @@ export interface ClientEntry {
   legacy?: boolean;
 }
 
+/** A saved embed config (carousel or grid) stored at Embeds/<slug>.json and
+ *  rendered live on external sites by embed.js. */
+export interface EmbedConfig {
+  type: "carousel" | "grid";
+  name: string;
+  slug: string;
+  logos: { name: string; url: string; colorUrl?: string; alt: string }[];
+  options: Record<string, unknown>;
+  updatedAt: string;
+}
+
 export interface PublishRequest {
   files: RenderedFile[];
   /** Repo paths to delete in the same commit. */

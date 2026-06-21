@@ -84,7 +84,7 @@ export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
   for (let r = 0; r < rows; r++) {
     const rowLogos = logos.filter((_, i) => i % rows === r);
     const imgs = [...rowLogos, ...rowLogos]
-      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= rowLogos.length ? ' aria-hidden="true"' : ""}${logoStyle(l, true)} />`)
+      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${i >= rowLogos.length ? ' aria-hidden="true"' : ""}${logoStyle(l, true)} />`)
       .join("\n");
     const dir = o.mirrorRows && r % 2 === 1 ? (o.direction === "left" ? "right" : "left") : o.direction;
     rowsHtml.push(`  <div class="gf-logos__row" data-dir="${dir}">\n    <div class="gf-logos__track">\n${imgs}\n    </div>\n  </div>`);
@@ -112,7 +112,7 @@ ${HOVER_CSS}
 
 export function gridMarkup(logos: EmbedLogo[], o: GridEmbedOptions): string {
   const cells = logos
-    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${logoStyle(l, false)} /></div>`)
+    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${logoStyle(l, false)} /></div>`)
     .join("\n");
   const wrapperStyle = `--gf-cols:${o.columns};--gf-gap:${o.gap}px;--gf-pad:${o.padding}px;--gf-h:${o.cellHeight}px;background:${o.background}`;
   return `<!-- GlassFire client logo grid -->

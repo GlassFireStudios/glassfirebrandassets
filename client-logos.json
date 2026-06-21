@@ -1,7 +1,31 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:41:01.220Z",
+  "updatedAt": "2026-06-21T04:06:32.801Z",
   "clients": [
+    {
+      "name": "Apple",
+      "slug": "apple",
+      "domain": "apple.com",
+      "alt": "Apple logo — GlassFire client",
+      "title": "Apple logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idnrCPuv87/w/800/h/978/theme/light/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T04:06:31.214Z"
+    },
     {
       "name": "Chick-fil-A",
       "slug": "chick-fil-a",

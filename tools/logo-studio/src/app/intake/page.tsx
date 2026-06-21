@@ -43,6 +43,9 @@ export default function IntakePage() {
   // Selected source
   const sourceCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [sourceLoaded, setSourceLoaded] = useState(false);
+  // Bumped whenever a new source image is adopted, so the rebuild effect re-runs
+  // even when sourceLoaded is already true (e.g. selecting a different logo).
+  const [sourceVersion, setSourceVersion] = useState(0);
   const [loadingSource, setLoadingSource] = useState(false);
   const [sourceErr, setSourceErr] = useState<string | null>(null);
 
@@ -103,6 +106,7 @@ export default function IntakePage() {
     async (canvas: HTMLCanvasElement, meta: Partial<LogoCandidate>) => {
       sourceCanvasRef.current = canvas;
       setSourceLoaded(true);
+      setSourceVersion((v) => v + 1);
       const ctx = canvas.getContext("2d")!;
       const transparent = hasTransparency(ctx, canvas.width, canvas.height);
       const solid = !transparent && looksLikeSolidBackground(canvas);
@@ -186,7 +190,7 @@ export default function IntakePage() {
       preserveDetail,
     });
     setBuild(result);
-  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail]);
+  }, [sourceLoaded, sourceVersion, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);

@@ -7,7 +7,7 @@ import { slugify } from "@/lib/slug";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
 import { gridMarkup, liveEmbedCode, cdnUrl, CDN_BASE, type EmbedLogo, type HoverStyle } from "@/lib/embed";
-import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
+import type { ClientEntry, EmbedConfig, LogoAdjust, RenderedFile, VariantName } from "@/lib/types";
 
 type WatermarkVariant = "none" | "color" | "white" | "black";
 
@@ -79,6 +79,9 @@ export default function GridPage() {
   const [savingEmbed, setSavingEmbed] = useState(false);
   const [embedSaved, setEmbedSaved] = useState<{ slug?: string; error?: string } | null>(null);
   const [copied, setCopied] = useState("");
+  const [adjust, setAdjust] = useState<Record<string, LogoAdjust>>({});
+  const handleAdjust = (name: string, a: LogoAdjust | null) =>
+    setAdjust((prev) => { const next = { ...prev }; if (!a) delete next[name]; else next[name] = a; return next; });
 
   // Seed the order with all clients once they load.
   useEffect(() => {
@@ -197,6 +200,9 @@ export default function GridPage() {
       const cfg: EmbedConfig = await res.json();
       const o = cfg.options as Record<string, unknown>;
       setOrder(cfg.logos.map((l) => l.name));
+      const adj: Record<string, LogoAdjust> = {};
+      cfg.logos.forEach((l) => { if (l.scale != null) adj[l.name] = { scale: l.scale }; });
+      setAdjust(adj);
       initialized.current = true;
       setEmbedName(cfg.name);
       setEditingSlug(cfg.slug);
@@ -214,10 +220,10 @@ export default function GridPage() {
   const evp = (c: ClientEntry) => c.variants[variant] || c.variants.white || c.variants.color || c.variants.black;
   const ecp = (c: ClientEntry) => c.variants.color || c.variants.white || c.variants.black;
   const embedLogos = (urlFor: (p: string) => string): EmbedLogo[] =>
-    chosen.map((c) => { const v = evp(c); const col = ecp(c); return v ? { url: urlFor(v), colorUrl: col ? urlFor(col) : undefined, alt: c.alt || `${c.name} logo` } : null; }).filter(Boolean) as EmbedLogo[];
+    chosen.map((c) => { const v = evp(c); const col = ecp(c); const adj = adjust[c.name]; return v ? { url: urlFor(v), colorUrl: col ? urlFor(col) : undefined, alt: c.alt || `${c.name} logo`, scale: adj?.scale } : null; }).filter(Boolean) as EmbedLogo[];
   const gridEmbedOpts = { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background: bgImageName ? "transparent" : background, hoverStyle: embedHover };
-  const embedPreviewHtml = useMemo(() => gridMarkup(embedLogos((p) => `/api/asset?path=${encodeURIComponent(p)}`), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName]); // eslint-disable-line react-hooks/exhaustive-deps
-  const embedStaticCode = useMemo(() => gridMarkup(embedLogos((p) => cdnUrl(repo, branch, p)), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, repo, branch]); // eslint-disable-line react-hooks/exhaustive-deps
+  const embedPreviewHtml = useMemo(() => gridMarkup(embedLogos((p) => `/api/asset?path=${encodeURIComponent(p)}`), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, adjust]); // eslint-disable-line react-hooks/exhaustive-deps
+  const embedStaticCode = useMemo(() => gridMarkup(embedLogos((p) => cdnUrl(repo, branch, p)), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, adjust, repo, branch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function copyText(text: string, key: string) { await navigator.clipboard.writeText(text); setCopied(key); setTimeout(() => setCopied(""), 1500); }
 
@@ -228,7 +234,7 @@ export default function GridPage() {
     try {
       const cfg: EmbedConfig = {
         type: "grid", name: embedName || slug, slug,
-        logos: chosen.map((c) => { const v = evp(c)!; const col = ecp(c); return { name: c.name, url: v, colorUrl: col, alt: c.alt || `${c.name} logo` }; }),
+        logos: chosen.map((c) => { const v = evp(c)!; const col = ecp(c); const adj = adjust[c.name]; return { name: c.name, url: v, colorUrl: col, alt: c.alt || `${c.name} logo`, ...(adj?.scale != null && adj.scale !== 1 ? { scale: adj.scale } : {}) }; }),
         options: { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background, hoverStyle: embedHover, variant },
         ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
         updatedAt: new Date().toISOString(),
@@ -249,7 +255,7 @@ export default function GridPage() {
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
         <div className="space-y-5">
-          <LogoOrderPanel clients={clients} order={order} onChange={setOrder} />
+          <LogoOrderPanel clients={clients} order={order} onChange={setOrder} adjust={adjust} onAdjust={handleAdjust} allowSideTrim={false} />
 
           <Field label="Logo variant">
             <div className="flex gap-2">

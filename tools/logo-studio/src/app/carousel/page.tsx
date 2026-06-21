@@ -5,7 +5,7 @@ import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
 import { carouselMarkup, cdnUrl, CDN_BASE, liveEmbedCode, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import { slugify } from "@/lib/slug";
-import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
+import type { ClientEntry, EmbedConfig, LogoAdjust, RenderedFile, VariantName } from "@/lib/types";
 
 const HOVERS: { id: HoverStyle; label: string }[] = [
   { id: "grayscale", label: "Grayscale → color" },
@@ -19,6 +19,10 @@ export default function CarouselPage() {
   const [order, setOrder] = useState<string[]>([]);
   const [seeded, setSeeded] = useState(false);
   const [variant, setVariant] = useState<VariantName>("white");
+  const [adjust, setAdjust] = useState<Record<string, LogoAdjust>>({});
+
+  const handleAdjust = (name: string, a: LogoAdjust | null) =>
+    setAdjust((prev) => { const next = { ...prev }; if (!a) delete next[name]; else next[name] = a; return next; });
 
   const [hoverStyle, setHoverStyle] = useState<HoverStyle>("grayscale");
   const [height, setHeight] = useState(44);
@@ -52,6 +56,9 @@ export default function CarouselPage() {
       const cfg: EmbedConfig = await res.json();
       const o = cfg.options as unknown as CarouselOptions & { variant?: VariantName };
       setOrder(cfg.logos.map((l) => l.name));
+      const adj: Record<string, LogoAdjust> = {};
+      cfg.logos.forEach((l) => { if (l.scale != null || l.sideTrim != null) adj[l.name] = { scale: l.scale, sideTrim: l.sideTrim }; });
+      setAdjust(adj);
       setSeeded(true);
       setEmbedName(cfg.name);
       setEditingSlug(cfg.slug);
@@ -74,8 +81,8 @@ export default function CarouselPage() {
 
   function logosFor(urlFor: (p: string) => string): EmbedLogo[] {
     return chosen.map((c) => {
-      const vp = variantPath(c); const cp = colorPath(c);
-      return vp ? { url: urlFor(vp), colorUrl: cp ? urlFor(cp) : undefined, alt: c.alt || `${c.name} logo` } : null;
+      const vp = variantPath(c); const cp = colorPath(c); const adj = adjust[c.name];
+      return vp ? { url: urlFor(vp), colorUrl: cp ? urlFor(cp) : undefined, alt: c.alt || `${c.name} logo`, scale: adj?.scale, sideTrim: adj?.sideTrim } : null;
     }).filter(Boolean) as EmbedLogo[];
   }
 
@@ -101,8 +108,8 @@ export default function CarouselPage() {
         name: embedName || slug,
         slug,
         logos: chosen.map((c) => {
-          const vp = variantPath(c)!; const cp = colorPath(c);
-          return { name: c.name, url: vp, colorUrl: cp, alt: c.alt || `${c.name} logo` };
+          const vp = variantPath(c)!; const cp = colorPath(c); const adj = adjust[c.name];
+          return { name: c.name, url: vp, colorUrl: cp, alt: c.alt || `${c.name} logo`, ...(adj?.scale != null && adj.scale !== 1 ? { scale: adj.scale } : {}), ...(adj?.sideTrim ? { sideTrim: adj.sideTrim } : {}) };
         }),
         options: { ...opts, variant },
         ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
@@ -136,7 +143,7 @@ export default function CarouselPage() {
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
         <div className="space-y-5">
-          <LogoOrderPanel clients={clients} order={order} onChange={setOrder} />
+          <LogoOrderPanel clients={clients} order={order} onChange={setOrder} adjust={adjust} onAdjust={handleAdjust} />
 
           <Field label="Resting style → hover reveals color">
             <div className="grid grid-cols-2 gap-2">

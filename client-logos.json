@@ -1,12 +1,12 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T02:44:41.904Z",
+  "updatedAt": "2026-06-21T02:44:44.603Z",
   "clients": [
     {
-      "name": "ChickFilA",
-      "slug": "chickfila",
-      "alt": "ChickFilA logo — GlassFire client",
-      "title": "ChickFilA logo",
+      "name": "Google",
+      "slug": "google",
+      "alt": "Google logo — GlassFire client",
+      "title": "Google logo",
       "source": "backfill",
       "variants": [
         "white",
@@ -21,7 +21,7 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T02:44:41.904Z"
+      "addedAt": "2026-06-21T02:44:44.603Z"
     }
   ]
 }

@@ -1,14 +1,17 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T02:45:03.480Z",
+  "updatedAt": "2026-06-21T03:18:08.988Z",
   "clients": [
     {
-      "name": "Enhanced Games",
-      "slug": "enhanced-games",
-      "alt": "Enhanced Games logo — GlassFire client",
-      "title": "Enhanced Games logo",
-      "source": "backfill",
+      "name": "Chick-fil-A",
+      "slug": "chick-fil-a",
+      "domain": "chick-fil-a.co.uk",
+      "alt": "Chick-fil-A logo — GlassFire client",
+      "title": "Chick-fil-A logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idD1kfumTV/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
       "variants": [
+        "color",
         "white",
         "black"
       ],
@@ -21,7 +24,76 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T02:45:03.480Z"
+      "addedAt": "2026-06-21T03:16:26.231Z"
+    },
+    {
+      "name": "ChickFilA",
+      "slug": "chickfila",
+      "alt": "ChickFilA logo — GlassFire client",
+      "title": "ChickFilA logo",
+      "source": "backfill",
+      "variants": [
+        "black",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T02:45:08.406Z"
+    },
+    {
+      "name": "Ladder",
+      "slug": "ladder",
+      "domain": "joinladder.com",
+      "alt": "Ladder logo — GlassFire client",
+      "title": "Ladder logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idxRQahYuo/w/820/h/110/theme/light/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:14:39.950Z"
+    },
+    {
+      "name": "National Hockey League (NHL)",
+      "slug": "national-hockey-league-nhl",
+      "domain": "nhl.com",
+      "alt": "National Hockey League (NHL) logo — GlassFire client",
+      "title": "National Hockey League (NHL) logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idyidCcmZW/theme/light/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:14:19.101Z"
     }
   ]
 }

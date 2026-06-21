@@ -8,6 +8,16 @@ export interface EmbedLogo {
   url: string; // resting-variant image URL (or repo path for live configs)
   colorUrl?: string; // color image URL, used when a hover style reveals color
   alt: string;
+  scale?: number; // per-logo size multiplier (optical balancing)
+  sideTrim?: number; // px trimmed off each side to tighten spacing (carousel)
+}
+
+/** Inline per-logo style: optical scale (keeps row height) + side trim. */
+function logoStyle(l: EmbedLogo, withTrim: boolean): string {
+  const parts: string[] = [];
+  if (l.scale && l.scale !== 1) parts.push(`height:calc(var(--gf-h) * ${l.scale})`);
+  if (withTrim && l.sideTrim) parts.push(`margin-left:-${l.sideTrim}px;margin-right:calc(var(--gf-gap) - ${l.sideTrim}px)`);
+  return parts.length ? ` style="${parts.join(";")}"` : "";
 }
 
 export interface CarouselOptions {
@@ -74,7 +84,7 @@ export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
   for (let r = 0; r < rows; r++) {
     const rowLogos = logos.filter((_, i) => i % rows === r);
     const imgs = [...rowLogos, ...rowLogos]
-      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= rowLogos.length ? ' aria-hidden="true"' : ""} />`)
+      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${i >= rowLogos.length ? ' aria-hidden="true"' : ""}${logoStyle(l, true)} />`)
       .join("\n");
     const dir = o.mirrorRows && r % 2 === 1 ? (o.direction === "left" ? "right" : "left") : o.direction;
     rowsHtml.push(`  <div class="gf-logos__row" data-dir="${dir}">\n    <div class="gf-logos__track">\n${imgs}\n    </div>\n  </div>`);
@@ -102,7 +112,7 @@ ${HOVER_CSS}
 
 export function gridMarkup(logos: EmbedLogo[], o: GridEmbedOptions): string {
   const cells = logos
-    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" /></div>`)
+    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${logoStyle(l, false)} /></div>`)
     .join("\n");
   const wrapperStyle = `--gf-cols:${o.columns};--gf-gap:${o.gap}px;--gf-pad:${o.padding}px;--gf-h:${o.cellHeight}px;background:${o.background}`;
   return `<!-- GlassFire client logo grid -->
@@ -120,7 +130,7 @@ ${HOVER_CSS}
 /** Builds the full, self-contained static HTML for a saved embed config,
  *  with images served from the jsDelivr CDN. Paste-and-replace on a page. */
 export function staticMarkupFromConfig(
-  cfg: { type: "carousel" | "grid"; logos: { url: string; colorUrl?: string; alt: string }[]; options: Record<string, unknown> },
+  cfg: { type: "carousel" | "grid"; logos: { url: string; colorUrl?: string; alt: string; scale?: number; sideTrim?: number }[]; options: Record<string, unknown> },
   repo: string,
   branch: string,
 ): string {
@@ -128,6 +138,8 @@ export function staticMarkupFromConfig(
     url: cdnUrl(repo, branch, l.url),
     colorUrl: l.colorUrl ? cdnUrl(repo, branch, l.colorUrl) : undefined,
     alt: l.alt,
+    scale: l.scale,
+    sideTrim: l.sideTrim,
   }));
   const o = cfg.options;
   if (cfg.type === "grid") {

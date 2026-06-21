@@ -63,13 +63,19 @@ export interface ClientEntry {
   legacy?: boolean;
 }
 
+/** Per-logo display tweaks (optical sizing / side-spacing) keyed by client name. */
+export interface LogoAdjust {
+  scale?: number; // 0.5–1.5 multiplier on the shared logo height
+  sideTrim?: number; // px pulled off each side to tighten spacing (carousel)
+}
+
 /** A saved embed config (carousel or grid) stored at Embeds/<slug>.json and
  *  rendered live on external sites by embed.js. */
 export interface EmbedConfig {
   type: "carousel" | "grid";
   name: string;
   slug: string;
-  logos: { name: string; url: string; colorUrl?: string; alt: string }[];
+  logos: { name: string; url: string; colorUrl?: string; alt: string; scale?: number; sideTrim?: number }[];
   options: Record<string, unknown>;
   // Optional custom image CDN base (Bunny pull zone). embed.js uses it for
   // image URLs when present, else falls back to jsDelivr.

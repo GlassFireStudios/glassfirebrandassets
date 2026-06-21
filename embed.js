@@ -60,6 +60,14 @@
     return cdnUrl(repo, branch, path, base);
   }
 
+  // Per-logo inline style: optical scale + (carousel) side trim.
+  function logoStyle(l, withTrim) {
+    var parts = [];
+    if (l.scale && l.scale !== 1) parts.push("height:calc(var(--gf-h) * " + l.scale + ")");
+    if (withTrim && l.sideTrim) parts.push("margin-left:-" + l.sideTrim + "px;margin-right:calc(var(--gf-gap) - " + l.sideTrim + "px)");
+    return parts.length ? ' style="' + parts.join(";") + '"' : "";
+  }
+
   function carousel(el, cfg, repo, branch, base) {
     var o = cfg.options || {};
     var dir = o.direction || "left";
@@ -71,7 +79,7 @@
         for (var i = 0; i < cfg.logos.length; i++) {
           if (i % rows !== r) continue;
           var l = cfg.logos[i];
-          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '"' + (pass ? ' aria-hidden="true"' : "") + ">";
+          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '" loading="lazy" decoding="async"' + (pass ? ' aria-hidden="true"' : "") + logoStyle(l, true) + ">";
         }
       }
       var rdir = o.mirrorRows && r % 2 === 1 ? (dir === "left" ? "right" : "left") : dir;
@@ -87,7 +95,7 @@
     var cells = "";
     for (var i = 0; i < cfg.logos.length; i++) {
       var l = cfg.logos[i];
-      cells += '<div class="gf-grid__cell"><img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '"></div>';
+      cells += '<div class="gf-grid__cell"><img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '" loading="lazy" decoding="async"' + logoStyle(l, false) + "></div>";
     }
     var style = "--gf-cols:" + (o.columns || 5) + ";--gf-gap:" + (o.gap || 40) + "px;--gf-pad:" + (o.padding || 32) + "px;--gf-h:" + (o.cellHeight || 56) + "px;background:" + (o.background || "transparent");
     el.innerHTML = '<div class="gf-grid gf-fx" style="' + style + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '">' + cells + "</div>";

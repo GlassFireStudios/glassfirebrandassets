@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:19:04.709Z",
+  "updatedAt": "2026-06-21T04:25:22.553Z",
   "clients": [
     {
       "name": "Apple",
@@ -73,30 +73,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:40:48.512Z"
-    },
-    {
-      "name": "Enhanced Games",
-      "slug": "enhanced-games",
-      "domain": "enhanced.com",
-      "alt": "Enhanced Games logo — GlassFire client",
-      "title": "Enhanced Games logo",
-      "source": "brandfetch",
-      "sourceUrl": "https://cdn.brandfetch.io/idU0M_KN8U/w/690/h/361/theme/dark/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
-      "variants": [
-        "color",
-        "white",
-        "black"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-21T04:19:03.083Z"
     },
     {
       "name": "Ladder",

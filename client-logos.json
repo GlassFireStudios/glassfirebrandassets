@@ -1,7 +1,31 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:15:11.867Z",
+  "updatedAt": "2026-06-21T03:16:27.027Z",
   "clients": [
+    {
+      "name": "Chick-fil-A",
+      "slug": "chick-fil-a",
+      "domain": "chick-fil-a.co.uk",
+      "alt": "Chick-fil-A logo — GlassFire client",
+      "title": "Chick-fil-A logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idD1kfumTV/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:16:26.231Z"
+    },
     {
       "name": "ChickFilA",
       "slug": "chickfila",

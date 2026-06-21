@@ -102,12 +102,14 @@ export interface Testimonial {
 }
 
 /** A tokenized capture invite (Testimonials/_invites/<token>.json) that
- *  pre-fills and authorizes a client's submission. */
+ *  pre-fills and authorizes a client's submission. A "universal" invite
+ *  (open: true) lets anyone submit and enter their own company. */
 export interface TestimonialInvite {
   token: string;
-  company: string;
+  company?: string; // omitted for universal links
   clientName?: string;
   role?: string;
+  open?: boolean;
   createdAt: string;
 }
 

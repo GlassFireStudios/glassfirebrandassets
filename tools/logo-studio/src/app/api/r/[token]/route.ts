@@ -20,12 +20,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ tok
   const { token } = await params;
   const invite = await loadInvite(token);
   if (!invite) return NextResponse.json({ error: "This capture link is invalid or expired." }, { status: 404 });
-  return NextResponse.json({ company: invite.company, role: invite.role ?? "", clientName: invite.clientName ?? "" });
+  return NextResponse.json({ open: !!invite.open, company: invite.company ?? "", role: invite.role ?? "", clientName: invite.clientName ?? "" });
 }
 
 interface SubmitBody {
   name?: string;
   role?: string;
+  company?: string; // used only for universal (open) links
   quote?: string;
   rating?: number;
   consent?: boolean;
@@ -46,10 +47,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (body.website) return NextResponse.json({ ok: true }); // bot trap — pretend success
   const name = (body.name || "").trim();
   const quote = (body.quote || "").trim();
+  const company = (invite.open ? (body.company || "") : (invite.company || "")).trim();
   if (!name || !quote) return NextResponse.json({ error: "Name and testimonial are required." }, { status: 400 });
+  if (!company) return NextResponse.json({ error: "Please enter your company." }, { status: 400 });
   if (!body.consent) return NextResponse.json({ error: "Please confirm we may use your testimonial." }, { status: 400 });
 
-  const slug = `${slugify(invite.company)}-${slugify(name)}-${Date.now().toString(36).slice(-4)}`;
+  const slug = `${slugify(company)}-${slugify(name)}-${Date.now().toString(36).slice(-4)}`;
   const files: RenderedFile[] = [];
   let headshotPath: string | undefined;
 
@@ -67,8 +70,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     slug,
     name,
     role: (body.role || invite.role || "").trim() || undefined,
-    company: invite.company,
-    clientName: invite.clientName || undefined,
+    company,
+    clientName: invite.open ? undefined : (invite.clientName || undefined),
     quote,
     rating,
     headshot: headshotPath,
@@ -82,7 +85,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   });
 
   try {
-    await commitChanges(files, [], `Testimonial submission: ${invite.company} (${name})`, BASE_BRANCH, false);
+    await commitChanges(files, [], `Testimonial submission: ${company} (${name})`, BASE_BRANCH, false);
     return NextResponse.json({ ok: true });
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : "Submission failed." }, { status: 500 });

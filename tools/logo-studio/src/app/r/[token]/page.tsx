@@ -7,7 +7,7 @@ const GOOGLE_REVIEW_URL = process.env.NEXT_PUBLIC_GOOGLE_REVIEW_URL || "";
 
 export default function CapturePage() {
   const { token } = useParams<{ token: string }>();
-  const [invite, setInvite] = useState<{ company: string; role: string } | null>(null);
+  const [invite, setInvite] = useState<{ company: string; role: string; open: boolean } | null>(null);
   const [loadErr, setLoadErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -15,6 +15,7 @@ export default function CapturePage() {
   const [quote, setQuote] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [company, setCompany] = useState("");
   const [headshot, setHeadshot] = useState<{ base64: string; ext: string; preview: string } | null>(null);
   const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState(""); // honeypot
@@ -30,7 +31,7 @@ export default function CapturePage() {
         const res = await fetch(`/api/r/${token}`);
         const data = await res.json();
         if (!res.ok) setLoadErr(data.error || "This link is invalid.");
-        else { setInvite(data); setRole(data.role || ""); }
+        else { setInvite(data); setRole(data.role || ""); if (!data.open) setCompany(data.company || ""); }
       } catch { setLoadErr("Could not load this link."); }
       finally { setLoading(false); }
     })();
@@ -48,12 +49,13 @@ export default function CapturePage() {
   async function submit() {
     setSubmitErr(null);
     if (!name.trim() || !quote.trim()) { setSubmitErr("Please add your name and a few words."); return; }
+    if (invite?.open && !company.trim()) { setSubmitErr("Please tell us your company."); return; }
     if (!consent) { setSubmitErr("Please tick the permission box so we can use your words."); return; }
     setSubmitting(true);
     try {
       const res = await fetch(`/api/r/${token}`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, role, quote, rating, consent, website, headshotBase64: headshot?.base64, headshotExt: headshot?.ext }),
+        body: JSON.stringify({ name, role, company, quote, rating, consent, website, headshotBase64: headshot?.base64, headshotExt: headshot?.ext }),
       });
       const data = await res.json();
       if (res.ok) setDone(true);
@@ -111,6 +113,9 @@ export default function CapturePage() {
           <textarea value={quote} onChange={(e) => setQuote(e.target.value)} rows={5} placeholder="What did we help you achieve? What was it like working with us?" className="w-full rounded-lg border border-zinc-700 bg-zinc-900 p-3 text-sm" />
         </Field>
 
+        {invite?.open && (
+          <Field label="Your company"><input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" /></Field>
+        )}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Your name"><input value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" /></Field>
           <Field label="Role / title"><input value={role} onChange={(e) => setRole(e.target.value)} placeholder="e.g. Marketing Director" className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" /></Field>

@@ -119,16 +119,24 @@ function CaptureLinks({ clients, onCreate, onError }: { clients: ClientEntry[]; 
   const [link, setLink] = useState("");
   const [copied, setCopied] = useState(false);
 
-  async function create() {
-    if (!company.trim()) return;
+  async function createInvite(invite: TestimonialInvite, message: string) {
     setBusy(true); setLink("");
     try {
-      const token = `${slugify(company)}-${Math.random().toString(36).slice(2, 7)}`;
-      const invite: TestimonialInvite = { token, company: company.trim(), role: role.trim() || undefined, clientName: clientName || undefined, createdAt: new Date().toISOString() };
-      await onCreate([{ path: `Testimonials/_invites/${token}.json`, base64: b64(JSON.stringify(invite, null, 2)) }], [], `Create capture link: ${company}`);
-      setLink(`${window.location.origin}/r/${token}`);
+      await onCreate([{ path: `Testimonials/_invites/${invite.token}.json`, base64: b64(JSON.stringify(invite, null, 2)) }], [], message);
+      setLink(`${window.location.origin}/r/${invite.token}`);
     } catch (e) { onError(e instanceof Error ? e.message : "Failed to create link"); }
     finally { setBusy(false); }
+  }
+
+  function create() {
+    if (!company.trim()) return;
+    const token = `${slugify(company)}-${Math.random().toString(36).slice(2, 7)}`;
+    createInvite({ token, company: company.trim(), role: role.trim() || undefined, clientName: clientName || undefined, createdAt: new Date().toISOString() }, `Create capture link: ${company}`);
+  }
+
+  function createUniversal() {
+    const token = `share-${Math.random().toString(36).slice(2, 7)}`;
+    createInvite({ token, open: true, createdAt: new Date().toISOString() }, "Create universal capture link");
   }
 
   return (
@@ -145,6 +153,13 @@ function CaptureLinks({ clients, onCreate, onError }: { clients: ClientEntry[]; 
         </select>
       </Field>
       <button onClick={create} disabled={busy || !company.trim()} className="rounded-lg bg-fire px-4 py-2 text-sm font-medium text-white disabled:opacity-50">{busy ? "Creating…" : "Create capture link"}</button>
+
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+        <p className="text-sm font-medium">Universal link (for mass email)</p>
+        <p className="mt-1 text-xs text-zinc-500">One reusable link anyone can use — they enter their own company too. Perfect for a newsletter or bulk send. Everything still goes through <b>Moderate</b> before it&rsquo;s live.</p>
+        <button onClick={createUniversal} disabled={busy} className="mt-3 rounded-lg border border-glass px-4 py-2 text-sm font-medium text-glass disabled:opacity-50">{busy ? "Creating…" : "Create universal link"}</button>
+      </div>
+
       {link && (
         <div className="space-y-2 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
           <p className="text-sm text-green-400">Send this to your client:</p>

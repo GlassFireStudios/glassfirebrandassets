@@ -71,6 +71,9 @@ export interface EmbedConfig {
   slug: string;
   logos: { name: string; url: string; colorUrl?: string; alt: string }[];
   options: Record<string, unknown>;
+  // Optional custom image CDN base (Bunny pull zone). embed.js uses it for
+  // image URLs when present, else falls back to jsDelivr.
+  cdnBase?: string;
   updatedAt: string;
 }
 

@@ -6,7 +6,7 @@ import { renderGrid, type GridItem } from "@/lib/grid";
 import { slugify } from "@/lib/slug";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
-import { gridMarkup, liveEmbedCode, rawUrl, type EmbedLogo, type HoverStyle } from "@/lib/embed";
+import { gridMarkup, liveEmbedCode, cdnUrl, CDN_BASE, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
 
 type WatermarkVariant = "none" | "color" | "white" | "black";
@@ -217,7 +217,7 @@ export default function GridPage() {
     chosen.map((c) => { const v = evp(c); const col = ecp(c); return v ? { url: urlFor(v), colorUrl: col ? urlFor(col) : undefined, alt: c.alt || `${c.name} logo` } : null; }).filter(Boolean) as EmbedLogo[];
   const gridEmbedOpts = { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background: bgImageName ? "transparent" : background, hoverStyle: embedHover };
   const embedPreviewHtml = useMemo(() => gridMarkup(embedLogos((p) => `/api/asset?path=${encodeURIComponent(p)}`), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName]); // eslint-disable-line react-hooks/exhaustive-deps
-  const embedStaticCode = useMemo(() => gridMarkup(embedLogos((p) => rawUrl(repo, branch, p)), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, repo, branch]); // eslint-disable-line react-hooks/exhaustive-deps
+  const embedStaticCode = useMemo(() => gridMarkup(embedLogos((p) => cdnUrl(repo, branch, p)), gridEmbedOpts), [chosen, embedCols, gap, outerPad, embedCellH, background, embedHover, variant, bgImageName, repo, branch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function copyText(text: string, key: string) { await navigator.clipboard.writeText(text); setCopied(key); setTimeout(() => setCopied(""), 1500); }
 
@@ -230,6 +230,7 @@ export default function GridPage() {
         type: "grid", name: embedName || slug, slug,
         logos: chosen.map((c) => { const v = evp(c)!; const col = ecp(c); return { name: c.name, url: v, colorUrl: col, alt: c.alt || `${c.name} logo` }; }),
         options: { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background, hoverStyle: embedHover, variant },
+        ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
         updatedAt: new Date().toISOString(),
       };
       const file: RenderedFile = { path: `Embeds/${slug}.json`, base64: btoa(unescape(encodeURIComponent(JSON.stringify(cfg, null, 2)))) };

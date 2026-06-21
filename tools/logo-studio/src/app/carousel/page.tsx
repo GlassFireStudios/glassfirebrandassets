@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
-import { carouselMarkup, liveEmbedCode, rawUrl, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
+import { carouselMarkup, cdnUrl, CDN_BASE, liveEmbedCode, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import { slugify } from "@/lib/slug";
 import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
 
@@ -29,6 +29,9 @@ export default function CarouselPage() {
   const [edgeFade, setEdgeFade] = useState(true);
   const [background, setBackground] = useState("transparent");
   const [padding, setPadding] = useState(24);
+  const [rows, setRows] = useState(1);
+  const [mirrorRows, setMirrorRows] = useState(true);
+  const [rowGap, setRowGap] = useState(24);
   const [previewBg, setPreviewBg] = useState("#0b0b0d");
 
   const [embedName, setEmbedName] = useState("");
@@ -57,13 +60,16 @@ export default function CarouselPage() {
       setHeight(o.height); setGap(o.gap); setDuration(o.duration);
       setDirection(o.direction); setPauseOnHover(o.pauseOnHover);
       setEdgeFade(o.edgeFade); setBackground(o.background); setPadding(o.padding);
+      if (o.rows) setRows(o.rows);
+      if (typeof o.mirrorRows === "boolean") setMirrorRows(o.mirrorRows);
+      if (typeof o.rowGap === "number") setRowGap(o.rowGap);
     })();
   }, []);
 
   const variantPath = (c: ClientEntry) => c.variants[variant] || c.variants.white || c.variants.color || c.variants.black;
   const colorPath = (c: ClientEntry) => c.variants.color || c.variants.white || c.variants.black;
 
-  const opts: CarouselOptions = { height, gap, duration, direction, hoverStyle, pauseOnHover, background, edgeFade, padding };
+  const opts: CarouselOptions = { height, gap, duration, direction, hoverStyle, pauseOnHover, background, edgeFade, padding, rows, mirrorRows, rowGap };
   const chosen = useMemo(() => order.map((n) => clients.find((c) => c.name === n)).filter(Boolean) as ClientEntry[], [order, clients]);
 
   function logosFor(urlFor: (p: string) => string): EmbedLogo[] {
@@ -74,7 +80,7 @@ export default function CarouselPage() {
   }
 
   const previewLogos = logosFor((p) => `/api/asset?path=${encodeURIComponent(p)}`);
-  const staticLogos = logosFor((p) => rawUrl(repo, branch, p));
+  const staticLogos = logosFor((p) => cdnUrl(repo, branch, p));
   const previewHtml = useMemo(() => carouselMarkup(previewLogos, opts), [previewLogos, opts]);
   const staticCode = useMemo(() => carouselMarkup(staticLogos, opts), [staticLogos, opts]);
 
@@ -99,6 +105,7 @@ export default function CarouselPage() {
           return { name: c.name, url: vp, colorUrl: cp, alt: c.alt || `${c.name} logo` };
         }),
         options: { ...opts, variant },
+        ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
         updatedAt: new Date().toISOString(),
       };
       const file: RenderedFile = {
@@ -163,6 +170,21 @@ export default function CarouselPage() {
               ))}
             </div>
           </Field>
+
+          <Field label="Rows">
+            <div className="flex gap-2">
+              {[1, 2, 3].map((n) => (
+                <button key={n} onClick={() => setRows(n)} className={`flex-1 rounded-lg border px-2 py-1.5 text-sm ${rows === n ? "border-glass bg-glass/10" : "border-zinc-700 text-zinc-400"}`}>{n}</button>
+              ))}
+            </div>
+            <p className="mt-1 text-xs text-zinc-600">Logos are split evenly across rows.</p>
+          </Field>
+          {rows > 1 && (
+            <>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={mirrorRows} onChange={(e) => setMirrorRows(e.target.checked)} /> Alternate row directions</label>
+              <Field label={`Row gap ${rowGap}px`}><input type="range" min={0} max={80} value={rowGap} onChange={(e) => setRowGap(Number(e.target.value))} className="w-full" /></Field>
+            </>
+          )}
 
           <div className="space-y-2 text-sm">
             <label className="flex items-center gap-2"><input type="checkbox" checked={pauseOnHover} onChange={(e) => setPauseOnHover(e.target.checked)} /> Pause on hover</label>

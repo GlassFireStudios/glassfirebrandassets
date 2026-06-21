@@ -43,10 +43,16 @@ export function rawUrl(repo: string, branch: string, path: string): string {
   return `https://raw.githubusercontent.com/${repo}/${branch}/${enc}`;
 }
 
-/** jsDelivr CDN URL — preferred for production image hosting (raw.githubusercontent
- *  is not a CDN and is rate-limited for hot-linking). */
+/** Optional custom image CDN base (e.g. a Bunny pull zone on your own domain,
+ *  https://cdn.glassfire.co). When set, it serves repo-relative image paths
+ *  directly; otherwise we fall back to the free jsDelivr CDN. */
+export const CDN_BASE = (process.env.NEXT_PUBLIC_CDN_BASE || "").replace(/\/$/, "");
+
+/** Production image URL. Uses the configured custom CDN (Bunny) when present,
+ *  else jsDelivr — never raw.githubusercontent, which isn't a CDN. */
 export function cdnUrl(repo: string, branch: string, path: string): string {
   const enc = path.split("/").map(encodeURIComponent).join("/");
+  if (CDN_BASE) return `${CDN_BASE}/${enc}`;
   return `https://cdn.jsdelivr.net/gh/${repo}@${branch}/${enc}`;
 }
 

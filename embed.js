@@ -13,9 +13,12 @@
   function rawUrl(repo, branch, path) {
     return RAW + repo + "/" + branch + "/" + path.split("/").map(encodeURIComponent).join("/");
   }
-  // Images go through the jsDelivr CDN (raw.githubusercontent is not a CDN).
-  function cdnUrl(repo, branch, path) {
-    return "https://cdn.jsdelivr.net/gh/" + repo + "@" + branch + "/" + path.split("/").map(encodeURIComponent).join("/");
+  // Image URLs. A custom CDN base (Bunny pull zone, set via data-cdn or the saved
+  // config's cdnBase) serves repo-relative paths; otherwise fall back to jsDelivr.
+  function cdnUrl(repo, branch, path, base) {
+    var enc = path.split("/").map(encodeURIComponent).join("/");
+    if (base) return base.replace(/\/$/, "") + "/" + enc;
+    return "https://cdn.jsdelivr.net/gh/" + repo + "@" + branch + "/" + enc;
   }
 
   var CSS =
@@ -51,13 +54,13 @@
     return String(s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function imgSrc(logo, o, repo, branch) {
+  function imgSrc(logo, o, repo, branch, base) {
     // Hover styles reveal color, so use the color image + a CSS filter at rest.
     var path = o.hoverStyle && o.hoverStyle !== "none" && logo.colorUrl ? logo.colorUrl : logo.url;
-    return cdnUrl(repo, branch, path);
+    return cdnUrl(repo, branch, path, base);
   }
 
-  function carousel(el, cfg, repo, branch) {
+  function carousel(el, cfg, repo, branch, base) {
     var o = cfg.options || {};
     var dir = o.direction || "left";
     var rows = Math.max(1, Math.min(3, o.rows || 1));
@@ -68,7 +71,7 @@
         for (var i = 0; i < cfg.logos.length; i++) {
           if (i % rows !== r) continue;
           var l = cfg.logos[i];
-          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch)) + '" alt="' + esc(l.alt) + '"' + (pass ? ' aria-hidden="true"' : "") + ">";
+          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '"' + (pass ? ' aria-hidden="true"' : "") + ">";
         }
       }
       var rdir = o.mirrorRows && r % 2 === 1 ? (dir === "left" ? "right" : "left") : dir;
@@ -79,12 +82,12 @@
       '<div class="gf-logos gf-fx" style="' + style + '" data-fade="' + !!o.edgeFade + '" data-pause="' + (o.pauseOnHover !== false) + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '">' + rowsHtml + "</div>";
   }
 
-  function grid(el, cfg, repo, branch) {
+  function grid(el, cfg, repo, branch, base) {
     var o = cfg.options || {};
     var cells = "";
     for (var i = 0; i < cfg.logos.length; i++) {
       var l = cfg.logos[i];
-      cells += '<div class="gf-grid__cell"><img src="' + esc(imgSrc(l, o, repo, branch)) + '" alt="' + esc(l.alt) + '"></div>';
+      cells += '<div class="gf-grid__cell"><img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '"></div>';
     }
     var style = "--gf-cols:" + (o.columns || 5) + ";--gf-gap:" + (o.gap || 40) + "px;--gf-pad:" + (o.padding || 32) + "px;--gf-h:" + (o.cellHeight || 56) + "px;background:" + (o.background || "transparent");
     el.innerHTML = '<div class="gf-grid gf-fx" style="' + style + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '">' + cells + "</div>";
@@ -99,8 +102,9 @@
       .then(function (r) { if (!r.ok) throw new Error("config " + r.status); return r.json(); })
       .then(function (cfg) {
         injectCss();
-        if (cfg.type === "grid") grid(el, cfg, repo, branch);
-        else carousel(el, cfg, repo, branch);
+        var base = el.getAttribute("data-cdn") || cfg.cdnBase || "";
+        if (cfg.type === "grid") grid(el, cfg, repo, branch, base);
+        else carousel(el, cfg, repo, branch, base);
       })
       .catch(function (e) { console.error("[gf-embed]", slug, e); });
   }

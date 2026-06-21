@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
-import { carouselMarkup, cdnUrl, liveEmbedCode, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
+import { carouselMarkup, cdnUrl, CDN_BASE, liveEmbedCode, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import { slugify } from "@/lib/slug";
 import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
 
@@ -105,6 +105,7 @@ export default function CarouselPage() {
           return { name: c.name, url: vp, colorUrl: cp, alt: c.alt || `${c.name} logo` };
         }),
         options: { ...opts, variant },
+        ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
         updatedAt: new Date().toISOString(),
       };
       const file: RenderedFile = {

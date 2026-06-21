@@ -6,7 +6,7 @@ import { renderGrid, type GridItem } from "@/lib/grid";
 import { slugify } from "@/lib/slug";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
-import { gridMarkup, liveEmbedCode, cdnUrl, type EmbedLogo, type HoverStyle } from "@/lib/embed";
+import { gridMarkup, liveEmbedCode, cdnUrl, CDN_BASE, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import type { ClientEntry, EmbedConfig, RenderedFile, VariantName } from "@/lib/types";
 
 type WatermarkVariant = "none" | "color" | "white" | "black";
@@ -230,6 +230,7 @@ export default function GridPage() {
         type: "grid", name: embedName || slug, slug,
         logos: chosen.map((c) => { const v = evp(c)!; const col = ecp(c); return { name: c.name, url: v, colorUrl: col, alt: c.alt || `${c.name} logo` }; }),
         options: { columns: embedCols, gap, padding: outerPad, cellHeight: embedCellH, background, hoverStyle: embedHover, variant },
+        ...(CDN_BASE ? { cdnBase: CDN_BASE } : {}),
         updatedAt: new Date().toISOString(),
       };
       const file: RenderedFile = { path: `Embeds/${slug}.json`, base64: btoa(unescape(encodeURIComponent(JSON.stringify(cfg, null, 2)))) };

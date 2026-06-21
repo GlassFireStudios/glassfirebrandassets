@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:40:13.945Z",
+  "updatedAt": "2026-06-21T03:40:50.026Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -25,6 +25,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:16:26.231Z"
+    },
+    {
+      "name": "Drone Racing League",
+      "slug": "drone-racing-league",
+      "domain": "thedroneracingleague.com",
+      "alt": "Drone Racing League logo — GlassFire client",
+      "title": "Drone Racing League logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idv46rAduk/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:40:48.512Z"
     },
     {
       "name": "Ladder",

@@ -37,8 +37,10 @@ export async function brandfetchSearch(query: string): Promise<LogoCandidate[]> 
   let hits: SearchHit[] = [];
   try {
     const url = `${SEARCH_URL}/${encodeURIComponent(query)}${clientId ? `?c=${clientId}` : ""}`;
+    // The Brand Search API authenticates via the ?c=clientId param. Only fall
+    // back to the Bearer key when no client ID is configured.
     const res = await fetch(url, {
-      headers: apiKey ? { Authorization: `Bearer ${apiKey}` } : {},
+      headers: !clientId && apiKey ? { Authorization: `Bearer ${apiKey}` } : {},
       cache: "no-store",
     });
     if (res.ok) hits = (await res.json()) as SearchHit[];

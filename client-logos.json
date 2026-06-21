@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:15:37.960Z",
+  "updatedAt": "2026-06-21T04:17:25.728Z",
   "clients": [
     {
       "name": "Apple",
@@ -73,30 +73,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:40:48.512Z"
-    },
-    {
-      "name": "High Point University",
-      "slug": "high-point-university",
-      "domain": "https://www.highpoint.edu/",
-      "alt": "High Point University logo — GlassFire client",
-      "title": "High Point University logo",
-      "source": "upload",
-      "sourceUrl": "HPU-Masthead-Panther-Logo_2685-04-scaled.webp",
-      "variants": [
-        "color",
-        "white",
-        "black"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-21T04:15:36.302Z"
     },
     {
       "name": "Ladder",

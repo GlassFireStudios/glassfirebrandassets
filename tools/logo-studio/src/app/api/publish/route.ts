@@ -5,7 +5,7 @@ import type { PublishRequest } from "@/lib/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const ALLOWED = ["Client Logos/", "Logos/", "Grids/", "Embeds/", "client-logos.json"];
+const ALLOWED = ["Client Logos/", "Logos/", "Grids/", "Embeds/", "Testimonials/", "client-logos.json"];
 
 function withinAllowed(path: string): boolean {
   return ALLOWED.some((p) => (p.endsWith("/") ? path.startsWith(p) : path === p));

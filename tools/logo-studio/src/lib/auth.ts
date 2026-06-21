@@ -10,9 +10,10 @@ export async function sha256Hex(input: string): Promise<string> {
 }
 
 /** The cookie value we expect for an authenticated session, or null if no
- *  password is configured (open access). */
+ *  password is configured (open access). Trimmed so a stray space/newline in
+ *  the env var doesn't silently break login. */
 export async function expectedToken(): Promise<string | null> {
-  const pw = process.env.APP_PASSWORD;
+  const pw = process.env.APP_PASSWORD?.trim();
   if (!pw) return null;
   return sha256Hex(`gf-logo-studio::${pw}`);
 }

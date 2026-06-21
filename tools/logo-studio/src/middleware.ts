@@ -9,6 +9,10 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/login") || pathname.startsWith("/api/login")) {
     return NextResponse.next();
   }
+  // Public client testimonial capture pages + their submit API stay open.
+  if (pathname.startsWith("/r/") || pathname.startsWith("/api/r/")) {
+    return NextResponse.next();
+  }
 
   const cookie = req.cookies.get(AUTH_COOKIE)?.value;
   if (cookie === token) return NextResponse.next();

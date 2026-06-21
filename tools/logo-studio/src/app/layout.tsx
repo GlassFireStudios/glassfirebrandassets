@@ -19,7 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav className="flex gap-4 text-sm text-zinc-400">
               <Link href="/intake" className="hover:text-white">Intake</Link>
-              <Link href="/grid" className="hover:text-white">Grid Builder</Link>
+              <Link href="/grid" className="hover:text-white">Grid</Link>
+              <Link href="/carousel" className="hover:text-white">Carousel</Link>
               <Link href="/manage" className="hover:text-white">Manage</Link>
             </nav>
           </div>

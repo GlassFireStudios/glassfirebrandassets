@@ -53,6 +53,16 @@ export interface ClientManifest {
   clients: ClientLogoMeta[];
 }
 
+/** A client discovered in the repo, with the repo paths of its available
+ *  variants. Shared by the Grid Builder, Carousel Builder, and Manage tab. */
+export interface ClientEntry {
+  name: string;
+  slug?: string;
+  alt?: string;
+  variants: Partial<Record<VariantName, string>>;
+  legacy?: boolean;
+}
+
 export interface PublishRequest {
   files: RenderedFile[];
   /** Repo paths to delete in the same commit. */

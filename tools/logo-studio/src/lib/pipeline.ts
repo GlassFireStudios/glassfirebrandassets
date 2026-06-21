@@ -6,7 +6,7 @@ import {
   SIZES,
   VARIANT_COLORS,
   normalizeToBox,
-  toSilhouette,
+  toMono,
   trimBounds,
   type Bounds,
 } from "./image";
@@ -22,6 +22,9 @@ export interface BuildOptions {
   /** When true, the box width adapts to the logo's aspect ratio (fixed height)
    *  so wide/tall logos fill the box without cropping or dead space. */
   fitToLogo?: boolean;
+  /** White/black variants keep internal detail via luminance knockout instead
+   *  of flattening to a solid blob. Defaults to true. */
+  preserveDetail?: boolean;
 }
 
 export interface SizeOutput {
@@ -57,9 +60,10 @@ export function buildAll(master: HTMLCanvasElement, opts: BuildOptions): BuildRe
     ? Math.max(1, Math.round((boxH * (1 - pad * 2)) * (bounds.w / bounds.h) / (1 - pad * 2)))
     : baseW;
 
+  const preserveDetail = opts.preserveDetail ?? true;
   const variants: VariantOutput[] = opts.variants.map((v) => {
     const colored =
-      v === "color" ? master : toSilhouette(master, VARIANT_COLORS[v]);
+      v === "color" ? master : toMono(master, VARIANT_COLORS[v], preserveDetail);
     const sizeOut: SizeOutput[] = sizes.map((s) => ({
       label: s.label,
       scale: s.scale,

@@ -63,6 +63,7 @@ export default function IntakePage() {
   const [sizes, setSizes] = useState<string[]>([...ALL_SIZES]);
   const [padding, setPadding] = useState(8);
   const [fitToLogo, setFitToLogo] = useState(false);
+  const [preserveDetail, setPreserveDetail] = useState(true);
 
   // Build output
   const [build, setBuild] = useState<BuildResult | null>(null);
@@ -182,9 +183,10 @@ export default function IntakePage() {
       sizeLabels: sizes,
       paddingRatio: padding / 100,
       fitToLogo,
+      preserveDetail,
     });
     setBuild(result);
-  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo]);
+  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -403,6 +405,14 @@ export default function IntakePage() {
                     </button>
                   ))}
                 </div>
+                <label className="mt-2 flex items-center gap-2 text-sm text-zinc-400">
+                  <input type="checkbox" checked={preserveDetail} onChange={(e) => setPreserveDetail(e.target.checked)} />
+                  Preserve inner detail in white/black
+                </label>
+                <p className="text-xs text-zinc-600">
+                  Keeps internal detail (e.g. the lettering inside a badge) by knocking it out
+                  instead of flattening to a solid shape. Turn off for a plain silhouette.
+                </p>
               </div>
 
               <div>

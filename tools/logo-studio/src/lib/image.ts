@@ -180,25 +180,72 @@ export function removeBackground(
   ctx.putImageData(imageData, 0, 0);
 }
 
+/** Relative luminance 0..1. */
+function luminance(r: number, g: number, b: number): number {
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+}
+
 /** Recolor every non-transparent pixel to a flat color, preserving alpha (and
  *  therefore anti-aliased edges). Produces clean white/black silhouettes. */
 export function toSilhouette(canvas: HTMLCanvasElement, color: [number, number, number]): HTMLCanvasElement {
+  return toMono(canvas, color, false);
+}
+
+/** Convert a logo to a single ink color.
+ *
+ *  - flat fill (preserveDetail=false): every opaque pixel becomes the ink color.
+ *    Simple + robust, but loses internal detail (a detailed badge collapses to
+ *    a blob).
+ *  - knockout (preserveDetail=true, default): keeps the dominant-polarity region
+ *    as ink and turns the opposite-polarity interior TRANSPARENT, so internal
+ *    detail (e.g. the lettering inside the NHL shield) survives. Polarity is
+ *    auto-detected from the logo's mean luminance, so it works for both
+ *    dark-on-light and light-on-dark marks. */
+export function toMono(
+  canvas: HTMLCanvasElement,
+  color: [number, number, number],
+  preserveDetail = true,
+): HTMLCanvasElement {
   const out = document.createElement("canvas");
   out.width = canvas.width;
   out.height = canvas.height;
-  const sctx = canvas.getContext("2d")!;
-  const octx = out.getContext("2d")!;
-  const img = sctx.getImageData(0, 0, canvas.width, canvas.height);
+  const img = canvas.getContext("2d")!.getImageData(0, 0, canvas.width, canvas.height);
   const { data } = img;
   const [r, g, b] = color;
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i + 3] > 8) {
-      data[i] = r;
-      data[i + 1] = g;
-      data[i + 2] = b;
+
+  if (!preserveDetail) {
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 8) { data[i] = r; data[i + 1] = g; data[i + 2] = b; }
     }
+    out.getContext("2d")!.putImageData(img, 0, 0);
+    return out;
   }
-  octx.putImageData(img, 0, 0);
+
+  // Mean luminance over opaque pixels → decide ink polarity.
+  let sum = 0, count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] > 8) { sum += luminance(data[i], data[i + 1], data[i + 2]); count++; }
+  }
+  const mean = count ? sum / count : 0.5;
+  const darkDominant = mean < 0.5;
+  const t = 0.5;
+  const band = 0.2;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const a0 = data[i + 3];
+    if (a0 <= 8) continue;
+    const L = luminance(data[i], data[i + 1], data[i + 2]);
+    // Ink coverage: 1 for the dominant region, 0 for the opposite interior, with
+    // a soft band between for anti-aliasing.
+    const cov = darkDominant
+      ? Math.min(1, Math.max(0, (t + band - L) / (2 * band)))
+      : Math.min(1, Math.max(0, (L - (t - band)) / (2 * band)));
+    data[i] = r;
+    data[i + 1] = g;
+    data[i + 2] = b;
+    data[i + 3] = Math.round(a0 * cov);
+  }
+  out.getContext("2d")!.putImageData(img, 0, 0);
   return out;
 }
 

@@ -20,6 +20,9 @@ export interface CarouselOptions {
   background: string;
   edgeFade: boolean;
   padding: number;
+  rows: number; // 1–3 scrolling rows
+  mirrorRows: boolean; // alternate each row's direction
+  rowGap: number; // vertical gap between rows (px)
 }
 
 export interface GridEmbedOptions {
@@ -40,6 +43,13 @@ export function rawUrl(repo: string, branch: string, path: string): string {
   return `https://raw.githubusercontent.com/${repo}/${branch}/${enc}`;
 }
 
+/** jsDelivr CDN URL — preferred for production image hosting (raw.githubusercontent
+ *  is not a CDN and is rate-limited for hot-linking). */
+export function cdnUrl(repo: string, branch: string, path: string): string {
+  const enc = path.split("/").map(encodeURIComponent).join("/");
+  return `https://cdn.jsdelivr.net/gh/${repo}@${branch}/${enc}`;
+}
+
 // Shared hover-effect CSS (matches embed.js).
 const HOVER_CSS =
   ".gf-fx img{transition:filter .35s ease,opacity .35s ease}" +
@@ -53,23 +63,29 @@ function src(l: EmbedLogo, hover: HoverStyle): string {
 }
 
 export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
-  const imgs = [...logos, ...logos]
-    .map((l, i) => `    <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= logos.length ? ' aria-hidden="true"' : ""} />`)
-    .join("\n");
+  const rows = Math.max(1, Math.min(3, o.rows || 1));
+  const rowsHtml: string[] = [];
+  for (let r = 0; r < rows; r++) {
+    const rowLogos = logos.filter((_, i) => i % rows === r);
+    const imgs = [...rowLogos, ...rowLogos]
+      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= rowLogos.length ? ' aria-hidden="true"' : ""} />`)
+      .join("\n");
+    const dir = o.mirrorRows && r % 2 === 1 ? (o.direction === "left" ? "right" : "left") : o.direction;
+    rowsHtml.push(`  <div class="gf-logos__row" data-dir="${dir}">\n    <div class="gf-logos__track">\n${imgs}\n    </div>\n  </div>`);
+  }
 
-  const wrapperStyle = `--gf-h:${o.height}px;--gf-gap:${o.gap}px;--gf-dur:${o.duration}s;--gf-pad:${o.padding}px;background:${o.background}`;
+  const wrapperStyle = `--gf-h:${o.height}px;--gf-gap:${o.gap}px;--gf-dur:${o.duration}s;--gf-pad:${o.padding}px;--gf-rowgap:${o.rowGap ?? 24}px;background:${o.background}`;
 
   return `<!-- GlassFire client logo carousel -->
-<div class="gf-logos gf-fx" style="${wrapperStyle}" data-fade="${o.edgeFade}" data-dir="${o.direction}" data-pause="${o.pauseOnHover}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
-  <div class="gf-logos__track">
-${imgs}
-  </div>
+<div class="gf-logos gf-fx" style="${wrapperStyle}" data-fade="${o.edgeFade}" data-pause="${o.pauseOnHover}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
+${rowsHtml.join("\n")}
 </div>
 <style>
 .gf-logos{overflow:hidden;width:100%;padding:var(--gf-pad) 0;box-sizing:border-box}
 .gf-logos[data-fade="true"]{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.gf-logos__row + .gf-logos__row{margin-top:var(--gf-rowgap)}
 .gf-logos__track{display:flex;align-items:center;width:max-content;animation:gf-marquee var(--gf-dur) linear infinite}
-.gf-logos[data-dir="right"] .gf-logos__track{animation-direction:reverse}
+.gf-logos__row[data-dir="right"] .gf-logos__track{animation-direction:reverse}
 .gf-logos[data-pause="true"]:hover .gf-logos__track{animation-play-state:paused}
 .gf-logos img{height:var(--gf-h);width:auto;flex:0 0 auto;margin-right:var(--gf-gap);object-fit:contain;display:block}
 @media (prefers-reduced-motion:reduce){.gf-logos__track{animation:none}}
@@ -93,6 +109,45 @@ ${cells}
 .gf-grid img{height:var(--gf-h);max-width:100%;width:auto;object-fit:contain;display:block}
 ${HOVER_CSS}
 </style>`;
+}
+
+/** Builds the full, self-contained static HTML for a saved embed config,
+ *  with images served from the jsDelivr CDN. Paste-and-replace on a page. */
+export function staticMarkupFromConfig(
+  cfg: { type: "carousel" | "grid"; logos: { url: string; colorUrl?: string; alt: string }[]; options: Record<string, unknown> },
+  repo: string,
+  branch: string,
+): string {
+  const logos: EmbedLogo[] = cfg.logos.map((l) => ({
+    url: cdnUrl(repo, branch, l.url),
+    colorUrl: l.colorUrl ? cdnUrl(repo, branch, l.colorUrl) : undefined,
+    alt: l.alt,
+  }));
+  const o = cfg.options;
+  if (cfg.type === "grid") {
+    return gridMarkup(logos, {
+      columns: Number(o.columns) || 5,
+      gap: Number(o.gap) || 40,
+      padding: Number(o.padding) || 32,
+      cellHeight: Number(o.cellHeight) || 56,
+      background: String(o.background ?? "transparent"),
+      hoverStyle: (o.hoverStyle as HoverStyle) || "none",
+    });
+  }
+  return carouselMarkup(logos, {
+    height: Number(o.height) || 44,
+    gap: Number(o.gap) || 72,
+    duration: Number(o.duration) || 40,
+    direction: (o.direction as "left" | "right") || "left",
+    hoverStyle: (o.hoverStyle as HoverStyle) || "none",
+    pauseOnHover: o.pauseOnHover !== false,
+    background: String(o.background ?? "transparent"),
+    edgeFade: o.edgeFade !== false,
+    padding: Number(o.padding) || 24,
+    rows: Number(o.rows) || 1,
+    mirrorRows: o.mirrorRows !== false,
+    rowGap: Number(o.rowGap) || 24,
+  });
 }
 
 /** The live (auto-updating) embed snippet that references a saved config. */

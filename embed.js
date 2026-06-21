@@ -13,12 +13,17 @@
   function rawUrl(repo, branch, path) {
     return RAW + repo + "/" + branch + "/" + path.split("/").map(encodeURIComponent).join("/");
   }
+  // Images go through the jsDelivr CDN (raw.githubusercontent is not a CDN).
+  function cdnUrl(repo, branch, path) {
+    return "https://cdn.jsdelivr.net/gh/" + repo + "@" + branch + "/" + path.split("/").map(encodeURIComponent).join("/");
+  }
 
   var CSS =
     ".gf-logos{overflow:hidden;width:100%;box-sizing:border-box;padding:var(--gf-pad,24px) 0}" +
     ".gf-logos[data-fade=true]{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}" +
+    ".gf-logos__row+.gf-logos__row{margin-top:var(--gf-rowgap,24px)}" +
     ".gf-logos__track{display:flex;align-items:center;width:max-content;animation:gf-marquee var(--gf-dur,40s) linear infinite}" +
-    ".gf-logos[data-dir=right] .gf-logos__track{animation-direction:reverse}" +
+    ".gf-logos__row[data-dir=right] .gf-logos__track{animation-direction:reverse}" +
     ".gf-logos[data-pause=true]:hover .gf-logos__track{animation-play-state:paused}" +
     ".gf-logos img,.gf-grid img{height:var(--gf-h,44px);width:auto;flex:0 0 auto;object-fit:contain;display:block}" +
     ".gf-logos img{margin-right:var(--gf-gap,72px)}" +
@@ -49,21 +54,29 @@
   function imgSrc(logo, o, repo, branch) {
     // Hover styles reveal color, so use the color image + a CSS filter at rest.
     var path = o.hoverStyle && o.hoverStyle !== "none" && logo.colorUrl ? logo.colorUrl : logo.url;
-    return rawUrl(repo, branch, path);
+    return cdnUrl(repo, branch, path);
   }
 
   function carousel(el, cfg, repo, branch) {
     var o = cfg.options || {};
-    var imgs = "";
-    for (var pass = 0; pass < 2; pass++) {
-      for (var i = 0; i < cfg.logos.length; i++) {
-        var l = cfg.logos[i];
-        imgs += '<img src="' + esc(imgSrc(l, o, repo, branch)) + '" alt="' + esc(l.alt) + '"' + (pass ? ' aria-hidden="true"' : "") + ">";
+    var dir = o.direction || "left";
+    var rows = Math.max(1, Math.min(3, o.rows || 1));
+    var rowsHtml = "";
+    for (var r = 0; r < rows; r++) {
+      var imgs = "";
+      for (var pass = 0; pass < 2; pass++) {
+        for (var i = 0; i < cfg.logos.length; i++) {
+          if (i % rows !== r) continue;
+          var l = cfg.logos[i];
+          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch)) + '" alt="' + esc(l.alt) + '"' + (pass ? ' aria-hidden="true"' : "") + ">";
+        }
       }
+      var rdir = o.mirrorRows && r % 2 === 1 ? (dir === "left" ? "right" : "left") : dir;
+      rowsHtml += '<div class="gf-logos__row" data-dir="' + rdir + '"><div class="gf-logos__track">' + imgs + "</div></div>";
     }
-    var style = "--gf-h:" + (o.height || 44) + "px;--gf-gap:" + (o.gap || 72) + "px;--gf-dur:" + (o.duration || 40) + "s;--gf-pad:" + (o.padding || 24) + "px;background:" + (o.background || "transparent");
+    var style = "--gf-h:" + (o.height || 44) + "px;--gf-gap:" + (o.gap || 72) + "px;--gf-dur:" + (o.duration || 40) + "s;--gf-pad:" + (o.padding || 24) + "px;--gf-rowgap:" + (o.rowGap == null ? 24 : o.rowGap) + "px;background:" + (o.background || "transparent");
     el.innerHTML =
-      '<div class="gf-logos gf-fx" style="' + style + '" data-fade="' + !!o.edgeFade + '" data-dir="' + (o.direction || "left") + '" data-pause="' + (o.pauseOnHover !== false) + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '"><div class="gf-logos__track">' + imgs + "</div></div>";
+      '<div class="gf-logos gf-fx" style="' + style + '" data-fade="' + !!o.edgeFade + '" data-pause="' + (o.pauseOnHover !== false) + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '">' + rowsHtml + "</div>";
   }
 
   function grid(el, cfg, repo, branch) {

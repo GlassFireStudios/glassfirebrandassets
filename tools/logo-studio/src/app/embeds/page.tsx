@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { liveEmbedCode } from "@/lib/embed";
+import { liveEmbedCode, staticMarkupFromConfig } from "@/lib/embed";
 import { useClients } from "@/lib/useClients";
 import type { EmbedConfig } from "@/lib/types";
 
@@ -67,6 +67,7 @@ export default function EmbedsPage() {
       <div className="space-y-4">
         {items.map((cfg) => {
           const code = liveEmbedCode(cfg.slug, repo, branch);
+          const staticHtml = staticMarkupFromConfig(cfg, repo, branch);
           return (
             <div key={cfg.slug} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
               <div className="flex items-center justify-between">
@@ -79,8 +80,16 @@ export default function EmbedsPage() {
                   <button onClick={() => remove(cfg)} disabled={busy === cfg.slug} className="rounded-lg border border-fire/40 px-3 py-1.5 text-fire hover:bg-fire/10 disabled:opacity-50">Delete</button>
                 </div>
               </div>
-              <textarea readOnly value={code} className="mt-3 h-20 w-full rounded-lg border border-zinc-800 bg-black p-3 font-mono text-xs text-zinc-300" />
-              <button onClick={() => copy(code, cfg.slug)} className="mt-2 rounded-lg bg-glass px-3 py-1.5 text-sm font-medium text-black">{copied === cfg.slug ? "Copied!" : "Copy embed code"}</button>
+              <p className="mt-3 text-xs font-medium uppercase tracking-wide text-zinc-500">Live embed (auto-updates)</p>
+              <textarea readOnly value={code} className="mt-1 h-20 w-full rounded-lg border border-zinc-800 bg-black p-3 font-mono text-xs text-zinc-300" />
+              <button onClick={() => copy(code, cfg.slug)} className="mt-2 rounded-lg bg-glass px-3 py-1.5 text-sm font-medium text-black">{copied === cfg.slug ? "Copied!" : "Copy live embed"}</button>
+
+              <details className="mt-3">
+                <summary className="cursor-pointer text-xs font-medium uppercase tracking-wide text-zinc-500">Full static HTML (best for SEO — paste &amp; replace)</summary>
+                <textarea readOnly value={staticHtml} className="mt-2 h-48 w-full rounded-lg border border-zinc-800 bg-black p-3 font-mono text-xs text-zinc-300" />
+                <button onClick={() => copy(staticHtml, `${cfg.slug}-static`)} className="mt-2 rounded-lg border border-zinc-700 px-3 py-1.5 text-sm hover:border-glass">{copied === `${cfg.slug}-static` ? "Copied!" : "Copy full static HTML"}</button>
+                <p className="mt-1 text-xs text-zinc-600">Re-save this embed after editing, then copy this and replace the old block on your page. Images served via jsDelivr CDN.</p>
+              </details>
             </div>
           );
         })}

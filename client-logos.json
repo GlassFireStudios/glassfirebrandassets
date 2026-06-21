@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T02:45:08.406Z",
+  "updatedAt": "2026-06-21T02:45:17.324Z",
   "clients": [
     {
       "name": "ChickFilA",
@@ -9,8 +9,8 @@
       "title": "ChickFilA logo",
       "source": "backfill",
       "variants": [
-        "white",
-        "black"
+        "black",
+        "white"
       ],
       "sizes": [
         "@1x",

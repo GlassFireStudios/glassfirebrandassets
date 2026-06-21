@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T02:45:17.324Z",
+  "updatedAt": "2026-06-21T02:51:07.069Z",
   "clients": [
     {
       "name": "ChickFilA",
@@ -22,6 +22,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T02:45:08.406Z"
+    },
+    {
+      "name": "Ladder",
+      "slug": "ladder",
+      "domain": "joinladder.com",
+      "alt": "Ladder logo — GlassFire client",
+      "title": "Ladder logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idxRQahYuo/w/820/h/110/theme/light/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T02:51:06.631Z"
     }
   ]
 }

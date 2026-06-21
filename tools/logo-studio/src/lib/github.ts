@@ -31,16 +31,17 @@ export interface PublishResult {
   createdBranch: boolean;
 }
 
-/** Commit a set of files atomically as a single tree commit. If the target
- *  branch does not exist and createBranch is true, it is branched off the base
- *  branch. */
-export async function publishFiles(
-  files: RenderedFile[],
+/** Commit a set of writes and/or deletes atomically as a single tree commit. If
+ *  the target branch does not exist and createBranch is true, it is branched off
+ *  the base branch. */
+export async function commitChanges(
+  writes: RenderedFile[],
+  deletes: string[],
   message: string,
   branch: string,
   createBranch: boolean,
 ): Promise<PublishResult> {
-  if (!files.length) throw new Error("No files to publish.");
+  if (!writes.length && !deletes.length) throw new Error("Nothing to commit.");
   const cfg = getConfig();
   const gh = client(cfg);
   const { owner, repo, baseBranch } = cfg;
@@ -64,36 +65,32 @@ export async function publishFiles(
   const parentCommit = await gh.git.getCommit({ owner, repo, commit_sha: parentSha });
   const baseTreeSha = parentCommit.data.tree.sha;
 
-  // Upload blobs.
+  // Upload blobs for writes.
   const blobs = await Promise.all(
-    files.map(async (f) => {
-      const blob = await gh.git.createBlob({
-        owner,
-        repo,
-        content: f.base64,
-        encoding: "base64",
-      });
+    writes.map(async (f) => {
+      const blob = await gh.git.createBlob({ owner, repo, content: f.base64, encoding: "base64" });
       return { path: f.path, sha: blob.data.sha };
     }),
   );
 
-  const tree = await gh.git.createTree({
-    owner,
-    repo,
-    base_tree: baseTreeSha,
-    tree: blobs.map((b) => ({
-      path: b.path,
-      mode: "100644" as const,
-      type: "blob" as const,
-      sha: b.sha,
-    })),
-  });
+  const tree: {
+    path: string;
+    mode: "100644";
+    type: "blob";
+    sha: string | null;
+  }[] = [
+    ...blobs.map((b) => ({ path: b.path, mode: "100644" as const, type: "blob" as const, sha: b.sha })),
+    // sha: null deletes the path.
+    ...deletes.map((p) => ({ path: p, mode: "100644" as const, type: "blob" as const, sha: null })),
+  ];
+
+  const newTree = await gh.git.createTree({ owner, repo, base_tree: baseTreeSha, tree });
 
   const commit = await gh.git.createCommit({
     owner,
     repo,
     message,
-    tree: tree.data.sha,
+    tree: newTree.data.sha,
     parents: [parentSha],
   });
 
@@ -109,6 +106,16 @@ export async function publishFiles(
     createdBranch: !branchExists,
     htmlUrl: `https://github.com/${owner}/${repo}/commit/${commit.data.sha}`,
   };
+}
+
+/** Convenience wrapper for writes-only commits. */
+export function publishFiles(
+  files: RenderedFile[],
+  message: string,
+  branch: string,
+  createBranch: boolean,
+): Promise<PublishResult> {
+  return commitChanges(files, [], message, branch, createBranch);
 }
 
 /** Fetch a UTF-8 file from the repo (e.g. the manifest). Returns null if absent. */

@@ -17,8 +17,11 @@ interface DiscoveredClient {
 // New clients live in per-client folders; legacy ones are flat white PNGs.
 export async function GET() {
   let branch = "main";
+  let repo = "GlassFireStudios/glassfirebrandassets";
   try {
-    branch = getConfig().baseBranch;
+    const cfg = getConfig();
+    branch = cfg.baseBranch;
+    repo = `${cfg.owner}/${cfg.repo}`;
   } catch (err) {
     const msg = err instanceof Error ? err.message : "GitHub not configured.";
     return NextResponse.json({ error: msg, clients: [] }, { status: 500 });
@@ -60,5 +63,5 @@ export async function GET() {
   }
 
   clients.sort((a, b) => a.name.localeCompare(b.name));
-  return NextResponse.json({ branch, clients, manifest });
+  return NextResponse.json({ branch, repo, clients, manifest });
 }

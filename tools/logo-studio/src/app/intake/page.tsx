@@ -9,6 +9,7 @@ import {
   removeBackground,
   canvasToBase64,
   canvasToDataUrl,
+  type BgRemovalMode,
 } from "@/lib/image";
 import { buildAll, type BuildResult } from "@/lib/pipeline";
 import { defaultAlt, defaultTitle, slugify, variantFileName } from "@/lib/slug";
@@ -42,6 +43,9 @@ export default function IntakePage() {
   // Selected source
   const sourceCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [sourceLoaded, setSourceLoaded] = useState(false);
+  // Bumped whenever a new source image is adopted, so the rebuild effect re-runs
+  // even when sourceLoaded is already true (e.g. selecting a different logo).
+  const [sourceVersion, setSourceVersion] = useState(0);
   const [loadingSource, setLoadingSource] = useState(false);
   const [sourceErr, setSourceErr] = useState<string | null>(null);
 
@@ -57,9 +61,13 @@ export default function IntakePage() {
   // Options
   const [removeBg, setRemoveBg] = useState(false);
   const [tolerance, setTolerance] = useState(10);
+  const [bgMode, setBgMode] = useState<BgRemovalMode>("edges");
   const [variants, setVariants] = useState<VariantName[]>([...ALL_VARIANTS]);
   const [sizes, setSizes] = useState<string[]>([...ALL_SIZES]);
   const [padding, setPadding] = useState(8);
+  const [fitToLogo, setFitToLogo] = useState(false);
+  const [preserveDetail, setPreserveDetail] = useState(true);
+  const [solidity, setSolidity] = useState(0);
 
   // Build output
   const [build, setBuild] = useState<BuildResult | null>(null);
@@ -99,6 +107,7 @@ export default function IntakePage() {
     async (canvas: HTMLCanvasElement, meta: Partial<LogoCandidate>) => {
       sourceCanvasRef.current = canvas;
       setSourceLoaded(true);
+      setSourceVersion((v) => v + 1);
       const ctx = canvas.getContext("2d")!;
       const transparent = hasTransparency(ctx, canvas.width, canvas.height);
       const solid = !transparent && looksLikeSolidBackground(canvas);
@@ -173,14 +182,17 @@ export default function IntakePage() {
       return;
     }
     const master = cloneCanvas(src);
-    if (removeBg) removeBackground(master, tolerance);
+    if (removeBg) removeBackground(master, tolerance, bgMode);
     const result = buildAll(master, {
       variants,
       sizeLabels: sizes,
       paddingRatio: padding / 100,
+      fitToLogo,
+      preserveDetail,
+      solidity: solidity / 100,
     });
     setBuild(result);
-  }, [sourceLoaded, removeBg, tolerance, variants, sizes, padding]);
+  }, [sourceLoaded, sourceVersion, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail, solidity]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -348,16 +360,38 @@ export default function IntakePage() {
                   Remove background (for JPEGs / solid backgrounds)
                 </label>
                 {removeBg && (
-                  <div className="mt-2">
-                    <label className="text-sm text-zinc-400">Tolerance: {tolerance}%</label>
-                    <input
-                      type="range"
-                      min={1}
-                      max={40}
-                      value={tolerance}
-                      onChange={(e) => setTolerance(Number(e.target.value))}
-                      className="w-full"
-                    />
+                  <div className="mt-2 space-y-2">
+                    <div>
+                      <label className="text-sm text-zinc-400">Tolerance: {tolerance}%</label>
+                      <input
+                        type="range"
+                        min={1}
+                        max={100}
+                        value={tolerance}
+                        onChange={(e) => setTolerance(Number(e.target.value))}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex gap-2">
+                        {(["edges", "all"] as BgRemovalMode[]).map((m) => (
+                          <button
+                            key={m}
+                            onClick={() => setBgMode(m)}
+                            className={`flex-1 rounded-lg border px-2 py-1.5 text-xs ${
+                              bgMode === m ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"
+                            }`}
+                          >
+                            {m === "edges" ? "Edges only" : "All matching color"}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="mt-1 text-xs text-zinc-600">
+                        {bgMode === "edges"
+                          ? "Removes background from the outside in; keeps same-colored shapes inside the logo."
+                          : "Removes the background color everywhere — including pockets trapped inside the logo."}
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -377,6 +411,33 @@ export default function IntakePage() {
                     </button>
                   ))}
                 </div>
+                <label className="mt-2 flex items-center gap-2 text-sm text-zinc-400">
+                  <input type="checkbox" checked={preserveDetail} onChange={(e) => setPreserveDetail(e.target.checked)} />
+                  Preserve inner detail in white/black
+                </label>
+                <p className="text-xs text-zinc-600">
+                  Keeps internal detail (e.g. the lettering inside a badge) by knocking it out
+                  instead of flattening to a solid shape. Turn off for a plain silhouette.
+                </p>
+                {preserveDetail && (
+                  <div className="mt-2">
+                    <label className="text-sm text-zinc-400">
+                      Solidity: {solidity}%{solidity === 0 ? " (full detail)" : solidity === 100 ? " (solid)" : ""}
+                    </label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={solidity}
+                      onChange={(e) => setSolidity(Number(e.target.value))}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-zinc-600">
+                      Dial up if a logo comes out with unwanted shades — 100% forces a fully solid
+                      fill (no knockout).
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -397,7 +458,32 @@ export default function IntakePage() {
               </div>
 
               <div>
-                <label className="text-sm text-zinc-400">Padding inside box: {padding}%</label>
+                <p className="font-medium">Box shape</p>
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => setFitToLogo(false)}
+                    className={`rounded-lg border px-3 py-1.5 text-sm ${!fitToLogo ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"}`}
+                  >
+                    Standard 3:1
+                  </button>
+                  <button
+                    onClick={() => setFitToLogo(true)}
+                    className={`rounded-lg border px-3 py-1.5 text-sm ${fitToLogo ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"}`}
+                  >
+                    Fit to logo
+                  </button>
+                </div>
+                <p className="mt-1 text-xs text-zinc-600">
+                  {fitToLogo
+                    ? "Box width follows the logo's shape — fills edge-to-edge with no cropping or dead space."
+                    : "Fixed 3:1 box (matches the existing library). Wide logos leave space top/bottom."}
+                </p>
+              </div>
+
+              <div>
+                <label className="text-sm text-zinc-400">
+                  Padding inside box: {padding}%
+                </label>
                 <input
                   type="range"
                   min={0}
@@ -406,6 +492,10 @@ export default function IntakePage() {
                   onChange={(e) => setPadding(Number(e.target.value))}
                   className="w-full"
                 />
+                <p className="text-xs text-zinc-600">
+                  Margin around the logo. The logo is auto-trimmed to fill the box at 0%. To
+                  remove empty space around wide/tall logos, use &ldquo;Fit to logo&rdquo; above.
+                </p>
               </div>
             </div>
 

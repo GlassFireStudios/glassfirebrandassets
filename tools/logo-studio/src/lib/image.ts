@@ -98,16 +98,32 @@ export function looksLikeSolidBackground(canvas: HTMLCanvasElement): boolean {
   return true;
 }
 
-/** Remove a solid background by flood-filling inward from the border, keying on
- *  the average corner color. Tolerance is 0..100 (% of max color distance).
- *  Interior shapes of the same color are preserved because they are not
- *  connected to the border. Works on JPEGs and PNGs alike. */
-export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): void {
+export type BgRemovalMode = "edges" | "all";
+
+/** Remove a background keyed on the average corner color. Tolerance is 0..100
+ *  (% of max color distance).
+ *
+ *  - "edges" (default): flood-fill inward from the border, so interior shapes of
+ *    the same color are PRESERVED (good when interior white is part of the mark).
+ *  - "all": remove every pixel matching the key color anywhere in the image, so
+ *    background trapped inside the logo (e.g. white inside a red circle) is also
+ *    cleared. A soft alpha band near the tolerance edge reduces anti-aliasing
+ *    halos.
+ *
+ *  Works on JPEGs and PNGs alike. */
+export function removeBackground(
+  canvas: HTMLCanvasElement,
+  tolerancePct = 10,
+  mode: BgRemovalMode = "edges",
+): void {
   const ctx = canvas.getContext("2d")!;
   const { width, height } = canvas;
   const imageData = ctx.getImageData(0, 0, width, height);
   const { data } = imageData;
   const tol = (tolerancePct / 100) * 441;
+  // Inner radius is fully removed; the band between inner and tol fades out, so
+  // anti-aliased edge pixels become partially transparent instead of a halo.
+  const inner = tol * 0.6;
 
   // Reference = average of four corners.
   const corners = [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]];
@@ -118,6 +134,25 @@ export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): 
   }
   rr /= 4; gg /= 4; bb /= 4;
 
+  const apply = (i: number, d: number) => {
+    if (d <= inner) {
+      data[i + 3] = 0;
+    } else if (d < tol) {
+      const a = Math.round(255 * ((d - inner) / (tol - inner)));
+      if (a < data[i + 3]) data[i + 3] = a;
+    }
+  };
+
+  if (mode === "all") {
+    for (let p = 0; p < width * height; p++) {
+      const i = p * 4;
+      apply(i, colorDist(data[i], data[i + 1], data[i + 2], rr, gg, bb));
+    }
+    ctx.putImageData(imageData, 0, 0);
+    return;
+  }
+
+  // "edges": flood-fill from the border, only crossing background pixels.
   const visited = new Uint8Array(width * height);
   const stack: number[] = [];
   for (let x = 0; x < width; x++) {
@@ -133,9 +168,8 @@ export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): 
     visited[p] = 1;
     const i = p * 4;
     const d = colorDist(data[i], data[i + 1], data[i + 2], rr, gg, bb);
-    if (d > tol) continue; // hit the logo — stop.
-    // Feather: fully transparent at center of tolerance, partial near the edge.
-    data[i + 3] = 0;
+    if (d >= tol) continue; // hit the logo — stop traversing here.
+    apply(i, d);
     const x = p % width;
     const y = (p / width) | 0;
     if (x > 0) stack.push(p - 1);
@@ -146,25 +180,107 @@ export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): 
   ctx.putImageData(imageData, 0, 0);
 }
 
+/** Relative luminance 0..1. */
+function luminance(r: number, g: number, b: number): number {
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+}
+
 /** Recolor every non-transparent pixel to a flat color, preserving alpha (and
  *  therefore anti-aliased edges). Produces clean white/black silhouettes. */
 export function toSilhouette(canvas: HTMLCanvasElement, color: [number, number, number]): HTMLCanvasElement {
+  return toMono(canvas, color, false);
+}
+
+/** Convert a logo to a single ink color.
+ *
+ *  - flat fill (preserveDetail=false): every opaque pixel becomes the ink color.
+ *    Simple + robust, but loses internal detail (a detailed badge collapses to
+ *    a blob).
+ *  - knockout (preserveDetail=true, default): keeps the dominant-polarity region
+ *    as ink and turns the opposite-polarity interior TRANSPARENT, so internal
+ *    detail (e.g. the lettering inside the NHL shield) survives. Polarity is
+ *    auto-detected from the logo's mean luminance, so it works for both
+ *    dark-on-light and light-on-dark marks. */
+export function toMono(
+  canvas: HTMLCanvasElement,
+  color: [number, number, number],
+  preserveDetail = true,
+  solidity = 0,
+): HTMLCanvasElement {
   const out = document.createElement("canvas");
   out.width = canvas.width;
   out.height = canvas.height;
-  const sctx = canvas.getContext("2d")!;
-  const octx = out.getContext("2d")!;
-  const img = sctx.getImageData(0, 0, canvas.width, canvas.height);
+  const img = canvas.getContext("2d")!.getImageData(0, 0, canvas.width, canvas.height);
   const { data } = img;
   const [r, g, b] = color;
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i + 3] > 8) {
-      data[i] = r;
-      data[i + 1] = g;
-      data[i + 2] = b;
+
+  if (!preserveDetail) {
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 8) { data[i] = r; data[i + 1] = g; data[i + 2] = b; }
     }
+    out.getContext("2d")!.putImageData(img, 0, 0);
+    return out;
   }
-  octx.putImageData(img, 0, 0);
+
+  const { width, height } = canvas;
+  // Mean luminance over opaque pixels → decide ink polarity.
+  let sum = 0, count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] > 8) { sum += luminance(data[i], data[i + 1], data[i + 2]); count++; }
+  }
+  const mean = count ? sum / count : 0.5;
+  const darkDominant = mean < 0.5;
+  const t = 0.5;
+  const band = 0.18;
+  // 0 = full knockout (preserve detail), 1 = no knockout (fully solid fill).
+  const keep = 1 - Math.min(1, Math.max(0, solidity));
+
+  // A pixel is "opposite" (knockout candidate) if it sits on the far side of the
+  // luminance threshold from the ink. The flood can travel through transparent
+  // background and opposite-tone pixels, but NOT through ink — so opposite
+  // regions enclosed by ink (the interior of a badge) are never reached, while
+  // opposite regions that are part of the outer shape (colored letters) are.
+  const passable = (p: number): boolean => {
+    const i = p * 4;
+    if (data[i + 3] <= 8) return true;
+    const L = luminance(data[i], data[i + 1], data[i + 2]);
+    return darkDominant ? L > t : L < t;
+  };
+
+  const reached = new Uint8Array(width * height);
+  const stack: number[] = [];
+  for (let x = 0; x < width; x++) stack.push(x, (height - 1) * width + x);
+  for (let y = 0; y < height; y++) stack.push(y * width, y * width + width - 1);
+  while (stack.length) {
+    const p = stack.pop()!;
+    if (reached[p] || !passable(p)) continue;
+    reached[p] = 1;
+    const x = p % width;
+    const y = (p / width) | 0;
+    if (x > 0) stack.push(p - 1);
+    if (x < width - 1) stack.push(p + 1);
+    if (y > 0) stack.push(p - width);
+    if (y < height - 1) stack.push(p + width);
+  }
+
+  for (let p = 0; p < width * height; p++) {
+    const i = p * 4;
+    const a0 = data[i + 3];
+    if (a0 <= 8) continue;
+    const L = luminance(data[i], data[i + 1], data[i + 2]);
+    // How strongly "opposite" this pixel is (0..1), soft-banded for clean edges.
+    const opp = darkDominant
+      ? Math.min(1, Math.max(0, (L - (t - band)) / (2 * band)))
+      : Math.min(1, Math.max(0, (t + band - L) / (2 * band)));
+    // Knock out only enclosed opposite regions; everything else becomes ink.
+    // Solidity scales the knockout down toward a fully solid fill.
+    const knock = (reached[p] ? 0 : opp) * keep;
+    data[i] = r;
+    data[i + 1] = g;
+    data[i + 2] = b;
+    data[i + 3] = Math.round(a0 * (1 - knock));
+  }
+  out.getContext("2d")!.putImageData(img, 0, 0);
   return out;
 }
 
@@ -205,7 +321,10 @@ export function normalizeToBox(
   ctx.imageSmoothingQuality = "high";
   const availW = boxW * (1 - paddingRatio * 2);
   const availH = boxH * (1 - paddingRatio * 2);
-  const scale = Math.min(availW / bounds.w, availH / bounds.h);
+  // Clamp to "contain" so the logo can never be scaled past the box edges
+  // (i.e. negative padding fills up to the edge but never crops).
+  const containScale = Math.min(boxW / bounds.w, boxH / bounds.h);
+  const scale = Math.min(availW / bounds.w, availH / bounds.h, containScale);
   const dw = bounds.w * scale;
   const dh = bounds.h * scale;
   const dx = (boxW - dw) / 2;
@@ -221,4 +340,15 @@ export function canvasToBase64(canvas: HTMLCanvasElement, type = "image/png", qu
 
 export function canvasToDataUrl(canvas: HTMLCanvasElement, type = "image/png", quality = 0.92): string {
   return canvas.toDataURL(type, quality);
+}
+
+/** Crop a canvas down to the given bounds (tight content, transparent edges
+ *  removed). Used by the grid builder so each logo can be fit into a slot at
+ *  its true aspect ratio with consistent padding. */
+export function cropToBounds(src: HTMLCanvasElement, bounds: Bounds): HTMLCanvasElement {
+  const cv = document.createElement("canvas");
+  cv.width = bounds.w;
+  cv.height = bounds.h;
+  cv.getContext("2d")!.drawImage(src, bounds.x, bounds.y, bounds.w, bounds.h, 0, 0, bounds.w, bounds.h);
+  return cv;
 }

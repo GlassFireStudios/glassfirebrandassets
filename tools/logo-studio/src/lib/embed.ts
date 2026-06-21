@@ -1,0 +1,102 @@
+// Generates embeddable logo carousels & grids. The same CSS powers the in-app
+// live preview, the static (frozen) copy-paste snippet, and the public embed.js
+// loader used for live/auto-updating embeds.
+
+export type HoverStyle = "none" | "grayscale" | "white" | "black";
+
+export interface EmbedLogo {
+  url: string; // resting-variant image URL (or repo path for live configs)
+  colorUrl?: string; // color image URL, used when a hover style reveals color
+  alt: string;
+}
+
+export interface CarouselOptions {
+  height: number;
+  gap: number;
+  duration: number;
+  direction: "left" | "right";
+  hoverStyle: HoverStyle;
+  pauseOnHover: boolean;
+  background: string;
+  edgeFade: boolean;
+  padding: number;
+}
+
+export interface GridEmbedOptions {
+  columns: number;
+  gap: number;
+  padding: number;
+  cellHeight: number;
+  background: string;
+  hoverStyle: HoverStyle;
+}
+
+function escapeAttr(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+export function rawUrl(repo: string, branch: string, path: string): string {
+  const enc = path.split("/").map(encodeURIComponent).join("/");
+  return `https://raw.githubusercontent.com/${repo}/${branch}/${enc}`;
+}
+
+// Shared hover-effect CSS (matches embed.js).
+const HOVER_CSS =
+  ".gf-fx img{transition:filter .35s ease,opacity .35s ease}" +
+  ".gf-fx[data-hover=grayscale] img{filter:grayscale(1);opacity:.7}" +
+  ".gf-fx[data-hover=white] img{filter:brightness(0) invert(1)}" +
+  ".gf-fx[data-hover=black] img{filter:brightness(0)}" +
+  ".gf-fx[data-hover=grayscale] img:hover,.gf-fx[data-hover=white] img:hover,.gf-fx[data-hover=black] img:hover{filter:none;opacity:1}";
+
+function src(l: EmbedLogo, hover: HoverStyle): string {
+  return hover !== "none" && l.colorUrl ? l.colorUrl : l.url;
+}
+
+export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
+  const imgs = [...logos, ...logos]
+    .map((l, i) => `    <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}"${i >= logos.length ? ' aria-hidden="true"' : ""} />`)
+    .join("\n");
+
+  const wrapperStyle = `--gf-h:${o.height}px;--gf-gap:${o.gap}px;--gf-dur:${o.duration}s;--gf-pad:${o.padding}px;background:${o.background}`;
+
+  return `<!-- GlassFire client logo carousel -->
+<div class="gf-logos gf-fx" style="${wrapperStyle}" data-fade="${o.edgeFade}" data-dir="${o.direction}" data-pause="${o.pauseOnHover}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
+  <div class="gf-logos__track">
+${imgs}
+  </div>
+</div>
+<style>
+.gf-logos{overflow:hidden;width:100%;padding:var(--gf-pad) 0;box-sizing:border-box}
+.gf-logos[data-fade="true"]{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.gf-logos__track{display:flex;align-items:center;width:max-content;animation:gf-marquee var(--gf-dur) linear infinite}
+.gf-logos[data-dir="right"] .gf-logos__track{animation-direction:reverse}
+.gf-logos[data-pause="true"]:hover .gf-logos__track{animation-play-state:paused}
+.gf-logos img{height:var(--gf-h);width:auto;flex:0 0 auto;margin-right:var(--gf-gap);object-fit:contain;display:block}
+@media (prefers-reduced-motion:reduce){.gf-logos__track{animation:none}}
+@keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+${HOVER_CSS}
+</style>`;
+}
+
+export function gridMarkup(logos: EmbedLogo[], o: GridEmbedOptions): string {
+  const cells = logos
+    .map((l) => `    <div class="gf-grid__cell"><img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" /></div>`)
+    .join("\n");
+  const wrapperStyle = `--gf-cols:${o.columns};--gf-gap:${o.gap}px;--gf-pad:${o.padding}px;--gf-h:${o.cellHeight}px;background:${o.background}`;
+  return `<!-- GlassFire client logo grid -->
+<div class="gf-grid gf-fx" style="${wrapperStyle}" data-hover="${o.hoverStyle}" aria-label="Trusted by">
+${cells}
+</div>
+<style>
+.gf-grid{display:grid;gap:var(--gf-gap);padding:var(--gf-pad);box-sizing:border-box;grid-template-columns:repeat(var(--gf-cols),1fr)}
+.gf-grid__cell{display:flex;align-items:center;justify-content:center}
+.gf-grid img{height:var(--gf-h);max-width:100%;width:auto;object-fit:contain;display:block}
+${HOVER_CSS}
+</style>`;
+}
+
+/** The live (auto-updating) embed snippet that references a saved config. */
+export function liveEmbedCode(slug: string, repo: string, branch = "main"): string {
+  return `<div class="gf-embed" data-embed="${slug}"></div>
+<script src="https://cdn.jsdelivr.net/gh/${repo}@${branch}/embed.js" defer></script>`;
+}

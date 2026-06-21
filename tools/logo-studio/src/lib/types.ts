@@ -53,8 +53,31 @@ export interface ClientManifest {
   clients: ClientLogoMeta[];
 }
 
+/** A client discovered in the repo, with the repo paths of its available
+ *  variants. Shared by the Grid Builder, Carousel Builder, and Manage tab. */
+export interface ClientEntry {
+  name: string;
+  slug?: string;
+  alt?: string;
+  variants: Partial<Record<VariantName, string>>;
+  legacy?: boolean;
+}
+
+/** A saved embed config (carousel or grid) stored at Embeds/<slug>.json and
+ *  rendered live on external sites by embed.js. */
+export interface EmbedConfig {
+  type: "carousel" | "grid";
+  name: string;
+  slug: string;
+  logos: { name: string; url: string; colorUrl?: string; alt: string }[];
+  options: Record<string, unknown>;
+  updatedAt: string;
+}
+
 export interface PublishRequest {
   files: RenderedFile[];
+  /** Repo paths to delete in the same commit. */
+  deletes?: string[];
   message: string;
   /** Target branch. If createBranch is true and it does not exist, it is created from the base branch. */
   branch: string;

@@ -1,15 +1,13 @@
 {
   "name": "Enhanced Games",
   "slug": "enhanced-games",
-  "domain": "enhanced.com",
   "alt": "Enhanced Games logo — GlassFire client",
   "title": "Enhanced Games logo",
-  "source": "brandfetch",
-  "sourceUrl": "https://cdn.brandfetch.io/idU0M_KN8U/w/690/h/361/theme/dark/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+  "source": "edit",
   "variants": [
+    "black",
     "color",
-    "white",
-    "black"
+    "white"
   ],
   "sizes": [
     "@1x",
@@ -20,5 +18,5 @@
     "width": 150,
     "height": 50
   },
-  "addedAt": "2026-06-21T04:19:03.083Z"
+  "addedAt": "2026-06-21T04:35:52.447Z"
 }

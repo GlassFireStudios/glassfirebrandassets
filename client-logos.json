@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:30:08.005Z",
+  "updatedAt": "2026-06-21T04:35:52.447Z",
   "clients": [
     {
       "name": "Apple",
@@ -193,6 +193,28 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:36:26.710Z"
+    },
+    {
+      "name": "Enhanced Games",
+      "slug": "enhanced-games",
+      "alt": "Enhanced Games logo — GlassFire client",
+      "title": "Enhanced Games logo",
+      "source": "edit",
+      "variants": [
+        "black",
+        "color",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T04:35:52.447Z"
     }
   ]
 }

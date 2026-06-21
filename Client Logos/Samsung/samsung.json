@@ -1,0 +1,24 @@
+{
+  "name": "Samsung",
+  "slug": "samsung",
+  "domain": "samsung.com",
+  "alt": "Samsung logo — GlassFire client",
+  "title": "Samsung logo",
+  "source": "brandfetch",
+  "sourceUrl": "https://cdn.brandfetch.io/iduaw_nOnR/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-21T03:33:09.358Z"
+}

@@ -11,7 +11,7 @@ Central store for GlassFire and client brand assets.
 - **`client-logos.json`** — manifest of client logos (name, slug, alt text,
   variants) for downstream sites.
 
-## Logo Studio
+## Brand Studio
 
 [`tools/logo-studio/`](tools/logo-studio) is an internal Next.js app (deployable
 on Vercel) for getting client logos into this repo: search for a client's logo,

@@ -9,6 +9,7 @@ import {
   removeBackground,
   canvasToBase64,
   canvasToDataUrl,
+  type BgRemovalMode,
 } from "@/lib/image";
 import { buildAll, type BuildResult } from "@/lib/pipeline";
 import { defaultAlt, defaultTitle, slugify, variantFileName } from "@/lib/slug";
@@ -57,6 +58,7 @@ export default function IntakePage() {
   // Options
   const [removeBg, setRemoveBg] = useState(false);
   const [tolerance, setTolerance] = useState(10);
+  const [bgMode, setBgMode] = useState<BgRemovalMode>("edges");
   const [variants, setVariants] = useState<VariantName[]>([...ALL_VARIANTS]);
   const [sizes, setSizes] = useState<string[]>([...ALL_SIZES]);
   const [padding, setPadding] = useState(8);
@@ -173,14 +175,14 @@ export default function IntakePage() {
       return;
     }
     const master = cloneCanvas(src);
-    if (removeBg) removeBackground(master, tolerance);
+    if (removeBg) removeBackground(master, tolerance, bgMode);
     const result = buildAll(master, {
       variants,
       sizeLabels: sizes,
       paddingRatio: padding / 100,
     });
     setBuild(result);
-  }, [sourceLoaded, removeBg, tolerance, variants, sizes, padding]);
+  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -348,16 +350,38 @@ export default function IntakePage() {
                   Remove background (for JPEGs / solid backgrounds)
                 </label>
                 {removeBg && (
-                  <div className="mt-2">
-                    <label className="text-sm text-zinc-400">Tolerance: {tolerance}%</label>
-                    <input
-                      type="range"
-                      min={1}
-                      max={40}
-                      value={tolerance}
-                      onChange={(e) => setTolerance(Number(e.target.value))}
-                      className="w-full"
-                    />
+                  <div className="mt-2 space-y-2">
+                    <div>
+                      <label className="text-sm text-zinc-400">Tolerance: {tolerance}%</label>
+                      <input
+                        type="range"
+                        min={1}
+                        max={100}
+                        value={tolerance}
+                        onChange={(e) => setTolerance(Number(e.target.value))}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex gap-2">
+                        {(["edges", "all"] as BgRemovalMode[]).map((m) => (
+                          <button
+                            key={m}
+                            onClick={() => setBgMode(m)}
+                            className={`flex-1 rounded-lg border px-2 py-1.5 text-xs ${
+                              bgMode === m ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"
+                            }`}
+                          >
+                            {m === "edges" ? "Edges only" : "All matching color"}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="mt-1 text-xs text-zinc-600">
+                        {bgMode === "edges"
+                          ? "Removes background from the outside in; keeps same-colored shapes inside the logo."
+                          : "Removes the background color everywhere — including pockets trapped inside the logo."}
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -397,15 +421,20 @@ export default function IntakePage() {
               </div>
 
               <div>
-                <label className="text-sm text-zinc-400">Padding inside box: {padding}%</label>
+                <label className="text-sm text-zinc-400">
+                  Padding inside box: {padding}%{padding < 0 && " (overscan — fills past the box)"}
+                </label>
                 <input
                   type="range"
-                  min={0}
+                  min={-25}
                   max={25}
                   value={padding}
                   onChange={(e) => setPadding(Number(e.target.value))}
                   className="w-full"
                 />
+                <p className="text-xs text-zinc-600">
+                  Negative values enlarge the logo to counteract built-in whitespace.
+                </p>
               </div>
             </div>
 

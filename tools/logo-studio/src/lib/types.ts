@@ -55,6 +55,8 @@ export interface ClientManifest {
 
 export interface PublishRequest {
   files: RenderedFile[];
+  /** Repo paths to delete in the same commit. */
+  deletes?: string[];
   message: string;
   /** Target branch. If createBranch is true and it does not exist, it is created from the base branch. */
   branch: string;

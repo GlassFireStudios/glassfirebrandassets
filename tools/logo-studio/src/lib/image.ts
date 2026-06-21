@@ -98,16 +98,32 @@ export function looksLikeSolidBackground(canvas: HTMLCanvasElement): boolean {
   return true;
 }
 
-/** Remove a solid background by flood-filling inward from the border, keying on
- *  the average corner color. Tolerance is 0..100 (% of max color distance).
- *  Interior shapes of the same color are preserved because they are not
- *  connected to the border. Works on JPEGs and PNGs alike. */
-export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): void {
+export type BgRemovalMode = "edges" | "all";
+
+/** Remove a background keyed on the average corner color. Tolerance is 0..100
+ *  (% of max color distance).
+ *
+ *  - "edges" (default): flood-fill inward from the border, so interior shapes of
+ *    the same color are PRESERVED (good when interior white is part of the mark).
+ *  - "all": remove every pixel matching the key color anywhere in the image, so
+ *    background trapped inside the logo (e.g. white inside a red circle) is also
+ *    cleared. A soft alpha band near the tolerance edge reduces anti-aliasing
+ *    halos.
+ *
+ *  Works on JPEGs and PNGs alike. */
+export function removeBackground(
+  canvas: HTMLCanvasElement,
+  tolerancePct = 10,
+  mode: BgRemovalMode = "edges",
+): void {
   const ctx = canvas.getContext("2d")!;
   const { width, height } = canvas;
   const imageData = ctx.getImageData(0, 0, width, height);
   const { data } = imageData;
   const tol = (tolerancePct / 100) * 441;
+  // Inner radius is fully removed; the band between inner and tol fades out, so
+  // anti-aliased edge pixels become partially transparent instead of a halo.
+  const inner = tol * 0.6;
 
   // Reference = average of four corners.
   const corners = [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]];
@@ -118,6 +134,25 @@ export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): 
   }
   rr /= 4; gg /= 4; bb /= 4;
 
+  const apply = (i: number, d: number) => {
+    if (d <= inner) {
+      data[i + 3] = 0;
+    } else if (d < tol) {
+      const a = Math.round(255 * ((d - inner) / (tol - inner)));
+      if (a < data[i + 3]) data[i + 3] = a;
+    }
+  };
+
+  if (mode === "all") {
+    for (let p = 0; p < width * height; p++) {
+      const i = p * 4;
+      apply(i, colorDist(data[i], data[i + 1], data[i + 2], rr, gg, bb));
+    }
+    ctx.putImageData(imageData, 0, 0);
+    return;
+  }
+
+  // "edges": flood-fill from the border, only crossing background pixels.
   const visited = new Uint8Array(width * height);
   const stack: number[] = [];
   for (let x = 0; x < width; x++) {
@@ -133,9 +168,8 @@ export function removeBackground(canvas: HTMLCanvasElement, tolerancePct = 10): 
     visited[p] = 1;
     const i = p * 4;
     const d = colorDist(data[i], data[i + 1], data[i + 2], rr, gg, bb);
-    if (d > tol) continue; // hit the logo — stop.
-    // Feather: fully transparent at center of tolerance, partial near the edge.
-    data[i + 3] = 0;
+    if (d >= tol) continue; // hit the logo — stop traversing here.
+    apply(i, d);
     const x = p % width;
     const y = (p / width) | 0;
     if (x > 0) stack.push(p - 1);
@@ -221,4 +255,15 @@ export function canvasToBase64(canvas: HTMLCanvasElement, type = "image/png", qu
 
 export function canvasToDataUrl(canvas: HTMLCanvasElement, type = "image/png", quality = 0.92): string {
   return canvas.toDataURL(type, quality);
+}
+
+/** Crop a canvas down to the given bounds (tight content, transparent edges
+ *  removed). Used by the grid builder so each logo can be fit into a slot at
+ *  its true aspect ratio with consistent padding. */
+export function cropToBounds(src: HTMLCanvasElement, bounds: Bounds): HTMLCanvasElement {
+  const cv = document.createElement("canvas");
+  cv.width = bounds.w;
+  cv.height = bounds.h;
+  cv.getContext("2d")!.drawImage(src, bounds.x, bounds.y, bounds.w, bounds.h, 0, 0, bounds.w, bounds.h);
+  return cv;
 }

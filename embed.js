@@ -40,7 +40,25 @@
     ".gf-fx[data-hover=grayscale] img{filter:grayscale(1);opacity:.7}" +
     ".gf-fx[data-hover=white] img{filter:brightness(0) invert(1)}" +
     ".gf-fx[data-hover=black] img{filter:brightness(0)}" +
-    ".gf-fx[data-hover=grayscale] img:hover,.gf-fx[data-hover=white] img:hover,.gf-fx[data-hover=black] img:hover{filter:none;opacity:1}";
+    ".gf-fx[data-hover=grayscale] img:hover,.gf-fx[data-hover=white] img:hover,.gf-fx[data-hover=black] img:hover{filter:none;opacity:1}" +
+    // Testimonials
+    ".gft{box-sizing:border-box;width:100%;padding:24px;background:var(--gft-bg,transparent)}" +
+    ".gft *{box-sizing:border-box}" +
+    ".gft-wall{display:grid;gap:20px;grid-template-columns:repeat(var(--gft-cols,3),1fr)}" +
+    ".gft-carousel{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}" +
+    ".gft-carousel .gft-card{flex:0 0 min(360px,80%);scroll-snap-align:start}" +
+    ".gft-single{max-width:680px;margin:0 auto}" +
+    ".gft-card{display:flex;flex-direction:column;gap:14px;background:var(--gft-card,#111114);border-radius:16px;padding:24px}" +
+    ".gft-stars{font-size:15px;letter-spacing:2px;color:#3f3f46}" +
+    ".gft-quote{margin:0;font-size:17px;line-height:1.55;color:var(--gft-text,#f4f4f5);font-weight:450}" +
+    ".gft-quote::before{content:'\\201C'}.gft-quote::after{content:'\\201D'}" +
+    ".gft-cap{display:flex;align-items:center;gap:12px;margin-top:auto}" +
+    ".gft-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:0 0 auto}" +
+    ".gft-id{display:flex;flex-direction:column;min-width:0}" +
+    ".gft-name{font-weight:600;color:var(--gft-text,#f4f4f5);font-size:14px}" +
+    ".gft-role{color:var(--gft-muted,#a1a1aa);font-size:13px}" +
+    ".gft-logo{height:24px;width:auto;margin-left:auto;object-fit:contain;opacity:.9;flex:0 0 auto}" +
+    "@media(max-width:720px){.gft-wall{grid-template-columns:1fr}}";
 
   function injectCss() {
     if (document.getElementById("gf-embed-css")) return;
@@ -101,6 +119,31 @@
     el.innerHTML = '<div class="gf-grid gf-fx" style="' + style + '" data-hover="' + (o.hoverStyle || "none") + '" aria-label="' + esc(cfg.name || "Logos") + '">' + cells + "</div>";
   }
 
+  function tstars(rating, accent) {
+    var n = Math.max(0, Math.min(5, Math.round(rating || 0))), out = "";
+    for (var i = 0; i < 5; i++) out += "<span" + (i < n ? ' style="color:' + accent + '"' : "") + ">★</span>";
+    return '<div class="gft-stars">' + out + "</div>";
+  }
+
+  function tcard(t, o, repo, branch, base) {
+    var rating = o.showRating !== false && t.rating ? tstars(t.rating, o.accent || "#EE2750") : "";
+    var avatar = t.headshotUrl ? '<img class="gft-avatar" src="' + esc(cdnUrl(repo, branch, t.headshotUrl, base)) + '" alt="' + esc(t.name) + '" loading="lazy" decoding="async">' : "";
+    var logo = o.showLogo !== false && t.logoUrl ? '<img class="gft-logo" src="' + esc(cdnUrl(repo, branch, t.logoUrl, base)) + '" alt="' + esc(t.company) + ' logo" loading="lazy" decoding="async">' : "";
+    var roleLine = [t.role, t.company].filter(Boolean).join(", ");
+    return '<figure class="gft-card">' + rating + '<blockquote class="gft-quote">' + esc(t.quote) + '</blockquote><figcaption class="gft-cap">' + avatar + '<div class="gft-id"><span class="gft-name">' + esc(t.name) + '</span><span class="gft-role">' + esc(roleLine) + "</span></div>" + logo + "</figcaption></figure>";
+  }
+
+  function testimonial(el, cfg, repo, branch, base) {
+    var o = cfg.options || {};
+    var items = cfg.items || [];
+    var cards = items.map(function (t) { return tcard(t, o, repo, branch, base); }).join("");
+    var layout = o.layout || "wall";
+    var cls = layout === "carousel" ? "gft-carousel" : layout === "card" ? "gft-single" : "gft-wall";
+    var inner = layout === "card" ? '<div class="gft-single">' + cards + "</div>" : '<div class="' + cls + '" style="--gft-cols:' + (o.columns || 3) + '">' + cards + "</div>";
+    var style = "--gft-bg:" + (o.background || "transparent") + ";--gft-card:" + (o.cardBg || "#111114") + ";--gft-text:" + (o.textColor || "#f4f4f5") + ";--gft-muted:" + (o.mutedColor || "#a1a1aa");
+    el.innerHTML = '<div class="gft" style="' + style + '" aria-label="Client testimonials">' + inner + "</div>";
+  }
+
   function load(el) {
     var slug = el.getAttribute("data-embed");
     if (!slug) return;
@@ -112,6 +155,7 @@
         injectCss();
         var base = el.getAttribute("data-cdn") || cfg.cdnBase || "";
         if (cfg.type === "grid") grid(el, cfg, repo, branch, base);
+        else if (cfg.type === "testimonial") testimonial(el, cfg, repo, branch, base);
         else carousel(el, cfg, repo, branch, base);
       })
       .catch(function (e) { console.error("[gf-embed]", slug, e); });

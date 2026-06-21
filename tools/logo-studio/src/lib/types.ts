@@ -83,6 +83,56 @@ export interface EmbedConfig {
   updatedAt: string;
 }
 
+/** A captured client testimonial. Pending ones live at
+ *  Testimonials/pending/<slug>.json; approved ones at Testimonials/<slug>.json. */
+export interface Testimonial {
+  slug: string;
+  name: string;
+  role?: string;
+  company: string;
+  /** Name of the client in the logo library, to attach their logo. */
+  clientName?: string;
+  quote: string;
+  rating?: number; // 1–5
+  headshot?: string; // repo path to uploaded headshot, if any
+  consent: boolean;
+  status: "pending" | "approved";
+  submittedAt: string;
+  approvedAt?: string;
+}
+
+/** A tokenized capture invite (Testimonials/_invites/<token>.json) that
+ *  pre-fills and authorizes a client's submission. */
+export interface TestimonialInvite {
+  token: string;
+  company: string;
+  clientName?: string;
+  role?: string;
+  createdAt: string;
+}
+
+/** One testimonial baked into a web embed config. */
+export interface TestimonialItem {
+  quote: string;
+  name: string;
+  role?: string;
+  company: string;
+  rating?: number;
+  headshotUrl?: string; // repo path (resolved to CDN by embed.js)
+  logoUrl?: string; // repo path to the company logo variant
+}
+
+/** A saved testimonial embed (stored in Embeds/<slug>.json, rendered by embed.js). */
+export interface TestimonialEmbedConfig {
+  type: "testimonial";
+  name: string;
+  slug: string;
+  items: TestimonialItem[];
+  options: Record<string, unknown>;
+  cdnBase?: string;
+  updatedAt: string;
+}
+
 export interface PublishRequest {
   files: RenderedFile[];
   /** Repo paths to delete in the same commit. */

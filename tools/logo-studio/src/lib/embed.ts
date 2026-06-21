@@ -2,6 +2,9 @@
 // live preview, the static (frozen) copy-paste snippet, and the public embed.js
 // loader used for live/auto-updating embeds.
 
+import { testimonialMarkup, DEFAULT_TESTIMONIAL_OPTIONS, type TestimonialOptions } from "./testimonial";
+import type { TestimonialItem } from "./types";
+
 export type HoverStyle = "none" | "grayscale" | "white" | "black";
 
 export interface EmbedLogo {
@@ -130,11 +133,25 @@ ${HOVER_CSS}
 /** Builds the full, self-contained static HTML for a saved embed config,
  *  with images served from the jsDelivr CDN. Paste-and-replace on a page. */
 export function staticMarkupFromConfig(
-  cfg: { type: "carousel" | "grid"; logos: { url: string; colorUrl?: string; alt: string; scale?: number; sideTrim?: number }[]; options: Record<string, unknown> },
+  cfg: {
+    type: "carousel" | "grid" | "testimonial";
+    logos?: { url: string; colorUrl?: string; alt: string; scale?: number; sideTrim?: number }[];
+    items?: TestimonialItem[];
+    options: Record<string, unknown>;
+  },
   repo: string,
   branch: string,
 ): string {
-  const logos: EmbedLogo[] = cfg.logos.map((l) => ({
+  if (cfg.type === "testimonial") {
+    const o = cfg.options as Partial<TestimonialOptions>;
+    const items = (cfg.items || []).map((t) => ({
+      ...t,
+      headshotUrl: t.headshotUrl ? cdnUrl(repo, branch, t.headshotUrl) : undefined,
+      logoUrl: t.logoUrl ? cdnUrl(repo, branch, t.logoUrl) : undefined,
+    }));
+    return testimonialMarkup(items, { ...DEFAULT_TESTIMONIAL_OPTIONS, ...o });
+  }
+  const logos: EmbedLogo[] = (cfg.logos || []).map((l) => ({
     url: cdnUrl(repo, branch, l.url),
     colorUrl: l.colorUrl ? cdnUrl(repo, branch, l.colorUrl) : undefined,
     alt: l.alt,

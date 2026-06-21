@@ -1,0 +1,24 @@
+{
+  "name": "National Hockey League (NHL)",
+  "slug": "national-hockey-league-nhl",
+  "domain": "nhl.com",
+  "alt": "National Hockey League (NHL) logo — GlassFire client",
+  "title": "National Hockey League (NHL) logo",
+  "source": "brandfetch",
+  "sourceUrl": "https://cdn.brandfetch.io/idyidCcmZW/theme/light/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-21T03:14:19.101Z"
+}

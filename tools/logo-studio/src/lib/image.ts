@@ -221,6 +221,7 @@ export function toMono(
     return out;
   }
 
+  const { width, height } = canvas;
   // Mean luminance over opaque pixels → decide ink polarity.
   let sum = 0, count = 0;
   for (let i = 0; i < data.length; i += 4) {
@@ -229,21 +230,51 @@ export function toMono(
   const mean = count ? sum / count : 0.5;
   const darkDominant = mean < 0.5;
   const t = 0.5;
-  const band = 0.2;
+  const band = 0.18;
 
-  for (let i = 0; i < data.length; i += 4) {
+  // A pixel is "opposite" (knockout candidate) if it sits on the far side of the
+  // luminance threshold from the ink. The flood can travel through transparent
+  // background and opposite-tone pixels, but NOT through ink — so opposite
+  // regions enclosed by ink (the interior of a badge) are never reached, while
+  // opposite regions that are part of the outer shape (colored letters) are.
+  const passable = (p: number): boolean => {
+    const i = p * 4;
+    if (data[i + 3] <= 8) return true;
+    const L = luminance(data[i], data[i + 1], data[i + 2]);
+    return darkDominant ? L > t : L < t;
+  };
+
+  const reached = new Uint8Array(width * height);
+  const stack: number[] = [];
+  for (let x = 0; x < width; x++) stack.push(x, (height - 1) * width + x);
+  for (let y = 0; y < height; y++) stack.push(y * width, y * width + width - 1);
+  while (stack.length) {
+    const p = stack.pop()!;
+    if (reached[p] || !passable(p)) continue;
+    reached[p] = 1;
+    const x = p % width;
+    const y = (p / width) | 0;
+    if (x > 0) stack.push(p - 1);
+    if (x < width - 1) stack.push(p + 1);
+    if (y > 0) stack.push(p - width);
+    if (y < height - 1) stack.push(p + width);
+  }
+
+  for (let p = 0; p < width * height; p++) {
+    const i = p * 4;
     const a0 = data[i + 3];
     if (a0 <= 8) continue;
     const L = luminance(data[i], data[i + 1], data[i + 2]);
-    // Ink coverage: 1 for the dominant region, 0 for the opposite interior, with
-    // a soft band between for anti-aliasing.
-    const cov = darkDominant
-      ? Math.min(1, Math.max(0, (t + band - L) / (2 * band)))
-      : Math.min(1, Math.max(0, (L - (t - band)) / (2 * band)));
+    // How strongly "opposite" this pixel is (0..1), soft-banded for clean edges.
+    const opp = darkDominant
+      ? Math.min(1, Math.max(0, (L - (t - band)) / (2 * band)))
+      : Math.min(1, Math.max(0, (t + band - L) / (2 * band)));
+    // Knock out only enclosed opposite regions; everything else becomes ink.
+    const knock = reached[p] ? 0 : opp;
     data[i] = r;
     data[i + 1] = g;
     data[i + 2] = b;
-    data[i + 3] = Math.round(a0 * cov);
+    data[i + 3] = Math.round(a0 * (1 - knock));
   }
   out.getContext("2d")!.putImageData(img, 0, 0);
   return out;

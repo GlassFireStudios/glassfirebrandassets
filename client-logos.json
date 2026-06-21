@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:34:54.175Z",
+  "updatedAt": "2026-06-21T03:35:25.699Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -97,6 +97,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:34:35.178Z"
+    },
+    {
+      "name": "Volvo",
+      "slug": "volvo",
+      "domain": "volvo.com",
+      "alt": "Volvo logo — GlassFire client",
+      "title": "Volvo logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idNEAWjsMP/w/800/h/67/theme/light/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:35:24.497Z"
     }
   ]
 }

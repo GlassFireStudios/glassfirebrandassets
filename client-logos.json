@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:25:22.553Z",
+  "updatedAt": "2026-06-21T04:29:33.031Z",
   "clients": [
     {
       "name": "Apple",
@@ -73,6 +73,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:40:48.512Z"
+    },
+    {
+      "name": "Fondation Ronald McDonald",
+      "slug": "fondation-ronald-mcdonald",
+      "domain": "fondation-ronald-mcdonald.fr",
+      "alt": "Fondation Ronald McDonald logo — GlassFire client",
+      "title": "Fondation Ronald McDonald logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idDkTemqwN/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782102337580bfumLaCV7mrC5H-hPt",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T04:29:31.132Z"
     },
     {
       "name": "Ladder",

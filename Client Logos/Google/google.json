@@ -1,0 +1,24 @@
+{
+  "name": "Google",
+  "slug": "google",
+  "domain": "google.com",
+  "alt": "Google logo — GlassFire client",
+  "title": "Google logo",
+  "source": "brandfetch",
+  "sourceUrl": "https://cdn.brandfetch.io/id6O2oGzv-/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-21T04:18:04.822Z"
+}

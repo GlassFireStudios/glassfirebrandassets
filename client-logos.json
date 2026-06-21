@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:34:50.734Z",
+  "updatedAt": "2026-06-21T03:34:54.175Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -75,13 +75,13 @@
       "addedAt": "2026-06-21T03:14:19.101Z"
     },
     {
-      "name": "Samsung",
-      "slug": "samsung",
-      "domain": "samsung.com",
-      "alt": "Samsung logo — GlassFire client",
-      "title": "Samsung logo",
-      "source": "brandfetch",
-      "sourceUrl": "https://cdn.brandfetch.io/iduaw_nOnR/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "name": "University of Kentucky",
+      "slug": "university-of-kentucky",
+      "domain": "bluegrasssmiles.com",
+      "alt": "University of Kentucky logo — GlassFire client",
+      "title": "University of Kentucky logo",
+      "source": "upload",
+      "sourceUrl": "university_of_kentucky.svg",
       "variants": [
         "color",
         "white",
@@ -96,7 +96,7 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T03:33:09.358Z"
+      "addedAt": "2026-06-21T03:34:35.178Z"
     }
   ]
 }

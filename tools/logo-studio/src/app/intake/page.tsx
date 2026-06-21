@@ -461,19 +461,19 @@ export default function IntakePage() {
 
               <div>
                 <label className="text-sm text-zinc-400">
-                  Padding inside box: {padding}%{padding < 0 && " (overscan — bleeds past the box)"}
+                  Padding inside box: {padding}%
                 </label>
                 <input
                   type="range"
-                  min={-25}
+                  min={0}
                   max={25}
                   value={padding}
                   onChange={(e) => setPadding(Number(e.target.value))}
                   className="w-full"
                 />
                 <p className="text-xs text-zinc-600">
-                  Negative bleeds the logo past the box edges (crops the long side). To fill
-                  without cropping, use &ldquo;Fit to logo&rdquo; above.
+                  Margin around the logo. The logo is auto-trimmed to fill the box at 0%. To
+                  remove empty space around wide/tall logos, use &ldquo;Fit to logo&rdquo; above.
                 </p>
               </div>
             </div>

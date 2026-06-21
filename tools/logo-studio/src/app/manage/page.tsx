@@ -19,7 +19,7 @@ const ALL_SIZES = ["@1x", "@2x", "@3x"];
 export default function ManagePage() {
   const [clients, setClients] = useState<DiscoveredClient[]>([]);
   const [branch, setBranch] = useState("main");
-  const [toMain, setToMain] = useState(false);
+  const [toMain, setToMain] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
   const [msg, setMsg] = useState<{ text: string; url?: string; error?: boolean } | null>(null);
 

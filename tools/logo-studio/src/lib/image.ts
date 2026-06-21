@@ -286,7 +286,10 @@ export function normalizeToBox(
   ctx.imageSmoothingQuality = "high";
   const availW = boxW * (1 - paddingRatio * 2);
   const availH = boxH * (1 - paddingRatio * 2);
-  const scale = Math.min(availW / bounds.w, availH / bounds.h);
+  // Clamp to "contain" so the logo can never be scaled past the box edges
+  // (i.e. negative padding fills up to the edge but never crops).
+  const containScale = Math.min(boxW / bounds.w, boxH / bounds.h);
+  const scale = Math.min(availW / bounds.w, availH / bounds.h, containScale);
   const dw = bounds.w * scale;
   const dh = bounds.h * scale;
   const dx = (boxW - dw) / 2;

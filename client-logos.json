@@ -1,12 +1,12 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T02:44:54.743Z",
+  "updatedAt": "2026-06-21T02:45:03.480Z",
   "clients": [
     {
-      "name": "Google",
-      "slug": "google",
-      "alt": "Google logo — GlassFire client",
-      "title": "Google logo",
+      "name": "Enhanced Games",
+      "slug": "enhanced-games",
+      "alt": "Enhanced Games logo — GlassFire client",
+      "title": "Enhanced Games logo",
       "source": "backfill",
       "variants": [
         "white",
@@ -21,7 +21,7 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T02:44:54.743Z"
+      "addedAt": "2026-06-21T02:45:03.480Z"
     }
   ]
 }

@@ -3,8 +3,8 @@ import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GlassFire Logo Studio",
-  description: "Internal tool for client logo intake, variants, and grids.",
+  title: "GlassFire Brand Studio",
+  description: "Internal tool for client logos, embeds, and testimonials.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

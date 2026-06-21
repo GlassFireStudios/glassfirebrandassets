@@ -27,7 +27,7 @@ function LoginForm() {
 
   return (
     <form onSubmit={submit} className="mx-auto mt-20 max-w-sm space-y-4">
-      <h1 className="text-xl font-semibold">GlassFire Logo Studio</h1>
+      <h1 className="text-xl font-semibold">GlassFire Brand Studio</h1>
       <p className="text-sm text-zinc-400">Internal access only.</p>
       <input
         type="password"

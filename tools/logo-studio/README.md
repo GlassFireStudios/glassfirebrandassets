@@ -1,6 +1,7 @@
-# GlassFire Logo Studio
+# GlassFire Brand Studio
 
-A lightweight internal tool for getting client logos into this brand-assets repo.
+A lightweight internal tool for client brand assets — logos, embeds, and
+testimonials — committed straight into this brand-assets repo.
 
 **Land a client → find their logo → get clean `color` / `white` / `black`
 variants at multiple sizes, SEO alt-tagged → publish straight into the repo →

@@ -1,4 +1,4 @@
-// Shared types for the GlassFire Logo Studio.
+// Shared types for the GlassFire Brand Studio.
 
 export type VariantName = "color" | "white" | "black";
 

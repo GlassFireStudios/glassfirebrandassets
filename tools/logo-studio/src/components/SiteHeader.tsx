@@ -21,7 +21,7 @@ export default function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span className="inline-block h-3 w-3 rounded-full bg-gradient-to-br from-fire to-glass" />
-          GlassFire Logo Studio
+          GlassFire Brand Studio
         </Link>
         <nav className="flex items-center gap-4 text-sm text-zinc-400">
           <Link href="/intake" className="hover:text-white">Intake</Link>

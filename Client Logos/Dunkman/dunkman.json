@@ -1,0 +1,23 @@
+{
+  "name": "Dunkman",
+  "slug": "dunkman",
+  "alt": "Dunkman logo — GlassFire client",
+  "title": "Dunkman logo",
+  "source": "upload",
+  "sourceUrl": "images.png",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-21T04:49:28.973Z"
+}

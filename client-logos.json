@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:35:52.447Z",
+  "updatedAt": "2026-06-21T04:49:30.506Z",
   "clients": [
     {
       "name": "Apple",
@@ -73,6 +73,51 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:40:48.512Z"
+    },
+    {
+      "name": "Dunkman",
+      "slug": "dunkman",
+      "alt": "Dunkman logo — GlassFire client",
+      "title": "Dunkman logo",
+      "source": "upload",
+      "sourceUrl": "images.png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T04:49:28.973Z"
+    },
+    {
+      "name": "Enhanced Games",
+      "slug": "enhanced-games",
+      "alt": "Enhanced Games logo — GlassFire client",
+      "title": "Enhanced Games logo",
+      "source": "edit",
+      "variants": [
+        "black",
+        "color",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T04:35:52.447Z"
     },
     {
       "name": "Fondation Ronald McDonald",
@@ -193,28 +238,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:36:26.710Z"
-    },
-    {
-      "name": "Enhanced Games",
-      "slug": "enhanced-games",
-      "alt": "Enhanced Games logo — GlassFire client",
-      "title": "Enhanced Games logo",
-      "source": "edit",
-      "variants": [
-        "black",
-        "color",
-        "white"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-21T04:35:52.447Z"
     }
   ]
 }

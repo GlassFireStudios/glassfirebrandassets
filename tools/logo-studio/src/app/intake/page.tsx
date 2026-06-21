@@ -62,6 +62,7 @@ export default function IntakePage() {
   const [variants, setVariants] = useState<VariantName[]>([...ALL_VARIANTS]);
   const [sizes, setSizes] = useState<string[]>([...ALL_SIZES]);
   const [padding, setPadding] = useState(8);
+  const [fitToLogo, setFitToLogo] = useState(false);
 
   // Build output
   const [build, setBuild] = useState<BuildResult | null>(null);
@@ -180,9 +181,10 @@ export default function IntakePage() {
       variants,
       sizeLabels: sizes,
       paddingRatio: padding / 100,
+      fitToLogo,
     });
     setBuild(result);
-  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding]);
+  }, [sourceLoaded, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -421,8 +423,31 @@ export default function IntakePage() {
               </div>
 
               <div>
+                <p className="font-medium">Box shape</p>
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => setFitToLogo(false)}
+                    className={`rounded-lg border px-3 py-1.5 text-sm ${!fitToLogo ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"}`}
+                  >
+                    Standard 3:1
+                  </button>
+                  <button
+                    onClick={() => setFitToLogo(true)}
+                    className={`rounded-lg border px-3 py-1.5 text-sm ${fitToLogo ? "border-glass bg-glass/10 text-white" : "border-zinc-700 text-zinc-400"}`}
+                  >
+                    Fit to logo
+                  </button>
+                </div>
+                <p className="mt-1 text-xs text-zinc-600">
+                  {fitToLogo
+                    ? "Box width follows the logo's shape — fills edge-to-edge with no cropping or dead space."
+                    : "Fixed 3:1 box (matches the existing library). Wide logos leave space top/bottom."}
+                </p>
+              </div>
+
+              <div>
                 <label className="text-sm text-zinc-400">
-                  Padding inside box: {padding}%{padding < 0 && " (overscan — fills past the box)"}
+                  Padding inside box: {padding}%{padding < 0 && " (overscan — bleeds past the box)"}
                 </label>
                 <input
                   type="range"
@@ -433,7 +458,8 @@ export default function IntakePage() {
                   className="w-full"
                 />
                 <p className="text-xs text-zinc-600">
-                  Negative values enlarge the logo to counteract built-in whitespace.
+                  Negative bleeds the logo past the box edges (crops the long side). To fill
+                  without cropping, use &ldquo;Fit to logo&rdquo; above.
                 </p>
               </div>
             </div>

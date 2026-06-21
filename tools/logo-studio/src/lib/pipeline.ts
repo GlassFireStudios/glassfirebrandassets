@@ -19,6 +19,9 @@ export interface BuildOptions {
   paddingRatio: number;
   boxWidth?: number;
   boxHeight?: number;
+  /** When true, the box width adapts to the logo's aspect ratio (fixed height)
+   *  so wide/tall logos fill the box without cropping or dead space. */
+  fitToLogo?: boolean;
 }
 
 export interface SizeOutput {
@@ -41,11 +44,18 @@ export interface BuildResult {
  *  canvas (already background-removed, transparent). */
 export function buildAll(master: HTMLCanvasElement, opts: BuildOptions): BuildResult {
   const bounds = trimBounds(master);
-  const boxW = opts.boxWidth ?? BASE_BOX.width;
+  const baseW = opts.boxWidth ?? BASE_BOX.width;
   const boxH = opts.boxHeight ?? BASE_BOX.height;
   const sizes = SIZES.filter((s) => opts.sizeLabels.includes(s.label));
 
   if (!bounds) return { bounds: null, variants: [] };
+
+  // In "fit to logo" mode the box width tracks the logo's aspect (at the fixed
+  // box height), inflated for padding so the content still fills edge-to-edge.
+  const pad = opts.paddingRatio;
+  const fitW = opts.fitToLogo
+    ? Math.max(1, Math.round((boxH * (1 - pad * 2)) * (bounds.w / bounds.h) / (1 - pad * 2)))
+    : baseW;
 
   const variants: VariantOutput[] = opts.variants.map((v) => {
     const colored =
@@ -56,7 +66,7 @@ export function buildAll(master: HTMLCanvasElement, opts: BuildOptions): BuildRe
       canvas: normalizeToBox(
         colored,
         bounds,
-        Math.round(boxW * s.scale),
+        Math.round(fitW * s.scale),
         Math.round(boxH * s.scale),
         opts.paddingRatio,
       ),

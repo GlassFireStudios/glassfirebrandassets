@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:18:08.988Z",
+  "updatedAt": "2026-06-21T03:18:18.462Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -27,14 +27,17 @@
       "addedAt": "2026-06-21T03:16:26.231Z"
     },
     {
-      "name": "ChickFilA",
-      "slug": "chickfila",
-      "alt": "ChickFilA logo — GlassFire client",
-      "title": "ChickFilA logo",
-      "source": "backfill",
+      "name": "Intuit",
+      "slug": "intuit",
+      "domain": "intuit.com",
+      "alt": "Intuit logo — GlassFire client",
+      "title": "Intuit logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idWrWLZ_I5/theme/light/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
       "variants": [
-        "black",
-        "white"
+        "color",
+        "white",
+        "black"
       ],
       "sizes": [
         "@1x",
@@ -45,7 +48,7 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T02:45:08.406Z"
+      "addedAt": "2026-06-21T03:15:10.947Z"
     },
     {
       "name": "Ladder",

@@ -67,6 +67,7 @@ export default function IntakePage() {
   const [padding, setPadding] = useState(8);
   const [fitToLogo, setFitToLogo] = useState(false);
   const [preserveDetail, setPreserveDetail] = useState(true);
+  const [solidity, setSolidity] = useState(0);
 
   // Build output
   const [build, setBuild] = useState<BuildResult | null>(null);
@@ -188,9 +189,10 @@ export default function IntakePage() {
       paddingRatio: padding / 100,
       fitToLogo,
       preserveDetail,
+      solidity: solidity / 100,
     });
     setBuild(result);
-  }, [sourceLoaded, sourceVersion, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail]);
+  }, [sourceLoaded, sourceVersion, removeBg, tolerance, bgMode, variants, sizes, padding, fitToLogo, preserveDetail, solidity]);
 
   const toggle = <T,>(arr: T[], v: T, set: (x: T[]) => void) =>
     set(arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]);
@@ -417,6 +419,25 @@ export default function IntakePage() {
                   Keeps internal detail (e.g. the lettering inside a badge) by knocking it out
                   instead of flattening to a solid shape. Turn off for a plain silhouette.
                 </p>
+                {preserveDetail && (
+                  <div className="mt-2">
+                    <label className="text-sm text-zinc-400">
+                      Solidity: {solidity}%{solidity === 0 ? " (full detail)" : solidity === 100 ? " (solid)" : ""}
+                    </label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={solidity}
+                      onChange={(e) => setSolidity(Number(e.target.value))}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-zinc-600">
+                      Dial up if a logo comes out with unwanted shades — 100% forces a fully solid
+                      fill (no knockout).
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div>

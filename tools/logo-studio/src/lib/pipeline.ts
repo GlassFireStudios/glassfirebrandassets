@@ -25,6 +25,9 @@ export interface BuildOptions {
   /** White/black variants keep internal detail via luminance knockout instead
    *  of flattening to a solid blob. Defaults to true. */
   preserveDetail?: boolean;
+  /** 0 = full detail knockout, 1 = fully solid fill. Lets you dial a logo to a
+   *  clean solid silhouette when knockout leaves unwanted shades. */
+  solidity?: number;
 }
 
 export interface SizeOutput {
@@ -61,9 +64,10 @@ export function buildAll(master: HTMLCanvasElement, opts: BuildOptions): BuildRe
     : baseW;
 
   const preserveDetail = opts.preserveDetail ?? true;
+  const solidity = opts.solidity ?? 0;
   const variants: VariantOutput[] = opts.variants.map((v) => {
     const colored =
-      v === "color" ? master : toMono(master, VARIANT_COLORS[v], preserveDetail);
+      v === "color" ? master : toMono(master, VARIANT_COLORS[v], preserveDetail, solidity);
     const sizeOut: SizeOutput[] = sizes.map((s) => ({
       label: s.label,
       scale: s.scale,

@@ -205,6 +205,7 @@ export function toMono(
   canvas: HTMLCanvasElement,
   color: [number, number, number],
   preserveDetail = true,
+  solidity = 0,
 ): HTMLCanvasElement {
   const out = document.createElement("canvas");
   out.width = canvas.width;
@@ -231,6 +232,8 @@ export function toMono(
   const darkDominant = mean < 0.5;
   const t = 0.5;
   const band = 0.18;
+  // 0 = full knockout (preserve detail), 1 = no knockout (fully solid fill).
+  const keep = 1 - Math.min(1, Math.max(0, solidity));
 
   // A pixel is "opposite" (knockout candidate) if it sits on the far side of the
   // luminance threshold from the ink. The flood can travel through transparent
@@ -270,7 +273,8 @@ export function toMono(
       ? Math.min(1, Math.max(0, (L - (t - band)) / (2 * band)))
       : Math.min(1, Math.max(0, (t + band - L) / (2 * band)));
     // Knock out only enclosed opposite regions; everything else becomes ink.
-    const knock = reached[p] ? 0 : opp;
+    // Solidity scales the knockout down toward a fully solid fill.
+    const knock = (reached[p] ? 0 : opp) * keep;
     data[i] = r;
     data[i + 1] = g;
     data[i + 2] = b;

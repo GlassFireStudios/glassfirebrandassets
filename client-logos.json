@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:36:44.495Z",
+  "updatedAt": "2026-06-21T03:36:48.228Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -99,13 +99,13 @@
       "addedAt": "2026-06-21T03:34:35.178Z"
     },
     {
-      "name": "Volvo",
-      "slug": "volvo",
-      "domain": "volvo.com",
-      "alt": "Volvo logo — GlassFire client",
-      "title": "Volvo logo",
-      "source": "brandfetch",
-      "sourceUrl": "https://cdn.brandfetch.io/idNEAWjsMP/w/800/h/67/theme/light/logo.png?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "name": "YouTube Music",
+      "slug": "youtube-music",
+      "domain": "youtube-music.app",
+      "alt": "YouTube Music logo — GlassFire client",
+      "title": "YouTube Music logo",
+      "source": "upload",
+      "sourceUrl": "YouTube_Music_logo.svg.png",
       "variants": [
         "color",
         "white",
@@ -120,7 +120,7 @@
         "width": 150,
         "height": 50
       },
-      "addedAt": "2026-06-21T03:35:24.497Z"
+      "addedAt": "2026-06-21T03:36:26.710Z"
     }
   ]
 }

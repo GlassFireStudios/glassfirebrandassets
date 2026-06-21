@@ -29,8 +29,17 @@ PAT, so it never touches `git` locally.
 - **SEO** — editable alt text (default `"<Client> logo — GlassFire client"`),
   title, kebab-case filenames, a per-client JSON sidecar, and a root
   `client-logos.json` manifest.
-- **Publish** — one click commits the whole set via the GitHub API, to a review
-  branch (`logo-intake/<client>`) or directly to `main`.
+- **Publish** — one click commits the whole set via the GitHub API. **Defaults
+  to `main`** so the logo lands in the library immediately; uncheck "Commit
+  directly to main" only if you want to stage it on a `logo-intake/<client>`
+  branch for review (you'll then need to merge + delete that branch yourself).
+
+> **Branch hygiene.** Because intake now commits to `main` by default, no
+> per-logo branches are created. Any legacy `logo-intake/*` branches are
+> superseded by `main` and safe to delete. (A `.gitignore` can't manage remote
+> branches — clutter is avoided by committing to `main`, not by ignore rules.)
+> Optionally enable **Settings → General → "Automatically delete head branches"**
+> on the repo so merged PR branches are removed automatically.
 
 ### 2. Grid Builder (`/grid`)
 - Reads every client logo in the repo, lets you pick which to include and which

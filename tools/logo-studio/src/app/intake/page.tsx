@@ -74,7 +74,7 @@ export default function IntakePage() {
 
   // Publish
   const [branch, setBranch] = useState("");
-  const [toMain, setToMain] = useState(false);
+  const [toMain, setToMain] = useState(true);
   const [publishing, setPublishing] = useState(false);
   const [publishResult, setPublishResult] = useState<{ htmlUrl?: string; error?: string } | null>(null);
 
@@ -574,6 +574,9 @@ export default function IntakePage() {
           {/* PUBLISH */}
           <section className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
             <h2 className="text-lg font-semibold">Publish to repo</h2>
+            <p className="text-xs text-zinc-500">
+              Commits straight to <code>main</code> so the logo is in the library immediately. Uncheck only if you want it staged on a separate branch for review.
+            </p>
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <label className="flex items-center gap-2">
                 <input type="checkbox" checked={toMain} onChange={(e) => setToMain(e.target.checked)} />

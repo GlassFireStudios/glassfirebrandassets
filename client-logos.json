@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:40:01.093Z",
+  "updatedAt": "2026-06-21T03:40:13.945Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -25,30 +25,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:16:26.231Z"
-    },
-    {
-      "name": "Coca-Cola",
-      "slug": "coca-cola",
-      "domain": "coca-cola.com",
-      "alt": "Coca-Cola logo — GlassFire client",
-      "title": "Coca-Cola logo",
-      "source": "brandfetch",
-      "sourceUrl": "https://cdn.brandfetch.io/idftrGPfCd/theme/dark/logo.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
-      "variants": [
-        "color",
-        "white",
-        "black"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-21T03:39:59.710Z"
     },
     {
       "name": "Ladder",

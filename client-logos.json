@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T03:35:25.699Z",
+  "updatedAt": "2026-06-21T03:36:28.052Z",
   "clients": [
     {
       "name": "Chick-fil-A",
@@ -121,6 +121,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:35:24.497Z"
+    },
+    {
+      "name": "YouTube Music",
+      "slug": "youtube-music",
+      "domain": "youtube-music.app",
+      "alt": "YouTube Music logo — GlassFire client",
+      "title": "YouTube Music logo",
+      "source": "upload",
+      "sourceUrl": "YouTube_Music_logo.svg.png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-21T03:36:26.710Z"
     }
   ]
 }

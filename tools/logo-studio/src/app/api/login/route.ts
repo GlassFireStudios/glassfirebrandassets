@@ -6,9 +6,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const { password } = (await req.json().catch(() => ({}))) as { password?: string };
-  const configured = process.env.APP_PASSWORD;
+  const configured = process.env.APP_PASSWORD?.trim();
 
-  if (configured && password !== configured) {
+  if (configured && password?.trim() !== configured) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 

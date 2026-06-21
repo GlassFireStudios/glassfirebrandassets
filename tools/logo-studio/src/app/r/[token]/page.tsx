@@ -73,20 +73,23 @@ export default function CapturePage() {
   if (loadErr) return <Centered><p className="text-fire">{loadErr}</p></Centered>;
 
   if (done) {
+    const fiveStar = rating === 5;
     return (
       <Centered>
         <div className="space-y-5 text-center">
-          <div className="text-4xl">🎉</div>
+          <div className="text-4xl">{fiveStar ? "🎉" : "🙏"}</div>
           <h1 className="text-2xl font-bold">Thank you, {name.split(" ")[0]}!</h1>
           <p className="text-zinc-400">Your testimonial has been sent to the GlassFire team. We really appreciate it.</p>
-          {GOOGLE_REVIEW_URL && (
+          {GOOGLE_REVIEW_URL && fiveStar ? (
             <div className="space-y-2 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
-              <p className="text-sm text-zinc-300">Would you share it on Google too? It helps us a lot.</p>
+              <p className="text-sm text-zinc-300">You made our day. Would you share it on Google too? It helps us a lot.</p>
               <button onClick={postToGoogle} className="rounded-lg bg-glass px-4 py-2 font-medium text-black">
                 {copied ? "Copied — paste it on Google ↗" : "Post my review to Google"}
               </button>
               <p className="text-xs text-zinc-500">We&rsquo;ll copy your words to your clipboard and open Google so you can paste &amp; post.</p>
             </div>
+          ) : (
+            <p className="text-sm text-zinc-500">A member of our team will follow up personally — thank you for the honest feedback.</p>
           )}
         </div>
       </Centered>

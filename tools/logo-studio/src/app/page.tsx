@@ -13,9 +13,10 @@ const tools = [
 export default function Home() {
   return (
     <div className="space-y-8">
-      <section>
-        <h1 className="text-3xl font-bold">Brand Studio</h1>
-        <p className="mt-2 max-w-2xl text-zinc-400">
+      <section className="space-y-3">
+        <p className="gf-eyebrow">GlassFire</p>
+        <h1 className="text-4xl font-extrabold sm:text-5xl">Brand <span className="gf-text-spark">Studio</span></h1>
+        <p className="mt-2 max-w-2xl text-fog">
           The home for GlassFire client brand assets — intake logos, build
           embeddable carousels &amp; grids, capture testimonials, and ship
           SEO-tagged, CDN-served exports straight from the brand-assets repo.

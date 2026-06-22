@@ -1,0 +1,24 @@
+{
+  "name": "Chicken Salad Chick",
+  "slug": "chicken-salad-chick",
+  "domain": "chickcatering.com",
+  "alt": "Chicken Salad Chick logo — GlassFire client",
+  "title": "Chicken Salad Chick logo",
+  "source": "brandfetch",
+  "sourceUrl": "https://cdn.brandfetch.io/idB__xAIkL/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178926359bfumLaCV7mKspcjutc",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-22T01:43:02.951Z"
+}

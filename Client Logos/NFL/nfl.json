@@ -1,15 +1,13 @@
 {
   "name": "NFL",
   "slug": "nfl",
-  "domain": "nfl.com",
   "alt": "NFL logo — GlassFire client",
   "title": "NFL logo",
-  "source": "brandfetch",
-  "sourceUrl": "https://cdn.brandfetch.io/id8A7s3HN0/theme/dark/symbol.svg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+  "source": "edit",
   "variants": [
+    "black",
     "color",
-    "white",
-    "black"
+    "white"
   ],
   "sizes": [
     "@1x",
@@ -20,5 +18,6 @@
     "width": 150,
     "height": 50
   },
-  "addedAt": "2026-06-21T03:29:57.660Z"
+  "addedAt": "2026-06-22T01:36:54.375Z",
+  "domain": "https://www.nhl.com/"
 }

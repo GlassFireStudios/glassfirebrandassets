@@ -1,0 +1,132 @@
+{
+  "type": "carousel",
+  "name": "Homepage",
+  "slug": "homepage",
+  "logos": [
+    {
+      "name": "Apple",
+      "url": "Client Logos/Apple/apple-white.png",
+      "colorUrl": "Client Logos/Apple/apple-color.png",
+      "alt": "Apple logo — GlassFire client"
+    },
+    {
+      "name": "Chick-fil-A",
+      "url": "Client Logos/Chick-fil-A/chick-fil-a-white.png",
+      "colorUrl": "Client Logos/Chick-fil-A/chick-fil-a-color.png",
+      "alt": "Chick-fil-A logo — GlassFire client"
+    },
+    {
+      "name": "Coca-Cola",
+      "url": "Client Logos/Coca-Cola/coca-cola-white.png",
+      "colorUrl": "Client Logos/Coca-Cola/coca-cola-color.png",
+      "alt": "Coca-Cola logo"
+    },
+    {
+      "name": "Drone Racing League",
+      "url": "Client Logos/Drone Racing League/drone-racing-league-white.png",
+      "colorUrl": "Client Logos/Drone Racing League/drone-racing-league-color.png",
+      "alt": "Drone Racing League logo — GlassFire client"
+    },
+    {
+      "name": "Dunkman",
+      "url": "Client Logos/Dunkman/dunkman-white.png",
+      "colorUrl": "Client Logos/Dunkman/dunkman-color.png",
+      "alt": "Dunkman logo — GlassFire client"
+    },
+    {
+      "name": "Enhanced Games",
+      "url": "Client Logos/Enhanced Games/enhanced-games-white.png",
+      "colorUrl": "Client Logos/Enhanced Games/enhanced-games-color.png",
+      "alt": "Enhanced Games logo — GlassFire client"
+    },
+    {
+      "name": "Fondation Ronald McDonald",
+      "url": "Client Logos/Fondation Ronald McDonald/fondation-ronald-mcdonald-white.png",
+      "colorUrl": "Client Logos/Fondation Ronald McDonald/fondation-ronald-mcdonald-color.png",
+      "alt": "Fondation Ronald McDonald logo — GlassFire client"
+    },
+    {
+      "name": "Google",
+      "url": "Client Logos/Google/google-white.png",
+      "colorUrl": "Client Logos/Google/google-color.png",
+      "alt": "Google logo"
+    },
+    {
+      "name": "High Point University",
+      "url": "Client Logos/High Point University/high-point-university-white.png",
+      "colorUrl": "Client Logos/High Point University/high-point-university-color.png",
+      "alt": "High Point University logo"
+    },
+    {
+      "name": "Intuit",
+      "url": "Client Logos/Intuit/intuit-white.png",
+      "colorUrl": "Client Logos/Intuit/intuit-color.png",
+      "alt": "Intuit logo"
+    },
+    {
+      "name": "Ladder",
+      "url": "Client Logos/Ladder/ladder-white.png",
+      "colorUrl": "Client Logos/Ladder/ladder-color.png",
+      "alt": "Ladder logo — GlassFire client"
+    },
+    {
+      "name": "National Hockey League (NHL)",
+      "url": "Client Logos/National Hockey League (NHL)/national-hockey-league-nhl-white.png",
+      "colorUrl": "Client Logos/National Hockey League (NHL)/national-hockey-league-nhl-color.png",
+      "alt": "National Hockey League (NHL) logo — GlassFire client"
+    },
+    {
+      "name": "NFL",
+      "url": "Client Logos/NFL/nfl-white.png",
+      "colorUrl": "Client Logos/NFL/nfl-color.png",
+      "alt": "NFL logo"
+    },
+    {
+      "name": "Paramount+",
+      "url": "Client Logos/Paramount+/paramount-white.png",
+      "colorUrl": "Client Logos/Paramount+/paramount-color.png",
+      "alt": "Paramount+ logo"
+    },
+    {
+      "name": "Samsung",
+      "url": "Client Logos/Samsung/samsung-white.png",
+      "colorUrl": "Client Logos/Samsung/samsung-color.png",
+      "alt": "Samsung logo"
+    },
+    {
+      "name": "University of Kentucky",
+      "url": "Client Logos/University of Kentucky/university-of-kentucky-white.png",
+      "colorUrl": "Client Logos/University of Kentucky/university-of-kentucky-color.png",
+      "alt": "University of Kentucky logo — GlassFire client"
+    },
+    {
+      "name": "Volvo",
+      "url": "Client Logos/Volvo/volvo-white.png",
+      "colorUrl": "Client Logos/Volvo/volvo-color.png",
+      "alt": "Volvo logo"
+    },
+    {
+      "name": "YouTube Music",
+      "url": "Client Logos/YouTube Music/youtube-music-white.png",
+      "colorUrl": "Client Logos/YouTube Music/youtube-music-color.png",
+      "alt": "YouTube Music logo — GlassFire client"
+    }
+  ],
+  "options": {
+    "height": 44,
+    "gap": 72,
+    "duration": 63,
+    "direction": "left",
+    "hoverStyle": "none",
+    "pauseOnHover": true,
+    "background": "transparent",
+    "edgeFade": true,
+    "padding": 24,
+    "rows": 3,
+    "mirrorRows": true,
+    "rowGap": 24,
+    "variant": "white"
+  },
+  "cdnBase": "https://brandcdn.glassfire.co",
+  "updatedAt": "2026-06-22T01:28:10.904Z"
+}

@@ -2,13 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GlassFire design-system tokens (subset of colors_and_type.css) */
 :root {
   color-scheme: dark;
+  --gf-fire: #EE2750;
+  --gf-glass: #00A8E4;
+  --gf-gradient-spark: linear-gradient(110deg, #00A8E4 0%, #3C5BA9 35%, #E50981 65%, #EE2750 100%);
+  --gf-gradient-fire: linear-gradient(180deg, #EF404E 0%, #EE3157 50%, #E50981 100%);
+  --border-soft: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.32);
 }
 
 body {
-  @apply bg-ink text-zinc-100 antialiased;
+  @apply bg-black text-snow antialiased;
+  font-family: var(--font-poppins), "Poppins", system-ui, sans-serif;
 }
+
+/* GlassFire's display style is heavy, all-caps, tightly tracked. Apply it to
+   page titles so the whole portal reads on-brand. */
+main h1 {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--gf-fire);
+  color: #fff;
+}
+
+/* Dark inputs get a cyan (glass) focus — matches the DS form spec. */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--gf-glass);
+}
+
+/* Cinematic gradient text */
+.gf-text-spark {
+  background: var(--gf-gradient-spark);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gf-eyebrow {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--gf-fire);
+}
+
+/* Brand button — uppercase, tracked, sharp corners (ui_kits/website/styles.css) */
+.gf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  padding: 14px 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 220ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 120ms, opacity 220ms;
+}
+.gf-btn:active { transform: scale(0.98); }
+.gf-btn:disabled { opacity: 0.5; cursor: default; }
+.gf-btn-fire { background: var(--gf-fire); color: #fff; }
+.gf-btn-fire:hover:not(:disabled) { background: #ff335e; }
+.gf-btn-ghost { background: transparent; color: #fff; border: 1px solid var(--border-strong); }
+.gf-btn-ghost:hover { background: rgba(255, 255, 255, 0.06); }
 
 /* Checkerboard to visualize transparency in previews. */
 .checker {

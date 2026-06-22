@@ -2,6 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cdnUrl } from "@/lib/embed";
+
+const LOGO = cdnUrl("GlassFireStudios/glassfirebrandassets", "main", "Logos/Variant White/GlassFire Logo White.png");
+
+const NAV = [
+  { href: "/intake", label: "Intake" },
+  { href: "/grid", label: "Grid" },
+  { href: "/carousel", label: "Carousel" },
+  { href: "/embeds", label: "Embeds" },
+  { href: "/testimonials", label: "Testimonials" },
+  { href: "/brand", label: "Brand" },
+  { href: "/manage", label: "Manage" },
+];
 
 function cdnLabel(): { text: string; custom: boolean } {
   const base = process.env.NEXT_PUBLIC_CDN_BASE;
@@ -17,26 +30,26 @@ export default function SiteHeader() {
   const cdn = cdnLabel();
 
   return (
-    <header className="border-b border-zinc-800">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span className="inline-block h-3 w-3 rounded-full bg-gradient-to-br from-fire to-glass" />
-          GlassFire Brand Studio
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
+        <Link href="/" className="flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={LOGO} alt="GlassFire" className="h-6 w-auto" />
+          <span className="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-fog sm:inline">Brand Studio</span>
         </Link>
-        <nav className="flex items-center gap-4 text-sm text-zinc-400">
-          <Link href="/intake" className="hover:text-white">Intake</Link>
-          <Link href="/grid" className="hover:text-white">Grid</Link>
-          <Link href="/carousel" className="hover:text-white">Carousel</Link>
-          <Link href="/embeds" className="hover:text-white">Embeds</Link>
-          <Link href="/testimonials" className="hover:text-white">Testimonials</Link>
-          <Link href="/brand" className="hover:text-white">Brand</Link>
-          <Link href="/manage" className="hover:text-white">Manage</Link>
+        <nav className="flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-fog">
+          {NAV.map((n) => {
+            const active = pathname === n.href || pathname?.startsWith(n.href + "/");
+            return (
+              <Link key={n.href} href={n.href} className={`transition-colors hover:text-white ${active ? "text-white" : ""}`}>{n.label}</Link>
+            );
+          })}
           <span
             title={cdn.custom ? "Embed images served from your custom CDN (Bunny)" : "Embed images served from the default jsDelivr CDN. Set NEXT_PUBLIC_CDN_BASE to use your own domain."}
-            className={`hidden items-center gap-1.5 rounded-full border px-2 py-0.5 text-xs sm:inline-flex ${cdn.custom ? "border-glass/40 text-glass" : "border-zinc-700 text-zinc-500"}`}
+            className={`hidden items-center gap-1.5 rounded-sm border px-2 py-0.5 normal-case tracking-normal lg:inline-flex ${cdn.custom ? "border-glass/40 text-glass" : "border-white/15 text-steel"}`}
           >
-            <span className={`inline-block h-1.5 w-1.5 rounded-full ${cdn.custom ? "bg-glass" : "bg-zinc-500"}`} />
-            CDN: {cdn.text}
+            <span className={`inline-block h-1.5 w-1.5 rounded-full ${cdn.custom ? "bg-glass" : "bg-steel"}`} />
+            {cdn.text}
           </span>
         </nav>
       </div>

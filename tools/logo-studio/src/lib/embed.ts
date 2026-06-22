@@ -19,7 +19,7 @@ export interface EmbedLogo {
 function logoStyle(l: EmbedLogo, withTrim: boolean): string {
   const parts: string[] = [];
   if (l.scale && l.scale !== 1) parts.push(`height:calc(var(--gf-h) * ${l.scale})`);
-  if (withTrim && l.sideTrim) parts.push(`margin-left:-${l.sideTrim}px;margin-right:calc(var(--gf-gap) - ${l.sideTrim}px)`);
+  if (withTrim && l.sideTrim) parts.push(`margin-left:-${l.sideTrim}px;margin-right:-${l.sideTrim}px`);
   return parts.length ? ` style="${parts.join(";")}"` : "";
 }
 
@@ -86,11 +86,11 @@ export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
   const rowsHtml: string[] = [];
   for (let r = 0; r < rows; r++) {
     const rowLogos = logos.filter((_, i) => i % rows === r);
-    const imgs = [...rowLogos, ...rowLogos]
-      .map((l, i) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${i >= rowLogos.length ? ' aria-hidden="true"' : ""}${logoStyle(l, true)} />`)
+    const group = rowLogos
+      .map((l) => `      <img src="${escapeAttr(src(l, o.hoverStyle))}" alt="${escapeAttr(l.alt)}" loading="lazy" decoding="async"${logoStyle(l, true)} />`)
       .join("\n");
     const dir = o.mirrorRows && r % 2 === 1 ? (o.direction === "left" ? "right" : "left") : o.direction;
-    rowsHtml.push(`  <div class="gf-logos__row" data-dir="${dir}">\n    <div class="gf-logos__track">\n${imgs}\n    </div>\n  </div>`);
+    rowsHtml.push(`  <div class="gf-logos__row" data-dir="${dir}">\n    <div class="gf-logos__group">\n${group}\n    </div>\n    <div class="gf-logos__group" aria-hidden="true">\n${group}\n    </div>\n  </div>`);
   }
 
   const wrapperStyle = `--gf-h:${o.height}px;--gf-gap:${o.gap}px;--gf-dur:${o.duration}s;--gf-pad:${o.padding}px;--gf-rowgap:${o.rowGap ?? 24}px;background:${o.background}`;
@@ -100,15 +100,16 @@ export function carouselMarkup(logos: EmbedLogo[], o: CarouselOptions): string {
 ${rowsHtml.join("\n")}
 </div>
 <style>
-.gf-logos{overflow:hidden;width:100%;padding:var(--gf-pad) 0;box-sizing:border-box}
+.gf-logos{overflow:hidden;width:100%;max-width:100%;padding:var(--gf-pad) 0;box-sizing:border-box}
 .gf-logos[data-fade="true"]{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.gf-logos__row{display:flex;gap:var(--gf-gap);overflow:hidden}
 .gf-logos__row + .gf-logos__row{margin-top:var(--gf-rowgap)}
-.gf-logos__track{display:flex;align-items:center;width:max-content;animation:gf-marquee var(--gf-dur) linear infinite}
-.gf-logos__row[data-dir="right"] .gf-logos__track{animation-direction:reverse}
-.gf-logos[data-pause="true"]:hover .gf-logos__track{animation-play-state:paused}
-.gf-logos img{height:var(--gf-h);width:auto;flex:0 0 auto;margin-right:var(--gf-gap);object-fit:contain;display:block}
-@media (prefers-reduced-motion:reduce){.gf-logos__track{animation:none}}
-@keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gf-logos__group{flex:0 0 auto;display:flex;align-items:center;justify-content:space-around;gap:var(--gf-gap);min-width:100%;animation:gf-marquee var(--gf-dur) linear infinite}
+.gf-logos__row[data-dir="right"] .gf-logos__group{animation-direction:reverse}
+.gf-logos[data-pause="true"]:hover .gf-logos__group{animation-play-state:paused}
+.gf-logos img{height:var(--gf-h);width:auto;flex:0 0 auto;object-fit:contain;display:block}
+@media (prefers-reduced-motion:reduce){.gf-logos__group{animation:none}}
+@keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(calc(-100% - var(--gf-gap)))}}
 ${HOVER_CSS}
 </style>`;
 }

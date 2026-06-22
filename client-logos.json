@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:49:30.506Z",
+  "updatedAt": "2026-06-22T01:45:41.306Z",
   "clients": [
     {
       "name": "Apple",
@@ -49,6 +49,54 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:16:26.231Z"
+    },
+    {
+      "name": "Chicken Salad Chick",
+      "slug": "chicken-salad-chick",
+      "domain": "chickcatering.com",
+      "alt": "Chicken Salad Chick logo — GlassFire client",
+      "title": "Chicken Salad Chick logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idB__xAIkL/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178926359bfumLaCV7mKspcjutc",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:43:02.951Z"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "slug": "cvs-pharmacy",
+      "domain": "cvs-optical.com",
+      "alt": "CVS Pharmacy logo — GlassFire client",
+      "title": "CVS Pharmacy logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idfKrp-Xyn/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178807915bfumLaCV7mFHNus8LP",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:40:20.211Z"
     },
     {
       "name": "Drone Racing League",
@@ -120,6 +168,30 @@
       "addedAt": "2026-06-21T04:35:52.447Z"
     },
     {
+      "name": "FedEx",
+      "slug": "fedex",
+      "domain": "fedexcares.com",
+      "alt": "FedEx logo — GlassFire client",
+      "title": "FedEx logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idegNSKfu7/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178869169bfumLaCV7mWp8bvO95",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:41:37.214Z"
+    },
+    {
       "name": "Fondation Ronald McDonald",
       "slug": "fondation-ronald-mcdonald",
       "domain": "fondation-ronald-mcdonald.fr",
@@ -142,6 +214,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T04:29:52.117Z"
+    },
+    {
+      "name": "HP",
+      "slug": "hp",
+      "domain": "hp.com",
+      "alt": "HP logo — GlassFire client",
+      "title": "HP logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idntgPecbn/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178750197bfumLaCV7mf064M8uL",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:39:19.341Z"
     },
     {
       "name": "Ladder",
@@ -168,6 +264,54 @@
       "addedAt": "2026-06-21T03:14:39.950Z"
     },
     {
+      "name": "Lenovo",
+      "slug": "lenovo",
+      "domain": "https://www.lenovo.com/",
+      "alt": "Lenovo logo — GlassFire client",
+      "title": "Lenovo logo",
+      "source": "upload",
+      "sourceUrl": "lenovo-company-logo-image-png-701751694771312slrvtpwjhi.png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:36:06.474Z"
+    },
+    {
+      "name": "NAACP",
+      "slug": "naacp",
+      "domain": "naacp.org",
+      "alt": "NAACP logo — GlassFire client",
+      "title": "NAACP logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idnx_iqJ3r/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782179000500bfumLaCV7mLfjk67fY",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:43:39.342Z"
+    },
+    {
       "name": "National Hockey League (NHL)",
       "slug": "national-hockey-league-nhl",
       "domain": "nhl.com",
@@ -192,6 +336,101 @@
       "addedAt": "2026-06-21T03:14:19.101Z"
     },
     {
+      "name": "NCAA",
+      "slug": "ncaa",
+      "domain": "ncaa.com",
+      "alt": "NCAA logo — GlassFire client",
+      "title": "NCAA logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/iddCYAw5jG/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178831950bfumLaCV7mTx3IGmPl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:40:49.023Z"
+    },
+    {
+      "name": "NFL",
+      "slug": "nfl",
+      "alt": "NFL logo — GlassFire client",
+      "title": "NFL logo",
+      "source": "edit",
+      "variants": [
+        "black",
+        "color",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:36:54.375Z",
+      "domain": "https://www.nhl.com/"
+    },
+    {
+      "name": "Panasonic USA",
+      "slug": "panasonic-usa",
+      "domain": "panasonic.com",
+      "alt": "Panasonic USA logo — GlassFire client",
+      "title": "Panasonic USA logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idZc2Ve3u9/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178903693bfumLaCV7mYg56n4P8",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:41:53.090Z"
+    },
+    {
+      "name": "Sierra Club",
+      "slug": "sierra-club",
+      "domain": "https://www.sierraclub.org/",
+      "alt": "Sierra Club logo — GlassFire client",
+      "title": "Sierra Club logo",
+      "source": "upload",
+      "sourceUrl": "images (1).png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:38:58.957Z"
+    },
+    {
       "name": "University of Kentucky",
       "slug": "university-of-kentucky",
       "domain": "bluegrasssmiles.com",
@@ -214,6 +453,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:34:35.178Z"
+    },
+    {
+      "name": "Walmart",
+      "slug": "walmart",
+      "domain": "walmart.com",
+      "alt": "Walmart logo — GlassFire client",
+      "title": "Walmart logo",
+      "source": "upload",
+      "sourceUrl": "b82d9ceb-fe55-4f6f-ae62-383f54904a2e.png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:45:38.814Z"
     },
     {
       "name": "YouTube Music",

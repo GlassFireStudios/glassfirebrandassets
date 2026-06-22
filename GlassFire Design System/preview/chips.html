@@ -1,0 +1,24 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Chips & Badges" subtitle="Ghost / solid / soft, all-caps tracked" viewport="700x110" -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; background: #000; color: #fff; font-family: var(--font-sans); overflow: hidden; }
+  .stage { padding: 28px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .chip { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 7px 14px; border-radius: 999px; }
+  .ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.24); }
+  .solid-fire { background: #EE2750; color: #fff; }
+  .solid-glass { background: #00A8E4; color: #fff; }
+  .soft-glass { background: rgba(0,168,228,0.16); color: #00A8E4; }
+  .soft-fire { background: rgba(238,39,80,0.16); color: #EE2750; }
+  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 999px; margin-right: 8px; vertical-align: middle; }
+</style></head>
+<body><div class="stage">
+  <span class="chip ghost">Cinematography</span>
+  <span class="chip solid-fire">On Air</span>
+  <span class="chip solid-glass">Live</span>
+  <span class="chip soft-glass"><span class="dot" style="background:#00A8E4"></span>Streaming</span>
+  <span class="chip soft-fire"><span class="dot" style="background:#EE2750"></span>In Production</span>
+  <span class="chip ghost">Post</span>
+  <span class="chip ghost">Color Grade</span>
+</div></body></html>

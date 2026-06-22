@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Form Inputs" subtitle="Dark inputs with cyan focus" viewport="700x220" -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; background: #000; color: #fff; font-family: var(--font-sans); overflow: hidden; }
+  .stage { padding: 24px 32px; box-sizing: border-box; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: flex; flex-direction: column; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #B8B8BE; }
+  input, textarea, select {
+    font-family: var(--font-sans); font-size: 14px; color: #fff;
+    background: #0A0A0C; border: 1px solid #2A2A30; border-radius: 4px;
+    padding: 12px 14px; outline: none; transition: border-color 150ms;
+  }
+  input:focus, textarea:focus, select:focus { border-color: #00A8E4; box-shadow: 0 0 0 2px rgba(0,168,228,0.25); }
+  input::placeholder { color: #6E6E76; }
+  .row { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; font-size: 11px; color: #B8B8BE; }
+  .check { width: 16px; height: 16px; border: 1px solid #2A2A30; border-radius: 3px; background: #0A0A0C; }
+  .check.on { background: #EE2750; border-color: #EE2750; position: relative; }
+  .check.on::after { content: ""; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: 2px solid #fff; border-top: 0; border-left: 0; transform: rotate(45deg); }
+</style></head>
+<body><div class="stage">
+  <label>Name<input value="Nate Glass"/></label>
+  <label>Company<input placeholder="Studio / brand"/></label>
+  <label style="grid-column: 1 / -1">Project brief<textarea rows="2" placeholder="What are you making?"></textarea></label>
+  <div class="row"><div class="check on"></div> Send me a calendar invite</div>
+</div></body></html>

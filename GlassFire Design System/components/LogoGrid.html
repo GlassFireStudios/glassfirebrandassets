@@ -1,0 +1,52 @@
+<!-- @dsCard group="Components" name="Logo Grid" subtitle="Trusted-by client wall — live & tweakable" viewport="1120x900" -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <style>
+    html, body { margin: 0; background: var(--gf-black); }
+    .stack { display: flex; flex-direction: column; gap: 2px; background: var(--gf-iron); }
+    .label {
+      font-family: var(--font-sans); font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.16em; font-size: 11px; color: var(--gf-steel);
+      padding: 14px 20px 0; background: var(--gf-black);
+    }
+    .mount { background: var(--gf-black); }
+    .mount.light { background: var(--gf-snow); }
+  </style>
+</head>
+<body>
+  <div class="stack">
+    <div class="mount"><div class="label">Default · black · auto columns</div><div id="a"></div></div>
+    <div class="mount"><div class="label">Staggered · glass accent · 5 cols</div><div id="b"></div></div>
+    <div class="mount light"><div class="label">Light background · inverted logos</div><div id="c"></div></div>
+  </div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script>
+    (function () {
+      var ns = window.GlassFireDesignSystem_019e1f || {};
+      var LogoGrid = ns.LogoGrid;
+      var h = React.createElement;
+      if (!LogoGrid) {
+        document.body.insertAdjacentHTML("afterbegin",
+          '<p style="color:#EE2750;font-family:sans-serif;padding:20px">LogoGrid not found on namespace — bundle may still be compiling.</p>');
+        return;
+      }
+      ReactDOM.createRoot(document.getElementById("a")).render(
+        h(LogoGrid, { basePath: "../assets/clients" })
+      );
+      ReactDOM.createRoot(document.getElementById("b")).render(
+        h(LogoGrid, { basePath: "../assets/clients", title: "TRUSTED BY", columns: 5, stagger: true, accent: "glass" })
+      );
+      ReactDOM.createRoot(document.getElementById("c")).render(
+        h(LogoGrid, { basePath: "../assets/clients", background: "white", variant: "black", accent: "none" })
+      );
+    })();
+  </script>
+</body>
+</html>

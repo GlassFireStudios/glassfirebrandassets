@@ -1,0 +1,22 @@
+{
+  "generator": "glassfire-logo-studio",
+  "note": "Shared client roster. The logo-studio app and the design-system LogoGrid component both read this file so they never drift. Each client points at its monochrome-white master in assets/clients/; add black/color variants as they are produced.",
+  "updatedAt": "2026-06-20T00:00:00.000Z",
+  "box": { "width": 220, "height": 80 },
+  "clients": [
+    { "name": "Chick-fil-A",              "slug": "chickfila",        "file": "ChickFilA.png",              "variants": { "white": "assets/clients/ChickFilA.png" } },
+    { "name": "Coca-Cola",                "slug": "coca-cola",        "file": "Coca Cola.png",              "variants": { "white": "assets/clients/Coca Cola.png" } },
+    { "name": "DRL",                      "slug": "drl",              "file": "DRL.png",                    "variants": { "white": "assets/clients/DRL.png" } },
+    { "name": "Enhanced Games",           "slug": "enhanced-games",   "file": "Enhanced Games.png",         "variants": { "white": "assets/clients/Enhanced Games.png" } },
+    { "name": "Google",                   "slug": "google",           "file": "Google.png",                 "variants": { "white": "assets/clients/Google.png" } },
+    { "name": "High Point University",    "slug": "high-point",       "file": "High Point University.png",  "variants": { "white": "assets/clients/High Point University.png" } },
+    { "name": "Intuit",                   "slug": "intuit",           "file": "Intuit.png",                 "variants": { "white": "assets/clients/Intuit.png" } },
+    { "name": "NFL",                      "slug": "nfl",              "file": "NFL.png",                    "variants": { "white": "assets/clients/NFL.png" } },
+    { "name": "Paramount",                "slug": "paramount",        "file": "Paramount.png",              "variants": { "white": "assets/clients/Paramount.png" } },
+    { "name": "Ronald McDonald House",    "slug": "rmh",              "file": "Ronald McDonald House.png",  "variants": { "white": "assets/clients/Ronald McDonald House.png" } },
+    { "name": "Samsung",                  "slug": "samsung",          "file": "Samsung.png",                "variants": { "white": "assets/clients/Samsung.png" } },
+    { "name": "University of Kentucky",   "slug": "kentucky",         "file": "University of Kentucky.png", "variants": { "white": "assets/clients/University of Kentucky.png" } },
+    { "name": "Volvo",                    "slug": "volvo",            "file": "Volvo.png",                  "variants": { "white": "assets/clients/Volvo.png" } },
+    { "name": "YouTube Music",            "slug": "youtube-music",    "file": "YouTube Music.png",          "variants": { "white": "assets/clients/YouTube Music.png" } }
+  ]
+}

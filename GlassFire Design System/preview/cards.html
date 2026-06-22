@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Cards" subtitle="Glass + fire, each plain and with gradient outline" viewport="700x280" -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; background: #000; color: #fff; font-family: var(--font-sans); overflow: hidden; }
+  .stage { padding: 20px 24px; box-sizing: border-box; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .card {
+    background: #1A1A1F; border-radius: 8px; padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 7px; position: relative;
+  }
+  /* plain (no gradient outline) — subtle hairline only */
+  .card.plain { border: 1px solid rgba(255,255,255,0.08); }
+  /* gradient outline via masked border */
+  .card.border { border: 0; }
+  .card.border::before {
+    content: ""; position: absolute; inset: 0; border-radius: 8px; padding: 1.5px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+  .card.border.glass::before { background: var(--gf-gradient-glass); }
+  .card.border.fire::before  { background: var(--gf-gradient-fire); }
+
+  .eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+  .glass .eyebrow { color: #00A8E4; }
+  .fire .eyebrow  { color: #EE2750; }
+  .title { font-weight: 800; text-transform: uppercase; font-size: 17px; letter-spacing: -0.005em; line-height: 1; }
+  .body { font-size: 11px; line-height: 1.5; color: #B8B8BE; }
+  .meta { margin-top: auto; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #6E6E76; }
+</style></head>
+<body><div class="stage">
+  <div class="card plain glass">
+    <div class="eyebrow">CASE STUDY</div>
+    <div class="title">Volvo Trucks</div>
+    <div class="body">Live streaming, virtual engagement, and event AV across three years of broadcasts.</div>
+    <div class="meta">Glass · No border</div>
+  </div>
+
+  <div class="card border glass">
+    <div class="eyebrow">CASE STUDY</div>
+    <div class="title">Walton Family</div>
+    <div class="body">On-location documentary film and event capture for the Heartland Summit.</div>
+    <div class="meta">Glass · Gradient border</div>
+  </div>
+
+  <div class="card plain fire">
+    <div class="eyebrow">FEATURED</div>
+    <div class="title">INEOS Grenadier</div>
+    <div class="body">Brand storytelling and automotive cinematography. Hangar to coastline in a day.</div>
+    <div class="meta">Fire · No border</div>
+  </div>
+
+  <div class="card border fire">
+    <div class="eyebrow">FEATURED</div>
+    <div class="title">Ladder Cares</div>
+    <div class="body">High-octane commercial production with practical effects and creative direction.</div>
+    <div class="meta">Fire · Gradient border</div>
+  </div>
+</div></body></html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Corner Radii" subtitle="Sharp. 0 / 2 / 4 / 8 / 14 / pill" viewport="700x160" -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; background: #000; color: #fff; font-family: var(--font-sans); overflow: hidden; }
+  .stage { padding: 24px 32px; box-sizing: border-box; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; align-items: center; }
+  .swatch { aspect-ratio: 1.4 / 1; background: linear-gradient(135deg, #1A1A1F 0%, #2A2A30 100%); border: 1px solid #2A2A30; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: #B8B8BE; }
+  .lbl { text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; color: #B8B8BE; }
+  .item { display: flex; flex-direction: column; }
+</style></head>
+<body><div class="stage">
+  <div class="item"><div class="swatch" style="border-radius:0">0</div><div class="lbl">None</div></div>
+  <div class="item"><div class="swatch" style="border-radius:2px">2</div><div class="lbl">XS</div></div>
+  <div class="item"><div class="swatch" style="border-radius:4px">4</div><div class="lbl">SM</div></div>
+  <div class="item"><div class="swatch" style="border-radius:8px">8</div><div class="lbl">MD</div></div>
+  <div class="item"><div class="swatch" style="border-radius:14px">14</div><div class="lbl">LG</div></div>
+  <div class="item"><div class="swatch" style="border-radius:999px">∞</div><div class="lbl">Pill</div></div>
+</div></body></html>

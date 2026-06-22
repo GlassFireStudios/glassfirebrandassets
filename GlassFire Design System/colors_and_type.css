@@ -1,0 +1,240 @@
+/* ─────────────────────────────────────────────────────────────
+   GlassFire — Colors & Type
+   The clarity of glass + the spark of fire.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── Webfonts ─────────────────────────────────────────────── */
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 100; src: url("fonts/Poppins-Thin.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 100; src: url("fonts/Poppins-ThinItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 200; src: url("fonts/Poppins-ExtraLight.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 200; src: url("fonts/Poppins-ExtraLightItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 300; src: url("fonts/Poppins-Light.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 300; src: url("fonts/Poppins-LightItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; src: url("fonts/Poppins-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 400; src: url("fonts/Poppins-Italic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; src: url("fonts/Poppins-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 500; src: url("fonts/Poppins-MediumItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; src: url("fonts/Poppins-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 600; src: url("fonts/Poppins-SemiBoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; src: url("fonts/Poppins-Bold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 700; src: url("fonts/Poppins-BoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 800; src: url("fonts/Poppins-ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 800; src: url("fonts/Poppins-ExtraBoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 900; src: url("fonts/Poppins-Black.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 900; src: url("fonts/Poppins-BlackItalic.ttf") format("truetype"); }
+
+:root {
+  /* ── Brand colors ───────────────────────────────────────── */
+  --gf-fire:        #EE2750;   /* primary brand — magenta-red */
+  --gf-fire-deep:   #E50981;   /* gradient mid                */
+  --gf-fire-warm:   #EF404E;   /* gradient top                */
+  --gf-glass:       #00A8E4;   /* primary brand — cyan        */
+  --gf-glass-deep:  #3C5BA9;   /* gradient mid                */
+
+  /* Signature brand gradients (lifted from the logo) */
+  --gf-gradient-fire:  linear-gradient(180deg, #EF404E 0%, #EE3157 50%, #E50981 100%); /* @kind color */
+  --gf-gradient-glass: linear-gradient(180deg, #00A8E4 0%, #178ACD 55%, #3C5BA9 100%); /* @kind color */
+  --gf-gradient-spark: linear-gradient(110deg, #00A8E4 0%, #3C5BA9 35%, #E50981 65%, #EE2750 100%); /* @kind color */
+
+  /* ── Neutrals — high-contrast black/white system ────────── */
+  --gf-black:       #000000;   /* deck + hero backgrounds      */
+  --gf-ink:         #0A0A0C;   /* near-black surface           */
+  --gf-graphite:    #1A1A1F;   /* card on black                */
+  --gf-iron:        #2A2A30;   /* dividers on black            */
+  --gf-steel:       #6E6E76;   /* secondary on black           */
+  --gf-fog:         #B8B8BE;   /* tertiary text                */
+  --gf-mist:        #E6E6E8;   /* hairlines / chip bg          */
+  --gf-paper:       #F5F5F2;   /* warm off-white surface       */
+  --gf-snow:        #FFFFFF;
+
+  /* ── Semantic foreground ───────────────────────────────── */
+  --fg-1: var(--gf-snow);                 /* primary on dark */
+  --fg-2: var(--gf-fog);                  /* secondary on dark */
+  --fg-3: var(--gf-steel);                /* tertiary on dark */
+  --fg-1-on-light: var(--gf-ink);
+  --fg-2-on-light: #4A4A52;
+  --fg-3-on-light: #8A8A90;
+  --fg-accent:    var(--gf-fire);
+  --fg-accent-2:  var(--gf-glass);
+
+  /* ── Semantic background ───────────────────────────────── */
+  --bg-1: var(--gf-black);                /* default deck/page */
+  --bg-2: var(--gf-ink);
+  --bg-3: var(--gf-graphite);
+  --bg-1-light: var(--gf-snow);
+  --bg-2-light: var(--gf-paper);
+
+  /* ── Borders & lines ───────────────────────────────────── */
+  --border-faint:   rgba(255,255,255,0.08);
+  --border-soft:    rgba(255,255,255,0.16);
+  --border-strong:  rgba(255,255,255,0.32);
+  --border-faint-on-light: rgba(0,0,0,0.08);
+  --border-soft-on-light:  rgba(0,0,0,0.14);
+
+  /* ── Status (used sparingly) ──────────────────────────── */
+  --status-success: #2FBF71;
+  --status-warning: #F2B33D;
+  --status-danger:  var(--gf-fire);
+  --status-info:    var(--gf-glass);
+
+  /* ── Radii ─────────────────────────────────────────────── */
+  --r-none: 0; /* @kind radius */
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   14px;
+  --r-xl:   22px;
+  --r-pill: 999px;
+
+  /* ── Spacing scale (4-pt) ──────────────────────────────── */
+  --sp-0: 0; /* @kind spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* ── Shadow / elevation ────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.30);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.32);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.45);
+  --shadow-spark: 0 0 0 1px rgba(238,39,80,0.4), 0 12px 40px rgba(238,39,80,0.35);
+  --shadow-glass: 0 0 0 1px rgba(0,168,228,0.35), 0 12px 40px rgba(0,168,228,0.30);
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1); /* @kind other */
+  --ease-in:     cubic-bezier(0.6, 0, 0.8, 0.4); /* @kind other */
+  --ease-cinema: cubic-bezier(0.65, 0.05, 0.36, 1); /* @kind other */
+  --dur-1: 120ms; /* @kind other */
+  --dur-2: 220ms; /* @kind other */
+  --dur-3: 360ms; /* @kind other */
+  --dur-4: 600ms; /* @kind other */
+
+  /* ── Type ──────────────────────────────────────────────── */
+  --font-sans: "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (base 16px) */
+  --t-2xs: 11px;
+  --t-xs:  12px;
+  --t-sm:  14px;
+  --t-md:  16px;
+  --t-lg:  18px;
+  --t-xl:  22px;
+  --t-2xl: 28px;
+  --t-3xl: 36px;
+  --t-4xl: 48px;
+  --t-5xl: 64px;
+  --t-6xl: 88px;
+  --t-7xl: 120px;
+  --t-8xl: 160px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Semantic typography
+   GlassFire's display style is HEAVY (800/900), ALL-CAPS,
+   tightly-tracked. Body is Poppins Regular at comfortable size.
+   ───────────────────────────────────────────────────────────── */
+
+.gf-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+.gf-h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(48px, 6vw, var(--t-6xl));
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+}
+
+.gf-h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(34px, 4vw, var(--t-4xl));
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+}
+
+.gf-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--t-2xl);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.gf-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--t-xs);
+  letter-spacing: 0.18em;
+  color: var(--fg-accent);
+}
+
+.gf-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--t-xl);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+.gf-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--t-md);
+  line-height: 1.55;
+}
+
+.gf-small {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+.gf-caption {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--t-2xs);
+  letter-spacing: 0.16em;
+  color: var(--fg-3);
+}
+
+.gf-mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0;
+}
+
+/* Cinematic gradient text */
+.gf-text-fire   { background: var(--gf-gradient-fire);  -webkit-background-clip: text; background-clip: text; color: transparent; }
+.gf-text-glass  { background: var(--gf-gradient-glass); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.gf-text-spark  { background: var(--gf-gradient-spark); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Base reset for embedded specimens */
+.gf-root {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

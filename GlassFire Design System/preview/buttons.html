@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Buttons" subtitle="Fire / Glass / Ghost / Text, all-caps labels" viewport="700x130" -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; background: #000; color: #fff; font-family: var(--font-sans); overflow: hidden; }
+  .stage { padding: 28px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    font-family: var(--font-sans); font-weight: 700; text-transform: uppercase;
+    font-size: 12px; letter-spacing: 0.14em; padding: 14px 22px; border-radius: 4px;
+    border: none; cursor: pointer; transition: transform 120ms var(--ease-out), background 200ms;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn:active { transform: scale(0.98); }
+  .fire { background: #EE2750; color: #fff; }
+  .fire:hover { background: #FF335E; }
+  .glass { background: #00A8E4; color: #fff; }
+  .ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.32); }
+  .ghost:hover { background: rgba(255,255,255,0.06); }
+  .text-btn { background: transparent; color: #fff; padding: 14px 8px; }
+  .text-btn:hover { color: #EE2750; }
+  .arrow { width: 14px; height: 14px; }
+</style></head>
+<body><div class="stage">
+  <button class="btn fire">LET'S TALK!</button>
+  <button class="btn glass">View Reel</button>
+  <button class="btn ghost">Our Services</button>
+  <button class="btn text-btn">Read case study
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </button>
+</div></body></html>

@@ -1,0 +1,61 @@
+/* GlassFire website kit — local styles */
+:root { color-scheme: dark; }
+html, body { margin: 0; padding: 0; background: var(--gf-black); color: var(--fg-1); font-family: var(--font-sans); }
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* Buttons */
+.gf-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-sans); font-weight: 700; text-transform: uppercase;
+  font-size: 12px; letter-spacing: 0.16em; padding: 16px 26px; border-radius: 4px;
+  border: none; cursor: pointer;
+  transition: background var(--dur-2) var(--ease-out), transform var(--dur-1) var(--ease-out), color var(--dur-2);
+}
+.gf-btn:active { transform: scale(0.98); }
+.gf-btn-fire   { background: var(--gf-fire); color: #fff; }
+.gf-btn-fire:hover  { background: #FF335E; }
+.gf-btn-glass  { background: var(--gf-glass); color: #fff; }
+.gf-btn-glass:hover { background: #2DBBEC; }
+.gf-btn-ghost  { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.32); }
+.gf-btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.5); }
+.gf-btn-text   { background: transparent; color: #fff; padding: 16px 0; }
+.gf-btn-text:hover { color: var(--gf-fire); }
+
+/* Section helpers */
+.section { padding: 96px 64px; }
+.section-tight { padding: 64px; }
+.container { max-width: 1440px; margin: 0 auto; }
+
+/* Eyebrow */
+.eyebrow {
+  font-weight: 600; text-transform: uppercase; font-size: 12px;
+  letter-spacing: 0.20em; color: var(--gf-fire);
+}
+.eyebrow.glass { color: var(--gf-glass); }
+.eyebrow.muted { color: var(--gf-fog); }
+
+/* Hairline divider */
+.rule { height: 1px; background: var(--border-faint); width: 100%; }
+
+/* Marquee */
+.marquee { overflow: hidden; width: 100%; }
+.marquee-track { display: flex; gap: 64px; width: max-content; animation: marquee 32s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-item {
+  font-weight: 800; text-transform: uppercase; font-size: 88px; line-height: 1;
+  letter-spacing: -0.02em; white-space: nowrap;
+}
+.marquee-star {
+  display: inline-flex; align-items: center;
+  color: var(--gf-fire);
+  margin: 0 18px;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 64px 24px; }
+  .section-tight { padding: 40px 24px; }
+}

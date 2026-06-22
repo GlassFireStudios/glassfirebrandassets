@@ -1,0 +1,459 @@
+<!doctype html>
+<!-- @dsCard group="Slides" name="Slide — Cover" subtitle="Capabilities deck — stacked gradient title" viewport="1280x720" -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GlassFire — Capabilities</title>
+  <link rel="icon" href="../assets/icon-color.svg">
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <script src="deck-stage.js"></script>
+  <script src="image-slot.js"></script>
+
+  <script type="application/json" id="speaker-notes">
+[
+  "Cover slide — set the room. Crafting visual experiences that inspire. Full-service production. The brand mark stays minimal and the type does the work.",
+  "Our manifesto: GlassFire is the balance of clarity and spark. The technical and the human, the clean and the raw, the frame and the flame.",
+  "Meet the team — six humans, one craft. Pronouns shown to model how we work and write about ourselves.",
+  "Trusted by — the marquee shows the partners. We work with global brands and intimate documentaries with the same approach.",
+  "Three core services — we open every services conversation here, then go deeper on the one that's relevant.",
+  "Cinematic video production. Story-first, pitch-to-post. Used as a section opener.",
+  "Live & event production. High-production-value broadcasts with AV, lighting, showcalling, and remote connectivity.",
+  "Post production & editing. Where we elevate a project, not just finish it.",
+  "Case study spread — pulled together from Volvo, Walton, Replacements, Ineos, Ladder. We rotate which one we lead with depending on audience.",
+  "Closer. The closing slide mirrors the cover. Big LET'S TALK!, contact, three city tags."
+]
+  </script>
+
+  <style>
+    deck-stage {
+      --slide-bg: #000;
+      --slide-fg: #fff;
+      font-family: var(--font-sans);
+    }
+    deck-stage section { color: #fff; background: #000; }
+
+    .slide-pad { padding: 80px 96px; box-sizing: border-box; height: 100%; width: 100%; }
+    .slide-pad-tight { padding: 64px 80px; box-sizing: border-box; height: 100%; width: 100%; }
+
+    .gf-logo-wm { position: absolute; bottom: 48px; left: 96px; height: 44px; width: auto; opacity: 0.92; }
+    .gf-logo-tr { position: absolute; top: 48px; right: 96px; height: 36px; width: auto; opacity: 0.92; }
+    .gf-page-num {
+      position: absolute; top: 48px; left: 96px;
+      font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.12em;
+      color: #6E6E76;
+    }
+
+    .display {
+      font-weight: 800; text-transform: uppercase;
+      font-size: 168px; line-height: 0.92; letter-spacing: -0.025em;
+      margin: 0;
+    }
+    .display-md {
+      font-weight: 800; text-transform: uppercase;
+      font-size: 120px; line-height: 0.92; letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .eyebrow {
+      font-weight: 600; text-transform: uppercase; font-size: 22px;
+      letter-spacing: 0.22em; color: #EE2750;
+    }
+    .eyebrow.glass { color: #00A8E4; }
+    .eyebrow.muted { color: #6E6E76; }
+    .lead { font-size: 28px; line-height: 1.4; color: #E6E6E8; max-width: 1080px; font-weight: 400; }
+    .body { font-size: 22px; line-height: 1.55; color: #B8B8BE; max-width: 880px; }
+
+    /* Cover */
+    .cover {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100%;
+    }
+    .cover-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 64px 96px;
+    }
+    .cover-top img { height: 56px; width: auto; }
+    .cover-center {
+      padding: 0 96px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .cover-bottom {
+      padding: 0 0 64px 96px; padding-right: 96px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      font-family: var(--font-mono); font-size: 16px; color: #6E6E76; letter-spacing: 0.1em;
+    }
+
+    /* Manifesto */
+    .manifesto-grid {
+      display: grid; grid-template-columns: 5fr 7fr; gap: 80px; height: 100%;
+      align-items: center;
+    }
+    .manifesto-grid h2 {
+      margin: 0; font-weight: 800; text-transform: uppercase;
+      font-size: 96px; line-height: 0.94; letter-spacing: -0.02em;
+    }
+    .manifesto-grid p { font-size: 26px; line-height: 1.5; color: #E6E6E8; }
+    .pair-row {
+      display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px;
+    }
+    .pair-row span {
+      font-weight: 700; text-transform: uppercase; font-size: 18px; letter-spacing: 0.22em;
+      padding: 12px 24px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* Team */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 56px;
+    }
+    .team-card {
+      background: #0A0A0C; border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; overflow: hidden;
+    }
+    .team-photo { aspect-ratio: 4 / 5; background: #1A1A1F; }
+    .team-photo image-slot { width: 100%; height: 100%; }
+    .team-meta { padding: 22px 24px; }
+    .team-meta h3 {
+      margin: 0; font-weight: 800; text-transform: uppercase;
+      font-size: 26px; letter-spacing: -0.005em;
+    }
+    .team-meta .pronouns { font-size: 14px; color: #6E6E76; margin-left: 8px; font-weight: 500; }
+    .team-meta .role {
+      margin-top: 8px; font-size: 14px; color: #B8B8BE;
+      letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    }
+
+    /* Trusted by */
+    .trusted-logos {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 56px;
+      margin-top: 64px;
+    }
+    .logo-tile {
+      height: 120px; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+      background: #0A0A0C;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 22px; letter-spacing: 0.18em; color: #B8B8BE;
+    }
+
+    /* Services grid */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+      margin-top: 64px;
+    }
+    .service-tile {
+      background: #0A0A0C; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 40px 36px;
+      display: flex; flex-direction: column; gap: 18px; min-height: 480px;
+    }
+    .service-tile .num {
+      font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.12em;
+    }
+    .service-tile h3 {
+      margin: 0; font-weight: 800; text-transform: uppercase;
+      font-size: 56px; line-height: 0.95; letter-spacing: -0.01em;
+    }
+    .service-tile p { margin: 0; color: #B8B8BE; font-size: 18px; line-height: 1.55; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .tag-row span {
+      font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);
+      color: #E6E6E8;
+    }
+
+    /* Service detail */
+    .service-detail {
+      display: grid; grid-template-columns: 5fr 7fr; gap: 0;
+      height: 100%;
+    }
+    .service-detail-left {
+      padding: 96px; display: flex; flex-direction: column; gap: 32px;
+      justify-content: center; background: #000;
+    }
+    .service-detail-left h2 {
+      margin: 0; font-weight: 800; text-transform: uppercase;
+      font-size: 96px; line-height: 0.92; letter-spacing: -0.02em;
+    }
+    .service-detail-right {
+      background: #0A0A0C; padding: 96px 80px;
+      display: flex; flex-direction: column; justify-content: center; gap: 32px;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+    .service-detail-right .body { color: #E6E6E8; font-size: 24px; line-height: 1.55; max-width: none; }
+    .capabilities-list { display: flex; flex-wrap: wrap; gap: 12px; }
+    .capabilities-list span {
+      font-size: 18px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 999px;
+      background: rgba(0,168,228,0.14); color: #00A8E4; border: 1px solid rgba(0,168,228,0.3);
+    }
+    .capabilities-list.fire span {
+      background: rgba(238,39,80,0.14); color: #EE2750; border: 1px solid rgba(238,39,80,0.3);
+    }
+
+    /* Case study */
+    .case-grid {
+      display: grid; grid-template-columns: 6fr 6fr; gap: 56px; height: 100%; align-items: center;
+    }
+    .case-image {
+      aspect-ratio: 4 / 3; background: #1A1A1F; border-radius: 8px; overflow: hidden;
+      position: relative;
+    }
+    .case-image image-slot { width: 100%; height: 100%; }
+    .case-image .badge {
+      position: absolute; top: 20px; left: 20px;
+      padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      background: rgba(238,39,80,0.18); color: #EE2750; backdrop-filter: blur(8px);
+    }
+    .case-text h2 {
+      margin: 0; font-weight: 800; text-transform: uppercase;
+      font-size: 88px; line-height: 0.92; letter-spacing: -0.02em;
+    }
+    .case-text .tags {
+      margin-top: 12px; font-size: 16px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #00A8E4;
+    }
+    .case-text p { font-size: 22px; line-height: 1.55; color: #E6E6E8; margin: 28px 0 0; max-width: 720px; }
+
+    /* Closer */
+    .closer {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 36px; height: 100%; text-align: center;
+      background: radial-gradient(ellipse at 50% 50%, rgba(238,39,80,0.22) 0%, transparent 60%), #000;
+      position: relative;
+    }
+    .closer h1 {
+      margin: 0; font-weight: 900; text-transform: uppercase;
+      font-size: 280px; line-height: 0.88; letter-spacing: -0.03em;
+    }
+    .closer .contact {
+      display: flex; gap: 40px; font-size: 22px; font-weight: 500; letter-spacing: 0.06em;
+      color: #E6E6E8;
+    }
+    .closer .cities {
+      font-size: 18px; letter-spacing: 0.32em; text-transform: uppercase; color: #6E6E76;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+<deck-stage>
+
+  <!-- ====== 1 / COVER ====== -->
+  <section data-screen-label="01 Cover">
+    <div class="cover">
+      <div class="cover-top">
+        <img src="../assets/logos/Logo Color.png" alt="GlassFire"/>
+        <div class="eyebrow muted">Full-Service Production · 2026</div>
+      </div>
+      <div class="cover-center">
+        <h1 class="display">
+          CRAFTING<br/>
+          VISUAL<br/>
+          EXPERIENCES<br/>
+          <span class="gf-text-spark">THAT INSPIRE</span>
+        </h1>
+      </div>
+      <div class="cover-bottom">
+        <span>glassfire.co</span>
+        <span>Raleigh · Lexington · Bentonville</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 2 / MANIFESTO ====== -->
+  <section data-screen-label="02 Manifesto">
+    <div class="slide-pad">
+      <img class="gf-logo-tr" src="../assets/logos/Icon Color.png" alt=""/>
+      <div class="gf-page-num">02 / 10</div>
+      <div class="manifesto-grid">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 24px;">Clarity Meets Spark</div>
+          <h2>The technical<br/>and the human.</h2>
+        </div>
+        <div>
+          <p style="margin: 0;">Our name reflects the balance at the core of our work: the clarity and precision of <em style="color:#00A8E4; font-style: normal; font-weight: 600;">glass</em> combined with the raw spark and emotion of <em style="color:#EE2750; font-style: normal; font-weight: 600;">fire</em>.</p>
+          <p>We hold both sides of the craft — the clean and the raw, the frame and the flame.</p>
+          <div class="pair-row">
+            <span>Clarity</span><span>Spark</span><span>Frame</span><span>Flame</span><span>Clean</span><span>Raw</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 3 / TEAM ====== -->
+  <section data-screen-label="03 Team">
+    <div class="slide-pad">
+      <img class="gf-logo-tr" src="../assets/logos/Icon Color.png" alt=""/>
+      <div class="gf-page-num">03 / 10</div>
+      <div class="eyebrow glass">Our Team</div>
+      <h2 class="display-md" style="margin-top: 24px;">Six humans.<br/>One craft.</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-nate" placeholder="Nate Glass portrait"></image-slot></div>
+          <div class="team-meta"><h3>Nate Glass<span class="pronouns">(he/him)</span></h3><div class="role">Founder · Producer · Cinematographer</div></div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-laura" placeholder="Laura MacFie Glass portrait"></image-slot></div>
+          <div class="team-meta"><h3>Laura MacFie Glass<span class="pronouns">(she/her)</span></h3><div class="role">Executive Producer</div></div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-zaq" placeholder="Zaq Brewer portrait"></image-slot></div>
+          <div class="team-meta"><h3>Zaq Brewer<span class="pronouns">(they/she)</span></h3><div class="role">Creative Director</div></div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-hannah" placeholder="Hannah Keener portrait"></image-slot></div>
+          <div class="team-meta"><h3>Hannah Keener<span class="pronouns">(she/her)</span></h3><div class="role">Senior Producer</div></div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-brinson" placeholder="Brinson Langley portrait"></image-slot></div>
+          <div class="team-meta"><h3>Brinson Langley<span class="pronouns">(he/him)</span></h3><div class="role">Technical Producer</div></div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><image-slot id="slide-team-dan" placeholder="Dan MacFie portrait"></image-slot></div>
+          <div class="team-meta"><h3>Dan MacFie<span class="pronouns">(he/him)</span></h3><div class="role">Production Technician</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 4 / TRUSTED BY ====== -->
+  <section data-screen-label="04 Trusted By">
+    <div class="slide-pad">
+      <img class="gf-logo-tr" src="../assets/logos/Icon Color.png" alt=""/>
+      <div class="gf-page-num">04 / 10</div>
+      <div class="eyebrow">Trusted By</div>
+      <h2 class="display-md" style="margin-top: 24px;">Brands that<br/>need it right.</h2>
+      <div class="trusted-logos">
+        <div class="logo-tile">VOLVO</div>
+        <div class="logo-tile">WALTON FAMILY</div>
+        <div class="logo-tile">INEOS</div>
+        <div class="logo-tile">REPLACEMENTS</div>
+        <div class="logo-tile">LADDER</div>
+        <div class="logo-tile">CISCO</div>
+        <div class="logo-tile">TFCU</div>
+        <div class="logo-tile">CARGILL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 5 / CORE SERVICES ====== -->
+  <section data-screen-label="05 Core Services">
+    <div class="slide-pad">
+      <img class="gf-logo-tr" src="../assets/logos/Icon Color.png" alt=""/>
+      <div class="gf-page-num">05 / 10</div>
+      <div class="eyebrow">Core Services</div>
+      <h2 class="display-md" style="margin-top: 24px;">From pitch<br/>to post.</h2>
+      <div class="services-grid">
+        <div class="service-tile">
+          <div class="num" style="color:#EE2750">01 / 03</div>
+          <h3>Cinematic<br/>Video<br/>Production</h3>
+          <p>Story-first commercials, branded films, and original campaigns — handled end-to-end.</p>
+          <div class="tag-row"><span>Commercial</span><span>Interview</span><span>XR Volume</span><span>B-Roll</span><span>Music Video</span></div>
+        </div>
+        <div class="service-tile">
+          <div class="num" style="color:#00A8E4">02 / 03</div>
+          <h3>Live Stream<br/>& Event<br/>Production</h3>
+          <p>High-production-value broadcasts with expert AV, showcalling, and remote connectivity.</p>
+          <div class="tag-row"><span>Conference</span><span>Concert</span><span>News Studio</span><span>Sports</span><span>Product Launch</span></div>
+        </div>
+        <div class="service-tile">
+          <div class="num" style="color:#EE2750">03 / 03</div>
+          <h3>Post<br/>Production<br/>& Editing</h3>
+          <p>Editing, color in DaVinci Resolve, sound mix, and platform-optimized social cutdowns.</p>
+          <div class="tag-row"><span>Editing</span><span>Color</span><span>Sound</span><span>Social</span><span>Documentary</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 6 / CINEMATIC ====== -->
+  <section data-screen-label="06 Cinematic">
+    <div class="service-detail">
+      <div class="service-detail-left">
+        <div class="eyebrow">01 — Cinematic</div>
+        <h2>CINEMATIC<br/>VIDEO<br/>PRODUCTION</h2>
+        <p class="body" style="max-width: none;">We make cinematic, story-first video content that connects with audiences and delivers results.</p>
+      </div>
+      <div class="service-detail-right">
+        <p class="body">We approach every project with a balance of creative instinct and technical precision. Our team handles everything from big-picture thinking to on-the-ground execution — on message, on budget, and built to perform.</p>
+        <div class="capabilities-list fire">
+          <span>Commercial</span><span>Interview</span><span>XR Volume</span><span>Sports</span><span>B-Roll</span><span>Music Video</span><span>Production Design</span><span>Casting</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 7 / LIVE ====== -->
+  <section data-screen-label="07 Live">
+    <div class="service-detail">
+      <div class="service-detail-left">
+        <div class="eyebrow glass">02 — Live</div>
+        <h2>LIVE STREAM<br/>& EVENT<br/>PRODUCTION</h2>
+        <p class="body" style="max-width: none;">High-production-value live events and broadcasts, backed by expert AV and showcalling.</p>
+      </div>
+      <div class="service-detail-right">
+        <p class="body">From scripting and showcalling to multi-camera broadcast, we ensure your event runs seamlessly while looking world-class. Run of show design, remote connectivity, and seasoned crews — on brand, on budget, unforgettable.</p>
+        <div class="capabilities-list">
+          <span>Conference</span><span>Concert</span><span>News Studio</span><span>Sports</span><span>Corporate</span><span>Remote</span><span>Product Launch</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 8 / POST ====== -->
+  <section data-screen-label="08 Post">
+    <div class="service-detail">
+      <div class="service-detail-left">
+        <div class="eyebrow">03 — Post</div>
+        <h2>POST<br/>PRODUCTION<br/>& EDITING</h2>
+        <p class="body" style="max-width: none;">We turn raw footage into refined stories — pacing, emotion, and narrative clarity.</p>
+      </div>
+      <div class="service-detail-right">
+        <p class="body">Where we elevate a project, not just finish it. We bring thoughtfulness, speed, and flexibility to every project — a fast-turn commercial or a long-form documentary.</p>
+        <div class="capabilities-list fire">
+          <span>Editing</span><span>Color Grading</span><span>DaVinci Resolve</span><span>Sound Mix</span><span>Social Cutdowns</span><span>Documentary</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 9 / CASE STUDY ====== -->
+  <section data-screen-label="09 Case Study — Volvo">
+    <div class="slide-pad">
+      <img class="gf-logo-tr" src="../assets/logos/Icon Color.png" alt=""/>
+      <div class="gf-page-num">09 / 10</div>
+      <div class="case-grid">
+        <div class="case-image">
+          <div class="badge">Case Study</div>
+          <image-slot id="slide-case-volvo" placeholder="Volvo Trucks broadcast still"></image-slot>
+        </div>
+        <div class="case-text">
+          <div class="eyebrow glass" style="margin-bottom: 12px;">Volvo Trucks</div>
+          <h2>Built to<br/>broadcast.</h2>
+          <div class="tags">Live Streaming · Virtual Engagement · Event AV</div>
+          <p>Since 2023, GlassFire has partnered with Volvo Trucks to deliver exceptional event experiences — from virtual conferences and stakeholder meetings to large-scale product launches, on-site and in studio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 10 / CLOSER ====== -->
+  <section data-screen-label="10 Closer">
+    <div class="closer">
+      <h1><span class="gf-text-spark">LET'S TALK!</span></h1>
+      <div class="contact">
+        <span>919.867.4547</span>
+        <span>·</span>
+        <span>hello@glassfire.co</span>
+        <span>·</span>
+        <span>glassfire.co</span>
+      </div>
+      <div class="cities">Raleigh · Lexington · Bentonville</div>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>

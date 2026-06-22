@@ -1,0 +1,242 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/**",
+              "slides/**",
+              "ui_kits/website/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Poppins))/i]",
+        "message": "Font not provided by the design system. Available: Poppins."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='LogoGridClient'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|src|key|ref|className|style|children)$/]",
+        "message": "<LogoGridClient> doesn't accept that prop. Declared props: name, src."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "LogoGridClient": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--bg-1",
+      "--bg-1-light",
+      "--bg-2",
+      "--bg-2-light",
+      "--bg-3",
+      "--border-faint",
+      "--border-faint-on-light",
+      "--border-soft",
+      "--border-soft-on-light",
+      "--border-strong",
+      "--dur-1",
+      "--dur-2",
+      "--dur-3",
+      "--dur-4",
+      "--ease-cinema",
+      "--ease-in",
+      "--ease-out",
+      "--fg-1",
+      "--fg-1-on-light",
+      "--fg-2",
+      "--fg-2-on-light",
+      "--fg-3",
+      "--fg-3-on-light",
+      "--fg-accent",
+      "--fg-accent-2",
+      "--font-display",
+      "--font-mono",
+      "--font-sans",
+      "--gf-black",
+      "--gf-fire",
+      "--gf-fire-deep",
+      "--gf-fire-warm",
+      "--gf-fog",
+      "--gf-glass",
+      "--gf-glass-deep",
+      "--gf-gradient-fire",
+      "--gf-gradient-glass",
+      "--gf-gradient-spark",
+      "--gf-graphite",
+      "--gf-ink",
+      "--gf-iron",
+      "--gf-mist",
+      "--gf-paper",
+      "--gf-snow",
+      "--gf-steel",
+      "--r-lg",
+      "--r-md",
+      "--r-none",
+      "--r-pill",
+      "--r-sm",
+      "--r-xl",
+      "--r-xs",
+      "--shadow-glass",
+      "--shadow-lg",
+      "--shadow-md",
+      "--shadow-sm",
+      "--shadow-spark",
+      "--sp-0",
+      "--sp-1",
+      "--sp-10",
+      "--sp-2",
+      "--sp-3",
+      "--sp-4",
+      "--sp-5",
+      "--sp-6",
+      "--sp-7",
+      "--sp-8",
+      "--sp-9",
+      "--status-danger",
+      "--status-info",
+      "--status-success",
+      "--status-warning",
+      "--t-2xl",
+      "--t-2xs",
+      "--t-3xl",
+      "--t-4xl",
+      "--t-5xl",
+      "--t-6xl",
+      "--t-7xl",
+      "--t-8xl",
+      "--t-lg",
+      "--t-md",
+      "--t-sm",
+      "--t-xl",
+      "--t-xs"
+    ],
+    "tokenKinds": {
+      "--gf-fire": "color",
+      "--gf-fire-deep": "color",
+      "--gf-fire-warm": "color",
+      "--gf-glass": "color",
+      "--gf-glass-deep": "color",
+      "--gf-gradient-fire": "color",
+      "--gf-gradient-glass": "color",
+      "--gf-gradient-spark": "color",
+      "--gf-black": "color",
+      "--gf-ink": "color",
+      "--gf-graphite": "color",
+      "--gf-iron": "color",
+      "--gf-steel": "color",
+      "--gf-fog": "color",
+      "--gf-mist": "color",
+      "--gf-paper": "color",
+      "--gf-snow": "color",
+      "--fg-1": "color",
+      "--fg-2": "color",
+      "--fg-3": "color",
+      "--fg-1-on-light": "color",
+      "--fg-2-on-light": "color",
+      "--fg-3-on-light": "color",
+      "--fg-accent": "color",
+      "--fg-accent-2": "color",
+      "--bg-1": "color",
+      "--bg-2": "color",
+      "--bg-3": "color",
+      "--bg-1-light": "color",
+      "--bg-2-light": "color",
+      "--border-faint": "color",
+      "--border-soft": "color",
+      "--border-strong": "color",
+      "--border-faint-on-light": "color",
+      "--border-soft-on-light": "color",
+      "--status-success": "color",
+      "--status-warning": "color",
+      "--status-danger": "color",
+      "--status-info": "color",
+      "--r-none": "radius",
+      "--r-xs": "spacing",
+      "--r-sm": "spacing",
+      "--r-md": "spacing",
+      "--r-lg": "spacing",
+      "--r-xl": "spacing",
+      "--r-pill": "spacing",
+      "--sp-0": "spacing",
+      "--sp-1": "spacing",
+      "--sp-2": "spacing",
+      "--sp-3": "spacing",
+      "--sp-4": "spacing",
+      "--sp-5": "spacing",
+      "--sp-6": "spacing",
+      "--sp-7": "spacing",
+      "--sp-8": "spacing",
+      "--sp-9": "spacing",
+      "--sp-10": "spacing",
+      "--shadow-sm": "shadow",
+      "--shadow-md": "shadow",
+      "--shadow-lg": "shadow",
+      "--shadow-spark": "shadow",
+      "--shadow-glass": "shadow",
+      "--ease-out": "other",
+      "--ease-in": "other",
+      "--ease-cinema": "other",
+      "--dur-1": "other",
+      "--dur-2": "other",
+      "--dur-3": "other",
+      "--dur-4": "other",
+      "--font-sans": "font",
+      "--font-display": "font",
+      "--font-mono": "font",
+      "--t-2xs": "spacing",
+      "--t-xs": "spacing",
+      "--t-sm": "spacing",
+      "--t-md": "spacing",
+      "--t-lg": "spacing",
+      "--t-xl": "spacing",
+      "--t-2xl": "spacing",
+      "--t-3xl": "spacing",
+      "--t-4xl": "spacing",
+      "--t-5xl": "spacing",
+      "--t-6xl": "spacing",
+      "--t-7xl": "spacing",
+      "--t-8xl": "spacing"
+    },
+    "fontFamilies": [
+      "Poppins"
+    ]
+  }
+}

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
+import PageHeading from "@/components/PageHeading";
 import { carouselMarkup, cdnUrl, CDN_BASE, liveEmbedCode, type CarouselOptions, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import { slugify } from "@/lib/slug";
 import type { ClientEntry, EmbedConfig, LogoAdjust, RenderedFile, VariantName } from "@/lib/types";
@@ -137,8 +138,7 @@ export default function CarouselPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Carousel Builder</h1>
-      <p className="text-sm text-zinc-400">An embeddable auto-scrolling logo strip. Build it, then copy a static snippet or save a live embed that auto-updates.</p>
+      <PageHeading eyebrow="Embed" title="Carousel Builder" sub="An embeddable auto-scrolling logo strip. Build it, then copy a static snippet or save a live embed that auto-updates." />
       {error && <p className="text-sm text-fire">{error}</p>}
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">

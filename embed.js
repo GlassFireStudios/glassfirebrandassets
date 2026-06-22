@@ -22,16 +22,16 @@
   }
 
   var CSS =
-    ".gf-logos{overflow:hidden;width:100%;box-sizing:border-box;padding:var(--gf-pad,24px) 0}" +
+    ".gf-logos{overflow:hidden;width:100%;max-width:100%;box-sizing:border-box;padding:var(--gf-pad,24px) 0}" +
     ".gf-logos[data-fade=true]{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}" +
+    ".gf-logos__row{display:flex;gap:var(--gf-gap,72px);overflow:hidden}" +
     ".gf-logos__row+.gf-logos__row{margin-top:var(--gf-rowgap,24px)}" +
-    ".gf-logos__track{display:flex;align-items:center;width:max-content;animation:gf-marquee var(--gf-dur,40s) linear infinite}" +
-    ".gf-logos__row[data-dir=right] .gf-logos__track{animation-direction:reverse}" +
-    ".gf-logos[data-pause=true]:hover .gf-logos__track{animation-play-state:paused}" +
+    ".gf-logos__group{flex:0 0 auto;display:flex;align-items:center;justify-content:space-around;gap:var(--gf-gap,72px);min-width:100%;animation:gf-marquee var(--gf-dur,40s) linear infinite}" +
+    ".gf-logos__row[data-dir=right] .gf-logos__group{animation-direction:reverse}" +
+    ".gf-logos[data-pause=true]:hover .gf-logos__group{animation-play-state:paused}" +
     ".gf-logos img,.gf-grid img{height:var(--gf-h,44px);width:auto;flex:0 0 auto;object-fit:contain;display:block}" +
-    ".gf-logos img{margin-right:var(--gf-gap,72px)}" +
-    "@media(prefers-reduced-motion:reduce){.gf-logos__track{animation:none}}" +
-    "@keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}" +
+    "@media(prefers-reduced-motion:reduce){.gf-logos__group{animation:none}}" +
+    "@keyframes gf-marquee{from{transform:translateX(0)}to{transform:translateX(calc(-100% - var(--gf-gap,72px)))}}" +
     ".gf-grid{display:grid;gap:var(--gf-gap,40px);box-sizing:border-box;padding:var(--gf-pad,32px);grid-template-columns:repeat(var(--gf-cols,5),1fr)}" +
     ".gf-grid__cell{display:flex;align-items:center;justify-content:center}" +
     ".gf-grid img{max-width:100%}" +
@@ -108,16 +108,14 @@
     var rows = Math.max(1, Math.min(3, o.rows || 1));
     var rowsHtml = "";
     for (var r = 0; r < rows; r++) {
-      var imgs = "";
-      for (var pass = 0; pass < 2; pass++) {
-        for (var i = 0; i < cfg.logos.length; i++) {
-          if (i % rows !== r) continue;
-          var l = cfg.logos[i];
-          imgs += '<img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '" loading="lazy" decoding="async"' + (pass ? ' aria-hidden="true"' : "") + logoStyle(l, true) + ">";
-        }
+      var group = "";
+      for (var i = 0; i < cfg.logos.length; i++) {
+        if (i % rows !== r) continue;
+        var l = cfg.logos[i];
+        group += '<img src="' + esc(imgSrc(l, o, repo, branch, base)) + '" alt="' + esc(l.alt) + '" loading="lazy" decoding="async"' + logoStyle(l, true) + ">";
       }
       var rdir = o.mirrorRows && r % 2 === 1 ? (dir === "left" ? "right" : "left") : dir;
-      rowsHtml += '<div class="gf-logos__row" data-dir="' + rdir + '"><div class="gf-logos__track">' + imgs + "</div></div>";
+      rowsHtml += '<div class="gf-logos__row" data-dir="' + rdir + '"><div class="gf-logos__group">' + group + '</div><div class="gf-logos__group" aria-hidden="true">' + group + "</div></div>";
     }
     var style = "--gf-h:" + (o.height || 44) + "px;--gf-gap:" + (o.gap || 72) + "px;--gf-dur:" + (o.duration || 40) + "s;--gf-pad:" + (o.padding || 24) + "px;--gf-rowgap:" + (o.rowGap == null ? 24 : o.rowGap) + "px;background:" + (o.background || "transparent");
     el.innerHTML =

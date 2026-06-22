@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:39:21.409Z",
+  "updatedAt": "2026-06-22T01:40:22.443Z",
   "clients": [
     {
       "name": "Apple",
@@ -49,6 +49,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:16:26.231Z"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "slug": "cvs-pharmacy",
+      "domain": "cvs-optical.com",
+      "alt": "CVS Pharmacy logo — GlassFire client",
+      "title": "CVS Pharmacy logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idfKrp-Xyn/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178807915bfumLaCV7mFHNus8LP",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:40:20.211Z"
     },
     {
       "name": "Drone Racing League",

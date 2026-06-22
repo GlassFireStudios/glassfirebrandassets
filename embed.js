@@ -58,7 +58,23 @@
     ".gft-name{font-weight:600;color:var(--gft-text,#f4f4f5);font-size:14px}" +
     ".gft-role{color:var(--gft-muted,#a1a1aa);font-size:13px}" +
     ".gft-logo{height:24px;width:auto;margin-left:auto;object-fit:contain;opacity:.9;flex:0 0 auto}" +
-    "@media(max-width:720px){.gft-wall{grid-template-columns:1fr}}";
+    ".gft-spot{padding:clamp(20px,4vw,44px)}" +
+    ".gft-spot__h{margin:0 0 28px;text-align:center;font-size:clamp(28px,5vw,54px);font-weight:800;letter-spacing:-.01em;text-transform:uppercase;color:#fff;line-height:1.05}" +
+    ".gft-spot__row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;align-items:stretch}" +
+    ".gft-spot__row+.gft-spot__row{margin-top:24px}" +
+    ".gft-spot__media{position:relative;border-radius:16px;overflow:hidden;min-height:340px;background-size:cover;background-position:center}" +
+    ".gft-spot__media::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,0) 55%)}" +
+    ".gft-spot__co{position:absolute;left:22px;bottom:18px;z-index:1;color:#fff;font-weight:800;font-size:clamp(18px,2.4vw,26px);text-shadow:0 2px 10px rgba(0,0,0,.55)}" +
+    ".gft-spot__play{position:absolute;left:18px;top:18px;z-index:1;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px}" +
+    ".gft-spot__card{background:#fff;border-radius:18px;padding:clamp(22px,3vw,38px);display:flex;flex-direction:column;gap:18px;justify-content:center}" +
+    ".gft-spot__mark{font-family:Georgia,serif;font-weight:700;font-size:72px;line-height:.6;height:34px}" +
+    ".gft-spot__person{display:flex;align-items:center;gap:14px}" +
+    ".gft-spot__person img{width:60px;height:60px;border-radius:8px;object-fit:cover}" +
+    ".gft-spot__name{font-weight:700;color:#111;font-size:18px}" +
+    ".gft-spot__role{color:#6b7280;font-size:15px}" +
+    ".gft-spot__quote{margin:0;color:#1f2937;font-size:clamp(16px,1.6vw,19px);line-height:1.6;font-weight:500}" +
+    ".gft-spot__quote::before{content:'\\201C'}.gft-spot__quote::after{content:'\\201D'}" +
+    "@media(max-width:760px){.gft-wall{grid-template-columns:1fr}.gft-spot__row{grid-template-columns:1fr}.gft-spot__media{min-height:240px}}";
 
   function injectCss() {
     if (document.getElementById("gf-embed-css")) return;
@@ -133,9 +149,30 @@
     return '<figure class="gft-card">' + rating + '<blockquote class="gft-quote">' + esc(t.quote) + '</blockquote><figcaption class="gft-cap">' + avatar + '<div class="gft-id"><span class="gft-name">' + esc(t.name) + '</span><span class="gft-role">' + esc(roleLine) + "</span></div>" + logo + "</figcaption></figure>";
   }
 
+  function tspotRow(t, o, repo, branch, base) {
+    var accent = o.accent || "#EE2750";
+    var media;
+    if (t.headshotUrl) {
+      media = '<div class="gft-spot__media" style="background-image:url(&quot;' + esc(cdnUrl(repo, branch, t.headshotUrl, base)) + '&quot;)">' + (o.showPlay ? '<span class="gft-spot__play">▶</span>' : "") + '<span class="gft-spot__co">' + esc(t.company) + "</span></div>";
+    } else {
+      media = '<div class="gft-spot__media" style="background:' + (o.background || "#0b2b2b") + '"><span class="gft-spot__co">' + esc(t.company) + "</span></div>";
+    }
+    var avatar = t.headshotUrl ? '<img src="' + esc(cdnUrl(repo, branch, t.headshotUrl, base)) + '" alt="' + esc(t.name) + '" loading="lazy">' : "";
+    var roleLine = [t.role, t.company].filter(Boolean).join(", ");
+    var rating = o.showRating !== false && t.rating ? '<div class="gft-stars" style="font-size:18px;color:' + accent + '">' + "★".repeat(t.rating) + "</div>" : "";
+    return '<div class="gft-spot__row">' + media + '<figure class="gft-spot__card"><div class="gft-spot__mark" style="color:' + accent + '">“</div><figcaption class="gft-spot__person">' + avatar + '<div><div class="gft-spot__name">' + esc(t.name) + '</div><div class="gft-spot__role">' + esc(roleLine) + "</div></div></figcaption>" + rating + '<blockquote class="gft-spot__quote">' + esc(t.quote) + "</blockquote></figure></div>";
+  }
+
   function testimonial(el, cfg, repo, branch, base) {
     var o = cfg.options || {};
     var items = cfg.items || [];
+    if (o.layout === "spotlight") {
+      var sbg = o.background && o.background !== "transparent" ? o.background : "linear-gradient(125deg,#0b2b2b 0%,#06201f 55%,#0a1414 100%)";
+      var heading = o.heading ? '<h2 class="gft-spot__h">' + esc(o.heading) + "</h2>" : "";
+      var rows = items.map(function (t) { return tspotRow(t, o, repo, branch, base); }).join("");
+      el.innerHTML = '<div class="gft gft-spot" style="background:' + sbg + '" aria-label="Client testimonials">' + heading + rows + "</div>";
+      return;
+    }
     var cards = items.map(function (t) { return tcard(t, o, repo, branch, base); }).join("");
     var layout = o.layout || "wall";
     var cls = layout === "carousel" ? "gft-carousel" : layout === "card" ? "gft-single" : "gft-wall";

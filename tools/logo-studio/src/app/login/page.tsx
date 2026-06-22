@@ -26,23 +26,23 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={submit} className="mx-auto mt-20 max-w-sm space-y-4">
-      <h1 className="text-xl font-semibold">GlassFire Brand Studio</h1>
-      <p className="text-sm text-zinc-400">Internal access only.</p>
+    <form onSubmit={submit} className="mx-auto mt-24 max-w-sm space-y-5 rounded-lg border border-white/10 bg-graphite/40 p-7">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="https://cdn.jsdelivr.net/gh/GlassFireStudios/glassfirebrandassets@main/Logos/Variant%20White/GlassFire%20Logo%20White.png" alt="GlassFire" className="h-7 w-auto" />
+      <div>
+        <h1 className="text-lg font-extrabold">Brand Studio</h1>
+        <p className="gf-eyebrow mt-1">Internal access only</p>
+      </div>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
-        className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 outline-none focus:border-glass"
+        className="w-full rounded-sm border border-white/15 bg-black px-3 py-2.5 outline-none focus:border-glass"
         autoFocus
       />
       {error && <p className="text-sm text-fire">Incorrect password.</p>}
-      <button
-        type="submit"
-        disabled={busy}
-        className="w-full rounded-lg bg-glass py-2 font-medium text-black disabled:opacity-50"
-      >
+      <button type="submit" disabled={busy} className="gf-btn gf-btn-fire w-full">
         {busy ? "Checking…" : "Enter"}
       </button>
     </form>

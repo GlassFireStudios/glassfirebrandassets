@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:36:08.644Z",
+  "updatedAt": "2026-06-22T01:36:54.375Z",
   "clients": [
     {
       "name": "Apple",
@@ -262,6 +262,29 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:36:26.710Z"
+    },
+    {
+      "name": "NFL",
+      "slug": "nfl",
+      "alt": "NFL logo — GlassFire client",
+      "title": "NFL logo",
+      "source": "edit",
+      "variants": [
+        "black",
+        "color",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:36:54.375Z",
+      "domain": "https://www.nhl.com/"
     }
   ]
 }

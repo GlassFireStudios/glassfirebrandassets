@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:39:00.744Z",
+  "updatedAt": "2026-06-22T01:39:21.409Z",
   "clients": [
     {
       "name": "Apple",
@@ -142,6 +142,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T04:29:52.117Z"
+    },
+    {
+      "name": "HP",
+      "slug": "hp",
+      "domain": "hp.com",
+      "alt": "HP logo — GlassFire client",
+      "title": "HP logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idntgPecbn/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178750197bfumLaCV7mf064M8uL",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:39:19.341Z"
     },
     {
       "name": "Ladder",

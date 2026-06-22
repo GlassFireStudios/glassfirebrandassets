@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:40:22.443Z",
+  "updatedAt": "2026-06-22T01:40:51.053Z",
   "clients": [
     {
       "name": "Apple",
@@ -262,6 +262,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:14:19.101Z"
+    },
+    {
+      "name": "NCAA",
+      "slug": "ncaa",
+      "domain": "ncaa.com",
+      "alt": "NCAA logo — GlassFire client",
+      "title": "NCAA logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/iddCYAw5jG/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178831950bfumLaCV7mTx3IGmPl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:40:49.023Z"
     },
     {
       "name": "NFL",

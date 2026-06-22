@@ -1,0 +1,24 @@
+{
+  "name": "Sierra Club",
+  "slug": "sierra-club",
+  "domain": "https://www.sierraclub.org/",
+  "alt": "Sierra Club logo — GlassFire client",
+  "title": "Sierra Club logo",
+  "source": "upload",
+  "sourceUrl": "images (1).png",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-22T01:38:58.957Z"
+}

@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:36:54.375Z",
+  "updatedAt": "2026-06-22T01:39:00.744Z",
   "clients": [
     {
       "name": "Apple",
@@ -216,6 +216,53 @@
       "addedAt": "2026-06-21T03:14:19.101Z"
     },
     {
+      "name": "NFL",
+      "slug": "nfl",
+      "alt": "NFL logo — GlassFire client",
+      "title": "NFL logo",
+      "source": "edit",
+      "variants": [
+        "black",
+        "color",
+        "white"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:36:54.375Z",
+      "domain": "https://www.nhl.com/"
+    },
+    {
+      "name": "Sierra Club",
+      "slug": "sierra-club",
+      "domain": "https://www.sierraclub.org/",
+      "alt": "Sierra Club logo — GlassFire client",
+      "title": "Sierra Club logo",
+      "source": "upload",
+      "sourceUrl": "images (1).png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:38:58.957Z"
+    },
+    {
       "name": "University of Kentucky",
       "slug": "university-of-kentucky",
       "domain": "bluegrasssmiles.com",
@@ -262,29 +309,6 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:36:26.710Z"
-    },
-    {
-      "name": "NFL",
-      "slug": "nfl",
-      "alt": "NFL logo — GlassFire client",
-      "title": "NFL logo",
-      "source": "edit",
-      "variants": [
-        "black",
-        "color",
-        "white"
-      ],
-      "sizes": [
-        "@1x",
-        "@2x",
-        "@3x"
-      ],
-      "box": {
-        "width": 150,
-        "height": 50
-      },
-      "addedAt": "2026-06-22T01:36:54.375Z",
-      "domain": "https://www.nhl.com/"
     }
   ]
 }

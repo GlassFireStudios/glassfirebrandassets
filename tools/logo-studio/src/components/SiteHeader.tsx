@@ -29,6 +29,7 @@ export default function SiteHeader() {
           <Link href="/carousel" className="hover:text-white">Carousel</Link>
           <Link href="/embeds" className="hover:text-white">Embeds</Link>
           <Link href="/testimonials" className="hover:text-white">Testimonials</Link>
+          <Link href="/brand" className="hover:text-white">Brand</Link>
           <Link href="/manage" className="hover:text-white">Manage</Link>
           <span
             title={cdn.custom ? "Embed images served from your custom CDN (Bunny)" : "Embed images served from the default jsDelivr CDN. Set NEXT_PUBLIC_CDN_BASE to use your own domain."}

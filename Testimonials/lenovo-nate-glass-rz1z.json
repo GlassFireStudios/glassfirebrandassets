@@ -6,6 +6,7 @@
   "rating": 5,
   "headshot": "Testimonials/headshots/lenovo-nate-glass-rz1z.jpg",
   "consent": true,
-  "status": "pending",
-  "submittedAt": "2026-06-22T01:11:17.303Z"
+  "status": "approved",
+  "submittedAt": "2026-06-22T01:11:17.303Z",
+  "approvedAt": "2026-06-22T01:12:20.000Z"
 }

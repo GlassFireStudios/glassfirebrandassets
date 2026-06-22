@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useClients } from "@/lib/useClients";
 import { slugify } from "@/lib/slug";
 import { cdnUrl, CDN_BASE, liveEmbedCode } from "@/lib/embed";
+import PageHeading from "@/components/PageHeading";
 import { testimonialMarkup, DEFAULT_TESTIMONIAL_OPTIONS, type TestimonialOptions } from "@/lib/testimonial";
 import type { ClientEntry, RenderedFile, Testimonial, TestimonialEmbedConfig, TestimonialInvite, TestimonialItem } from "@/lib/types";
 
@@ -55,7 +56,7 @@ export default function TestimonialsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Testimonials</h1>
+      <PageHeading eyebrow="Social Proof" title="Testimonials" sub="Capture client reviews, moderate them, and export polished testimonials for web and decks." />
       <div className="flex gap-2 border-b border-zinc-800 text-sm">
         {(["moderate", "links", "embed", "deck"] as Tab[]).map((t) => (
           <button key={t} onClick={() => setTab(t)} className={`-mb-px border-b-2 px-3 py-2 capitalize ${tab === t ? "border-glass text-white" : "border-transparent text-zinc-400"}`}>

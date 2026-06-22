@@ -13,6 +13,7 @@ import {
 } from "@/lib/image";
 import { buildAll, type BuildResult } from "@/lib/pipeline";
 import { defaultAlt, defaultTitle, slugify, variantFileName } from "@/lib/slug";
+import PageHeading from "@/components/PageHeading";
 import type {
   ClientLogoMeta,
   ClientManifest,
@@ -274,7 +275,7 @@ export default function IntakePage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold">Logo Intake</h1>
+      <PageHeading eyebrow="Library" title="Logo Intake" sub="Search or upload a client logo, remove the background, generate variants, and publish to the library." />
 
       {/* SEARCH */}
       <section className="space-y-3">

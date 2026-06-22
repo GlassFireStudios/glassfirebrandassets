@@ -46,6 +46,18 @@ select:focus {
   background-clip: text;
   color: transparent;
 }
+.gf-text-fire {
+  background: var(--gf-gradient-fire);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gf-text-glass {
+  background: linear-gradient(180deg, #00A8E4 0%, #178ACD 55%, #3C5BA9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .gf-eyebrow {
   font-weight: 600;
@@ -53,6 +65,40 @@ select:focus {
   font-size: 12px;
   letter-spacing: 0.18em;
   color: var(--gf-fire);
+}
+
+/* Hairline divider */
+.gf-rule {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Card surface — graphite on black, faint hairline, sharp-ish radius. */
+.gf-card {
+  background: rgba(26, 26, 31, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  transition: border-color 220ms cubic-bezier(0.2, 0.7, 0.2, 1), background 220ms, transform 220ms;
+}
+.gf-card-hover:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Chip / badge — all-caps, tracked. */
+.gf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--gf-fog, #b8b8be);
 }
 
 /* Brand button — uppercase, tracked, sharp corners (ui_kits/website/styles.css) */
@@ -75,8 +121,25 @@ select:focus {
 .gf-btn:disabled { opacity: 0.5; cursor: default; }
 .gf-btn-fire { background: var(--gf-fire); color: #fff; }
 .gf-btn-fire:hover:not(:disabled) { background: #ff335e; }
+.gf-btn-glass { background: var(--gf-glass); color: #fff; }
+.gf-btn-glass:hover:not(:disabled) { background: #2dbbec; }
 .gf-btn-ghost { background: transparent; color: #fff; border: 1px solid var(--border-strong); }
 .gf-btn-ghost:hover { background: rgba(255, 255, 255, 0.06); }
+
+/* Keyboard focus ring in brand cyan. */
+:focus-visible {
+  outline: 2px solid var(--gf-glass);
+  outline-offset: 2px;
+}
+
+/* Slim dark scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a30 transparent;
+}
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 999px; border: 2px solid #000; }
+*::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
 
 /* Checkerboard to visualize transparency in previews. */
 .checker {

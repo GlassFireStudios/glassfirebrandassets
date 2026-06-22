@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { liveEmbedCode, staticMarkupFromConfig } from "@/lib/embed";
 import { useClients } from "@/lib/useClients";
+import PageHeading from "@/components/PageHeading";
 import type { EmbedConfig, TestimonialEmbedConfig } from "@/lib/types";
 
 type AnyEmbed = EmbedConfig | TestimonialEmbedConfig;
@@ -60,8 +61,7 @@ export default function EmbedsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Saved Embeds</h1>
-      <p className="text-sm text-zinc-400">Live carousels, grids &amp; testimonials. Edit one and re-save, and every site using it updates automatically.</p>
+      <PageHeading eyebrow="Embed" title="Saved Embeds" sub="Live carousels, grids & testimonials. Edit one and re-save, and every site using it updates automatically." />
       {msg && <p className="text-sm text-fire">{msg}</p>}
       {loading && <p className="text-sm text-zinc-500">Loading…</p>}
       {!loading && !items.length && <p className="text-sm text-zinc-500">No saved embeds yet. Create one in the Carousel or Grid builder.</p>}

@@ -25,9 +25,9 @@ export default function Home() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((t) => (
-          <Link key={t.href} href={t.href} className={`rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 transition ${t.hover}`}>
-            <h2 className="text-lg font-semibold">{t.title}</h2>
-            <p className="mt-1 text-sm text-zinc-400">{t.body}</p>
+          <Link key={t.href} href={t.href} className="gf-card gf-card-hover block p-6">
+            <h2 className="text-base font-bold uppercase tracking-wide">{t.title}</h2>
+            <p className="mt-1.5 text-sm text-fog">{t.body}</p>
           </Link>
         ))}
       </div>

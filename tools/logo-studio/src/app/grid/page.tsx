@@ -6,6 +6,7 @@ import { renderGrid, type GridItem } from "@/lib/grid";
 import { slugify } from "@/lib/slug";
 import { useClients } from "@/lib/useClients";
 import LogoOrderPanel from "@/components/LogoOrderPanel";
+import PageHeading from "@/components/PageHeading";
 import { gridMarkup, liveEmbedCode, cdnUrl, CDN_BASE, type EmbedLogo, type HoverStyle } from "@/lib/embed";
 import type { ClientEntry, EmbedConfig, LogoAdjust, RenderedFile, VariantName } from "@/lib/types";
 
@@ -250,7 +251,7 @@ export default function GridPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Grid Builder</h1>
+      <PageHeading eyebrow="Embed" title="Grid Builder" sub="Pick logos, auto-optimize the layout, and export a transparent PNG or a live HTML grid." />
       {(err || error) && <p className="text-sm text-fire">{err || error}</p>}
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">

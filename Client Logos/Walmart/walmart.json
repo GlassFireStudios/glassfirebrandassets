@@ -1,0 +1,24 @@
+{
+  "name": "Walmart",
+  "slug": "walmart",
+  "domain": "walmart.com",
+  "alt": "Walmart logo — GlassFire client",
+  "title": "Walmart logo",
+  "source": "upload",
+  "sourceUrl": "b82d9ceb-fe55-4f6f-ae62-383f54904a2e.png",
+  "variants": [
+    "color",
+    "white",
+    "black"
+  ],
+  "sizes": [
+    "@1x",
+    "@2x",
+    "@3x"
+  ],
+  "box": {
+    "width": 150,
+    "height": 50
+  },
+  "addedAt": "2026-06-22T01:45:38.814Z"
+}

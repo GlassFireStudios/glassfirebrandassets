@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:40:51.053Z",
+  "updatedAt": "2026-06-22T01:41:39.841Z",
   "clients": [
     {
       "name": "Apple",
@@ -142,6 +142,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T04:35:52.447Z"
+    },
+    {
+      "name": "FedEx",
+      "slug": "fedex",
+      "domain": "fedexcares.com",
+      "alt": "FedEx logo — GlassFire client",
+      "title": "FedEx logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idegNSKfu7/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782178869169bfumLaCV7mWp8bvO95",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:41:37.214Z"
     },
     {
       "name": "Fondation Ronald McDonald",

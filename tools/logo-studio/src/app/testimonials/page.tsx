@@ -102,7 +102,7 @@ export default function TestimonialsPage() {
         />
       )}
       {tab === "embed" && <WebEmbed approved={approved} logoPath={logoPath} repo={repo} branch={branch} onSave={publish} />}
-      {tab === "deck" && <DeckExport approved={approved} logoPath={logoPath} />}
+      {tab === "deck" && <DeckExport approved={approved} />}
     </div>
   );
 }
@@ -284,14 +284,21 @@ function WebEmbed({ approved, logoPath, repo, branch, onSave }: {
           </div>
         </div>
         <Field label="Layout">
-          <div className="flex gap-2">
-            {(["wall", "carousel", "card"] as const).map((l) => (
-              <button key={l} onClick={() => setOpts((o) => ({ ...o, layout: l }))} className={`flex-1 rounded-lg border px-2 py-1.5 text-sm capitalize ${opts.layout === l ? "border-glass bg-glass/10" : "border-zinc-700 text-zinc-400"}`}>{l}</button>
+          <div className="grid grid-cols-2 gap-2">
+            {(["spotlight", "wall", "carousel", "card"] as const).map((l) => (
+              <button key={l} onClick={() => setOpts((o) => ({ ...o, layout: l }))} className={`rounded-lg border px-2 py-1.5 text-sm capitalize ${opts.layout === l ? "border-glass bg-glass/10" : "border-zinc-700 text-zinc-400"}`}>{l}</button>
             ))}
           </div>
+          {opts.layout === "spotlight" && <p className="mt-1 text-xs text-zinc-600">Featured layout matching the GlassFire site.</p>}
         </Field>
         {opts.layout === "wall" && (
           <Field label={`Columns ${opts.columns}`}><input type="range" min={1} max={4} value={opts.columns} onChange={(e) => setOpts((o) => ({ ...o, columns: Number(e.target.value) }))} className="w-full" /></Field>
+        )}
+        {opts.layout === "spotlight" && (
+          <>
+            <Field label="Heading"><input value={opts.heading} onChange={(e) => setOpts((o) => ({ ...o, heading: e.target.value }))} placeholder="About Our Work" className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" /></Field>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={opts.showPlay} onChange={(e) => setOpts((o) => ({ ...o, showPlay: e.target.checked }))} /> Video play badge on photo</label>
+          </>
         )}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Accent"><input type="color" value={opts.accent} onChange={(e) => setOpts((o) => ({ ...o, accent: e.target.value }))} className="h-9 w-full rounded" /></Field>
@@ -331,59 +338,66 @@ function WebEmbed({ approved, logoPath, repo, branch, onSave }: {
 }
 
 // ─── Deck export (PNG quote card) ───────────────────────────────────────────
-function DeckExport({ approved, logoPath }: { approved: Testimonial[]; logoPath: (n?: string) => string | undefined }) {
+function DeckExport({ approved }: { approved: Testimonial[] }) {
   const [slug, setSlug] = useState("");
-  const [bg, setBg] = useState("#0b0b0d");
+  const [heading, setHeading] = useState("About Our Work");
   const [accent, setAccent] = useState("#EE2750");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const t = approved.find((x) => x.slug === slug);
 
+  // Spotlight slide — mirrors the GlassFire site testimonial section.
   const draw = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas || !t) return;
-    const W = 1600, H = 900, P = 120;
+    const W = 1600, H = 900;
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-    // Stars
-    let y = P;
-    if (t.rating) {
-      ctx.font = "48px sans-serif"; ctx.textBaseline = "top";
-      const filled = "★".repeat(t.rating);
-      ctx.fillStyle = accent; ctx.fillText(filled, P, y);
-      ctx.fillStyle = "#3f3f46"; ctx.fillText("★".repeat(5 - t.rating), P + ctx.measureText(filled).width, y);
-      y += 90;
-    }
-    // Quote (wrapped)
-    ctx.fillStyle = "#f4f4f5";
-    ctx.font = "600 56px Georgia, serif";
-    const words = `“${t.quote}”`.split(/\s+/);
-    const maxW = W - P * 2; let line = ""; const lh = 78;
-    for (const w of words) {
+    const g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#0b2b2b"); g.addColorStop(0.55, "#06201f"); g.addColorStop(1, "#0a1414");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+    // Heading
+    ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "top";
+    ctx.font = "800 62px sans-serif";
+    ctx.fillText((heading || "").toUpperCase(), W / 2, 66);
+    ctx.textAlign = "left";
+
+    const top = 200, mh = 580, mx = 110, mw = 540;
+    const cx = mx + mw + 40, cw = W - cx - 110;
+    const hs = t.headshot ? await loadImg(assetUrl(t.headshot)!) : null;
+
+    // Left media
+    roundRect(ctx, mx, top, mw, mh, 20); ctx.save(); ctx.clip();
+    if (hs) drawCover(ctx, hs, mx, top, mw, mh); else { ctx.fillStyle = "#0a1414"; ctx.fillRect(mx, top, mw, mh); }
+    const og = ctx.createLinearGradient(0, top + mh, 0, top + mh - 260);
+    og.addColorStop(0, "rgba(0,0,0,.8)"); og.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = og; ctx.fillRect(mx, top, mw, mh);
+    ctx.restore();
+    ctx.fillStyle = "#fff"; ctx.textBaseline = "alphabetic"; ctx.font = "800 38px sans-serif";
+    ctx.fillText(t.company, mx + 30, top + mh - 34);
+
+    // Right white card
+    roundRect(ctx, cx, top, cw, mh, 22); ctx.fillStyle = "#fff"; ctx.fill();
+    const pad = 48;
+    ctx.fillStyle = accent; ctx.textBaseline = "top"; ctx.font = "700 120px Georgia, serif";
+    ctx.fillText("“", cx + pad, top + 18);
+
+    let py = top + 158, tx = cx + pad;
+    if (hs) { const s = 74; roundRect(ctx, tx, py, s, s, 10); ctx.save(); ctx.clip(); drawCover(ctx, hs, tx, py, s, s); ctx.restore(); tx += s + 18; }
+    ctx.fillStyle = "#111"; ctx.font = "700 30px sans-serif"; ctx.fillText(t.name, tx, py + 8);
+    ctx.fillStyle = "#6b7280"; ctx.font = "24px sans-serif"; ctx.fillText([t.role, t.company].filter(Boolean).join(", "), tx, py + 46);
+
+    py += 116;
+    ctx.fillStyle = "#1f2937"; ctx.font = "500 30px sans-serif";
+    const maxW = cw - pad * 2, lh = 46; let line = "", yy = py;
+    for (const w of (`“${t.quote}”`).split(/\s+/)) {
       const test = line ? line + " " + w : w;
-      if (ctx.measureText(test).width > maxW && line) { ctx.fillText(line, P, y); line = w; y += lh; }
+      if (ctx.measureText(test).width > maxW && line) { ctx.fillText(line, cx + pad, yy); line = w; yy += lh; }
       else line = test;
     }
-    if (line) { ctx.fillText(line, P, y); y += lh; }
-
-    // Attribution
-    y = H - P - 70;
-    let x = P;
-    if (t.headshot) {
-      const img = await loadImg(assetUrl(t.headshot)!);
-      if (img) { const s = 96; ctx.save(); ctx.beginPath(); ctx.arc(x + s / 2, y + s / 2 - 10, s / 2, 0, Math.PI * 2); ctx.clip(); ctx.drawImage(img, x, y - 10, s, s); ctx.restore(); x += s + 28; }
-    }
-    ctx.textBaseline = "top";
-    ctx.fillStyle = "#f4f4f5"; ctx.font = "600 36px sans-serif"; ctx.fillText(t.name, x, y);
-    ctx.fillStyle = "#a1a1aa"; ctx.font = "30px sans-serif"; ctx.fillText([t.role, t.company].filter(Boolean).join(", "), x, y + 46);
-
-    const lp = logoPath(t.clientName);
-    if (lp) {
-      const img = await loadImg(assetUrl(lp)!);
-      if (img) { const h = 70, w = (img.width / img.height) * h; ctx.drawImage(img, W - P - w, y, w, h); }
-    }
-  }, [t, bg, accent, logoPath]);
+    if (line) ctx.fillText(line, cx + pad, yy);
+  }, [t, heading, accent]);
 
   useEffect(() => { draw(); }, [draw]);
 
@@ -404,7 +418,7 @@ function DeckExport({ approved, logoPath }: { approved: Testimonial[]; logoPath:
             {approved.map((x) => <option key={x.slug} value={x.slug}>{x.name} · {x.company}</option>)}
           </select>
         </Field>
-        <Field label="Background"><input type="color" value={bg} onChange={(e) => setBg(e.target.value)} className="h-9 w-16 rounded" /></Field>
+        <Field label="Heading"><input value={heading} onChange={(e) => setHeading(e.target.value)} className="w-44 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm" /></Field>
         <Field label="Accent"><input type="color" value={accent} onChange={(e) => setAccent(e.target.value)} className="h-9 w-16 rounded" /></Field>
         <button onClick={download} disabled={!t} className="rounded-lg bg-fire px-4 py-2 text-sm font-medium text-white disabled:opacity-50">Download PNG (16:9)</button>
       </div>
@@ -416,6 +430,25 @@ function DeckExport({ approved, logoPath }: { approved: Testimonial[]; logoPath:
 
 function loadImg(src: string): Promise<HTMLImageElement | null> {
   return new Promise((resolve) => { const img = new Image(); img.crossOrigin = "anonymous"; img.onload = () => resolve(img); img.onerror = () => resolve(null); img.src = src; });
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+// Draw an image as object-fit: cover into the target rect.
+function drawCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, x: number, y: number, w: number, h: number) {
+  const ir = img.width / img.height, r = w / h;
+  let sw: number, sh: number, sx: number, sy: number;
+  if (ir > r) { sh = img.height; sw = sh * r; sx = (img.width - sw) / 2; sy = 0; }
+  else { sw = img.width; sh = sw / r; sx = 0; sy = (img.height - sh) / 2; }
+  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {

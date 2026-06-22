@@ -206,7 +206,7 @@ export default function CarouselPage() {
           </Field>
         </div>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <div className="flex items-center gap-2 text-xs text-zinc-500">
             Preview bg:
             {["#0b0b0d", "#ffffff", "#EE2750", "#00A8E4"].map((c) => (

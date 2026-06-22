@@ -79,7 +79,7 @@
       "name": "NFL",
       "url": "Client Logos/NFL/nfl-white.png",
       "colorUrl": "Client Logos/NFL/nfl-color.png",
-      "alt": "NFL logo"
+      "alt": "NFL logo — GlassFire client"
     },
     {
       "name": "Paramount+",
@@ -118,7 +118,7 @@
     "duration": 63,
     "direction": "left",
     "hoverStyle": "none",
-    "pauseOnHover": true,
+    "pauseOnHover": false,
     "background": "transparent",
     "edgeFade": true,
     "padding": 24,
@@ -128,5 +128,5 @@
     "variant": "white"
   },
   "cdnBase": "https://brandcdn.glassfire.co",
-  "updatedAt": "2026-06-22T01:28:10.904Z"
+  "updatedAt": "2026-06-22T02:08:34.751Z"
 }

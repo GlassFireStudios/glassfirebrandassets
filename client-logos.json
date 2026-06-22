@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:43:05.717Z",
+  "updatedAt": "2026-06-22T01:43:41.693Z",
   "clients": [
     {
       "name": "Apple",
@@ -286,6 +286,30 @@
         "height": 50
       },
       "addedAt": "2026-06-22T01:36:06.474Z"
+    },
+    {
+      "name": "NAACP",
+      "slug": "naacp",
+      "domain": "naacp.org",
+      "alt": "NAACP logo — GlassFire client",
+      "title": "NAACP logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idnx_iqJ3r/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782179000500bfumLaCV7mLfjk67fY",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:43:39.342Z"
     },
     {
       "name": "National Hockey League (NHL)",

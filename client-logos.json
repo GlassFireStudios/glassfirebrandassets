@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-21T04:49:30.506Z",
+  "updatedAt": "2026-06-22T01:36:08.644Z",
   "clients": [
     {
       "name": "Apple",
@@ -166,6 +166,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T03:14:39.950Z"
+    },
+    {
+      "name": "Lenovo",
+      "slug": "lenovo",
+      "domain": "https://www.lenovo.com/",
+      "alt": "Lenovo logo — GlassFire client",
+      "title": "Lenovo logo",
+      "source": "upload",
+      "sourceUrl": "lenovo-company-logo-image-png-701751694771312slrvtpwjhi.png",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-22T01:36:06.474Z"
     },
     {
       "name": "National Hockey League (NHL)",

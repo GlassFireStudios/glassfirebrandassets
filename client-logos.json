@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-22T01:45:41.306Z",
+  "updatedAt": "2026-06-24T01:32:50.232Z",
   "clients": [
     {
       "name": "Apple",
@@ -144,6 +144,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T04:49:28.973Z"
+    },
+    {
+      "name": "Eli Lilly and Company",
+      "slug": "eli-lilly-and-company",
+      "domain": "lilly.es",
+      "alt": "Eli Lilly and Company logo — GlassFire client",
+      "title": "Eli Lilly and Company logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/idJhS0ol-W/w/128/h/128/fallback/lettermark/icon.webp?c=1ax1782351111270bfumLaCV7msiHPrNsk",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-06-24T01:32:47.322Z"
     },
     {
       "name": "Enhanced Games",

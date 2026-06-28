@@ -12,7 +12,8 @@ const DEFAULTS: SignatureFields = {
   website: "www.glassfire.co",
   social: "@glassfirestudios",
   socialUrl: "https://instagram.com/glassfirestudios",
-  logo: "icon",
+  logo: "both",
+  logoSize: "m",
   accent: "glass",
 };
 
@@ -70,12 +71,21 @@ export default function SignaturePage() {
             <Field label="Social link"><input value={f.socialUrl} onChange={(e) => set("socialUrl", e.target.value)} className={input} /></Field>
           </div>
           <Field label="Logo">
-            <div className="flex gap-2">
-              {(["icon", "wordmark", "none"] as const).map((l) => (
-                <button key={l} onClick={() => set("logo", l)} className={`flex-1 rounded-sm border px-2 py-1.5 text-sm capitalize ${f.logo === l ? "border-glass bg-glass/10" : "border-white/15 text-fog"}`}>{l}</button>
+            <div className="grid grid-cols-2 gap-2">
+              {(["both", "icon", "wordmark", "none"] as const).map((l) => (
+                <button key={l} onClick={() => set("logo", l)} className={`rounded-sm border px-2 py-1.5 text-sm capitalize ${f.logo === l ? "border-glass bg-glass/10" : "border-white/15 text-fog"}`}>{l}</button>
               ))}
             </div>
           </Field>
+          {f.logo !== "none" && (
+            <Field label="Logo size">
+              <div className="flex gap-2">
+                {(["s", "m", "l"] as const).map((s) => (
+                  <button key={s} onClick={() => set("logoSize", s)} className={`flex-1 rounded-sm border px-2 py-1.5 text-sm uppercase ${f.logoSize === s ? "border-glass bg-glass/10" : "border-white/15 text-fog"}`}>{s}</button>
+                ))}
+              </div>
+            </Field>
+          )}
           <Field label="Name color">
             <div className="flex gap-2">
               {(["glass", "fire"] as const).map((a) => (

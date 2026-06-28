@@ -7,7 +7,8 @@ const tools = [
   { href: "/embeds", hover: "hover:border-fire", title: "Saved Embeds", body: "Manage every live carousel, grid & testimonial. Edit and re-save and sites update automatically." },
   { href: "/testimonials", hover: "hover:border-glass", title: "Testimonials", body: "Send capture links, moderate submissions, and export testimonial walls for web or slide-ready cards for decks." },
   { href: "/brand", hover: "hover:border-fire", title: "Brand Guide", body: "The GlassFire design system — logos, colors, and backgrounds with usage guidance, all downloadable." },
-  { href: "/manage", hover: "hover:border-glass", title: "Manage", body: "Review every client’s variants, backfill missing white/black, and remove logos." },
+  { href: "/signature", hover: "hover:border-glass", title: "Email Signature", body: "Build a Gmail-ready HTML signature with the GlassFire logo and brand colors — copy &amp; paste." },
+  { href: "/manage", hover: "hover:border-fire", title: "Manage", body: "Review every client’s variants, backfill missing white/black, and remove logos." },
 ];
 
 export default function Home() {

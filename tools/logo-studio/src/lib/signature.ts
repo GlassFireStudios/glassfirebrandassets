@@ -10,9 +10,13 @@ export interface SignatureFields {
   website: string; // display, e.g. www.glassfire.co
   social: string; // display, e.g. @glassfirestudios
   socialUrl: string; // full link
-  logo: "icon" | "wordmark" | "none";
+  logo: "icon" | "wordmark" | "both" | "none";
+  logoSize: "s" | "m" | "l";
   accent: "glass" | "fire";
 }
+
+const ICON_PX = { s: 54, m: 66, l: 84 };
+const WORD_PX = { s: 30, m: 42, l: 56 };
 
 const CDN = "https://cdn.jsdelivr.net/gh/GlassFireStudios/glassfirebrandassets@main";
 const ICON = `${CDN}/Logos/Official%20Gradient%20Logo/GlassFire%20Icon%20Color.png`;
@@ -52,14 +56,19 @@ export function buildSignatureHtml(f: SignatureFields): string {
   const nameBlock = `<div style="font-size:20px;font-weight:bold;color:${accent};line-height:1.1;">${esc(f.name)}</div>` +
     (f.title ? `<div style="font-size:13px;color:${STEEL};padding:3px 0 2px;">${esc(f.title)}</div>` : "");
 
-  const wordmark = f.logo === "wordmark" ? `<div style="padding-top:12px;"><img src="${WORDMARK}" alt="GlassFire" height="26" style="display:block;border:0;height:26px;width:auto;" /></div>` : "";
-  const details = `${nameBlock}${contactRow}${linkRow}${wordmark}`;
+  const iconPx = ICON_PX[f.logoSize] ?? ICON_PX.m;
+  const wordPx = WORD_PX[f.logoSize] ?? WORD_PX.m;
+  const showIcon = f.logo === "icon" || f.logo === "both";
+  const showWordmark = f.logo === "wordmark" || f.logo === "both";
 
-  if (f.logo === "icon") {
+  const wordmarkBlock = showWordmark ? `<div style="padding-top:13px;"><img src="${WORDMARK}" alt="GlassFire" height="${wordPx}" style="display:block;border:0;height:${wordPx}px;width:auto;" /></div>` : "";
+  const details = `${nameBlock}${contactRow}${linkRow}${wordmarkBlock}`;
+
+  if (showIcon) {
     return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:${FONT};color:${INK};border-collapse:collapse;">
   <tr>
     <td style="padding:0 18px 0 0;border-right:2px solid ${GLASS};vertical-align:middle;">
-      <img src="${ICON}" alt="GlassFire" width="62" style="display:block;border:0;width:62px;height:auto;" />
+      <img src="${ICON}" alt="GlassFire" width="${iconPx}" style="display:block;border:0;width:${iconPx}px;height:auto;" />
     </td>
     <td style="padding:0 0 0 18px;vertical-align:middle;">${details}</td>
   </tr>

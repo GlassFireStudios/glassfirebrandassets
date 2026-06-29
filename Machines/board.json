@@ -1,11 +1,13 @@
 {
   "machines": {
     "wash": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-06-29T23:00:27.262Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Graves",
+          "start": "2026-06-29T23:00:27.262Z",
+          "end": "2026-06-29T23:04:15.111Z"
+        },
         {
           "name": "Graves",
           "start": "2026-06-29T22:57:28.506Z",

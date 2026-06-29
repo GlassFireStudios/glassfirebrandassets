@@ -12,7 +12,8 @@ function isPublic(pathname: string): boolean {
     pathname.startsWith("/r/") ||
     pathname.startsWith("/api/r/") ||
     pathname.startsWith("/m/") ||
-    pathname.startsWith("/api/m/")
+    pathname.startsWith("/api/m/") ||
+    pathname.startsWith("/api/cron/")
   );
 }
 

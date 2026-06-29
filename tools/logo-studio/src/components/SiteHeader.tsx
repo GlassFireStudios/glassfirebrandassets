@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { cdnUrl } from "@/lib/embed";
 
 const LOGO = cdnUrl("GlassFireStudios/glassfirebrandassets", "main", "Logos/Variant White/GlassFire Logo White.png");
@@ -28,6 +30,10 @@ function cdnLabel(): { text: string; custom: boolean } {
 // pages (/r/*) so clients see a clean, unbranded-with-tooling form.
 export default function SiteHeader() {
   const pathname = usePathname();
+  const [email, setEmail] = useState<string | null>(null);
+  useEffect(() => {
+    fetch("/api/auth/session").then((r) => r.json()).then((s) => setEmail(s?.user?.email ?? null)).catch(() => {});
+  }, []);
   if (pathname?.startsWith("/r/") || pathname?.startsWith("/m/")) return null;
   const cdn = cdnLabel();
 
@@ -53,6 +59,9 @@ export default function SiteHeader() {
             <span className={`inline-block h-1.5 w-1.5 rounded-full ${cdn.custom ? "bg-glass" : "bg-steel"}`} />
             {cdn.text}
           </span>
+          {email && (
+            <button onClick={() => signOut({ callbackUrl: "/login" })} title={email} className="normal-case tracking-normal text-steel hover:text-fire">Sign out</button>
+          )}
         </nav>
       </div>
     </header>

@@ -18,7 +18,7 @@ export default function PublicMachinePage() {
           <p className="mt-1 text-sm text-fog">Sign onto the workstation you&rsquo;re editing on so the team can see who&rsquo;s where. This only updates the board — it doesn&rsquo;t log in or out of the actual computer.</p>
         </div>
       </header>
-      <MachineBoard token={token} />
+      <MachineBoard endpoint={`/api/m/${token}`} />
     </div>
   );
 }

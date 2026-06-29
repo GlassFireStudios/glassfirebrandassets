@@ -17,6 +17,7 @@ const NAV = [
   { href: "/brand", label: "Brand" },
   { href: "/signature", label: "Signature" },
   { href: "/machines", label: "Machines" },
+  { href: "/characters", label: "Characters" },
   { href: "/manage", label: "Manage" },
 ];
 

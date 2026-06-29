@@ -9,7 +9,8 @@ const tools = [
   { href: "/brand", hover: "hover:border-fire", title: "Brand Guide", body: "The GlassFire design system — logos, colors, and backgrounds with usage guidance, all downloadable." },
   { href: "/signature", hover: "hover:border-glass", title: "Email Signature", body: "Build a Gmail-ready HTML signature with the GlassFire logo and brand colors — copy &amp; paste." },
   { href: "/machines", hover: "hover:border-fire", title: "Machine Tracker", body: "A presence board for the editing workstations — share a public link so the team sees who's on which machine." },
-  { href: "/manage", hover: "hover:border-glass", title: "Manage", body: "Review every client’s variants, backfill missing white/black, and remove logos." },
+  { href: "/characters", hover: "hover:border-glass", title: "Characters", body: "Meet the Firefly crew the workstations are named after — portraits, bios, and the rig each one runs." },
+  { href: "/manage", hover: "hover:border-fire", title: "Manage", body: "Review every client’s variants, backfill missing white/black, and remove logos." },
 ];
 
 export default function Home() {

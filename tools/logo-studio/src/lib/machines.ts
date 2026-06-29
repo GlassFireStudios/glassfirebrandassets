@@ -6,6 +6,7 @@ export interface Machine {
   id: string;
   name: string; // Firefly character / hostname
   role: string; // character flavor
+  bio: string; // longer character blurb for the Characters page
   kind: "PC" | "Mac";
   cpu: string;
   ram: string;
@@ -13,12 +14,15 @@ export interface Machine {
 }
 
 export const MACHINES: Machine[] = [
-  { id: "kaylee", name: "Kaylee", role: "Ship's mechanic — keeps everything running", kind: "PC", cpu: "Intel i9-14900F", ram: "64 GB (4800 MT/s)", gpu: "RTX 4080 SUPER (16 GB)" },
-  { id: "inara", name: "Inara", role: "Companion — poised and powerful", kind: "PC", cpu: "AMD Ryzen 9 5950X (16-core)", ram: "64 GB (3200 MT/s)", gpu: "RTX 3090 (24 GB)" },
-  { id: "wash", name: "Wash", role: "Pilot — fast and nimble", kind: "PC", cpu: "AMD Ryzen 9 9900X (12-core)", ram: "32 GB (4800 MT/s)", gpu: "RTX 5080 (16 GB) + Radeon iGPU" },
-  { id: "river", name: "River", role: "The genius — quietly brilliant", kind: "Mac", cpu: "Apple M2 Ultra", ram: "64 GB unified", gpu: "M2 Ultra (integrated)" },
-  { id: "shepherd", name: "Shepherd", role: "Shepherd Book — steady and wise", kind: "Mac", cpu: "Apple M2 Ultra", ram: "64 GB unified", gpu: "M2 Ultra (integrated)" },
+  { id: "kaylee", name: "Kaylee", role: "Ship's mechanic — keeps everything running", bio: "The heart of the engine room: endlessly upbeat and able to coax performance out of any rig. A natural fit for our fast, do-everything workstation.", kind: "PC", cpu: "Intel i9-14900F", ram: "64 GB (4800 MT/s)", gpu: "RTX 4080 SUPER (16 GB)" },
+  { id: "inara", name: "Inara", role: "Companion — poised and powerful", bio: "Refined, composed, and quietly the most capable in the room. Paired with the big-VRAM workhorse for heavy timelines and effects.", kind: "PC", cpu: "AMD Ryzen 9 5950X (16-core)", ram: "64 GB (3200 MT/s)", gpu: "RTX 3090 (24 GB)" },
+  { id: "wash", name: "Wash", role: "Pilot — fast and nimble", bio: "Quick, playful, and unflappable at the controls. Matched to the nimble machine with our newest GPU for snappy, responsive edits.", kind: "PC", cpu: "AMD Ryzen 9 9900X (12-core)", ram: "32 GB (4800 MT/s)", gpu: "RTX 5080 (16 GB) + Radeon iGPU" },
+  { id: "river", name: "River", role: "The prodigy — quietly brilliant", bio: "Brilliant and a little mysterious, seeing patterns no one else can. One of our two Apple-silicon powerhouses for buttery playback.", kind: "Mac", cpu: "Apple M2 Ultra", ram: "64 GB unified", gpu: "M2 Ultra (integrated)" },
+  { id: "shepherd", name: "Shepherd", role: "The steady hand — calm and wise", bio: "Grounded, wise, and the calm in any storm. Our other M2 Ultra machine — dependable for long, focused sessions.", kind: "Mac", cpu: "Apple M2 Ultra", ram: "64 GB unified", gpu: "M2 Ultra (integrated)" },
 ];
+
+/** Repo path for a character portrait (upload these to light up the page). */
+export function characterImagePath(id: string): string { return `Machines/characters/${id}.jpg`; }
 
 export interface Session { name: string; start: string; end: string }
 export interface Occupant { name: string; email?: string; since: string; warnedAt?: string }

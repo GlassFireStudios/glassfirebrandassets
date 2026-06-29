@@ -1,11 +1,14 @@
 {
   "machines": {
     "wash": {
-      "current": {
-        "name": "Nate Glass",
-        "since": "2026-06-29T16:28:53.903Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Nate Glass",
+          "start": "2026-06-29T16:28:53.903Z",
+          "end": "2026-06-29T16:29:28.835Z"
+        }
+      ]
     }
   }
 }

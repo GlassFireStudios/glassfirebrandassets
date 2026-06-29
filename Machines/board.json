@@ -28,11 +28,13 @@
       "history": []
     },
     "shepherd": {
-      "current": {
-        "name": "Reilly",
-        "since": "2026-06-29T22:47:24.986Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Reilly",
+          "start": "2026-06-29T22:47:24.986Z",
+          "end": "2026-06-29T22:47:50.543Z"
+        },
         {
           "name": "Alyssa",
           "start": "2026-06-29T22:03:53.111Z",

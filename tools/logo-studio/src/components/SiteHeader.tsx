@@ -14,6 +14,7 @@ const NAV = [
   { href: "/testimonials", label: "Testimonials" },
   { href: "/brand", label: "Brand" },
   { href: "/signature", label: "Signature" },
+  { href: "/machines", label: "Machines" },
   { href: "/manage", label: "Manage" },
 ];
 
@@ -27,7 +28,7 @@ function cdnLabel(): { text: string; custom: boolean } {
 // pages (/r/*) so clients see a clean, unbranded-with-tooling form.
 export default function SiteHeader() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/r/")) return null;
+  if (pathname?.startsWith("/r/") || pathname?.startsWith("/m/")) return null;
   const cdn = cdnLabel();
 
   return (

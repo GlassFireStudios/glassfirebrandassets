@@ -9,8 +9,9 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/login") || pathname.startsWith("/api/login")) {
     return NextResponse.next();
   }
-  // Public client testimonial capture pages + their submit API stay open.
-  if (pathname.startsWith("/r/") || pathname.startsWith("/api/r/")) {
+  // Public pages that use their own long-token access stay open:
+  // testimonial capture (/r) and the machine tracker board (/m).
+  if (pathname.startsWith("/r/") || pathname.startsWith("/api/r/") || pathname.startsWith("/m/") || pathname.startsWith("/api/m/")) {
     return NextResponse.next();
   }
 

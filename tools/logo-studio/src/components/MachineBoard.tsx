@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import type { Machine, MachineStatus } from "@/lib/machines";
 
 type MachineRow = Machine & { status: MachineStatus };
@@ -75,7 +76,11 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
             <div key={m.id} className="gf-card flex flex-col p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-extrabold uppercase tracking-tight">{m.name}</h3>
+                  {user ? (
+                    <Link href={`/characters#${m.id}`} className="text-lg font-extrabold uppercase tracking-tight hover:text-glass">{m.name}</Link>
+                  ) : (
+                    <h3 className="text-lg font-extrabold uppercase tracking-tight">{m.name}</h3>
+                  )}
                   <p className="text-xs text-steel">{m.role}</p>
                 </div>
                 <span className="gf-chip">{m.kind}</span>
@@ -99,7 +104,10 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
                 {me ? (
                   <button onClick={() => act(m.id, "release")} disabled={busy === m.id} className="gf-btn gf-btn-ghost w-full">{busy === m.id ? "…" : "Sign out"}</button>
                 ) : cur ? (
-                  <button onClick={() => act(m.id, "claim")} disabled={busy === m.id} className="gf-btn gf-btn-ghost w-full">{busy === m.id ? "…" : "Take over"}</button>
+                  <div className="flex gap-2">
+                    <button onClick={() => act(m.id, "claim")} disabled={busy === m.id} className="gf-btn gf-btn-ghost flex-1">{busy === m.id ? "…" : "Take over"}</button>
+                    <button onClick={() => act(m.id, "release")} disabled={busy === m.id} title="Sign this machine out — no name needed" className="gf-btn gf-btn-ghost">Sign out</button>
+                  </div>
                 ) : (
                   <button onClick={() => act(m.id, "claim")} disabled={busy === m.id} className="gf-btn gf-btn-fire w-full">{busy === m.id ? "…" : "I'm on this machine"}</button>
                 )}
@@ -109,7 +117,7 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
                 <div className="mt-4 border-t border-white/10 pt-3">
                   <p className="gf-eyebrow mb-1.5" style={{ color: "#6E6E76" }}>Recent</p>
                   <ul className="space-y-1 text-xs text-fog">
-                    {m.status.history.slice(0, 4).map((h, i) => (
+                    {m.status.history.slice(0, 3).map((h, i) => (
                       <li key={i} className="flex justify-between gap-3"><span className="text-snow/80">{h.name}</span><span className="text-steel">{fmtTime(h.start)} – {fmtTime(h.end)}</span></li>
                     ))}
                   </ul>

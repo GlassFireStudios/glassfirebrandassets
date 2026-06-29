@@ -1,4 +1,4 @@
-import { auth, googleConfigured } from "@/auth";
+import { auth } from "@/auth";
 import PageHeading from "@/components/PageHeading";
 import MachinesClient from "./MachinesClient";
 
@@ -9,7 +9,7 @@ export default async function MachinesPage() {
   return (
     <div className="space-y-6">
       <PageHeading eyebrow="Edit Bay" title="Machine Tracker" sub="See who's on which editing workstation. Presence only — it doesn't touch the actual machines." />
-      <MachinesClient user={user} googleConfigured={googleConfigured} />
+      <MachinesClient user={user} />
     </div>
   );
 }

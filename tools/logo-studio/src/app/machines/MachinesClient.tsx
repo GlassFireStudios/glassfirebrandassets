@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import MachineBoard from "@/components/MachineBoard";
 
-export default function MachinesClient({ user, googleConfigured }: { user: { name: string; email: string } | null; googleConfigured: boolean }) {
+export default function MachinesClient({ user }: { user: { name: string; email: string } | null }) {
   const [token, setToken] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -22,13 +22,6 @@ export default function MachinesClient({ user, googleConfigured }: { user: { nam
         <div className="flex items-center gap-3 text-sm text-steel">
           Signed in as <b className="text-snow">{user.email}</b>
           <button onClick={() => signOut({ callbackUrl: "/login" })} className="text-fire hover:underline">Sign out</button>
-        </div>
-      )}
-
-      {!user && !googleConfigured && (
-        <div className="gf-card p-4 text-sm text-fog">
-          <p className="font-semibold text-snow">Google sign-in isn&rsquo;t set up yet</p>
-          <p className="mt-1">Editors can use the public link below for now. Once you add the Google OAuth credentials, this page switches to verified per-editor accounts automatically.</p>
         </div>
       )}
 

@@ -21,7 +21,8 @@ export const MACHINES: Machine[] = [
 ];
 
 export interface Session { name: string; start: string; end: string }
-export interface MachineStatus { current: { name: string; since: string } | null; history: Session[] }
+export interface Occupant { name: string; email?: string; since: string; warnedAt?: string }
+export interface MachineStatus { current: Occupant | null; history: Session[] }
 export interface BoardState { machines: Record<string, MachineStatus> }
 
 const HISTORY_LIMIT = 25;
@@ -34,13 +35,13 @@ export function getStatus(board: BoardState, id: string): MachineStatus {
 
 /** Sign an editor onto a machine. If someone else is on it, their session is
  *  closed into history first (takeover). */
-export function claim(status: MachineStatus, name: string, now: string): MachineStatus {
+export function claim(status: MachineStatus, who: { name: string; email?: string }, now: string): MachineStatus {
   const history = [...status.history];
   if (status.current) {
-    if (status.current.name === name) return status; // already on it
+    if ((who.email && status.current.email === who.email) || status.current.name === who.name) return status; // already on it
     history.unshift({ name: status.current.name, start: status.current.since, end: now });
   }
-  return { current: { name, since: now }, history: history.slice(0, HISTORY_LIMIT) };
+  return { current: { name: who.name, email: who.email, since: now }, history: history.slice(0, HISTORY_LIMIT) };
 }
 
 /** Sign off a machine, recording the session in history. */

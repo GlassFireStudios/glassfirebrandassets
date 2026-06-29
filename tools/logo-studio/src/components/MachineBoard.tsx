@@ -7,67 +7,70 @@ type MachineRow = Machine & { status: MachineStatus };
 
 function fmtTime(iso: string): string {
   const d = new Date(iso);
-  const today = new Date();
-  const sameDay = d.toDateString() === today.toDateString();
+  const sameDay = d.toDateString() === new Date().toDateString();
   const t = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
   return sameDay ? t : `${d.toLocaleDateString([], { month: "short", day: "numeric" })} ${t}`;
 }
 
-export default function MachineBoard({ token }: { token: string }) {
+// `user` set → signed-in mode (identity from session, no name field). Otherwise
+// typed-name mode against a token endpoint (public board / pre-Google fallback).
+export default function MachineBoard({ endpoint, user }: { endpoint: string; user?: { name: string; email: string } }) {
   const [rows, setRows] = useState<MachineRow[]>([]);
   const [loadErr, setLoadErr] = useState<string | null>(null);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(user?.name ?? "");
   const [busy, setBusy] = useState<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => { setName(localStorage.getItem("gf-editor-name") || ""); }, []);
+  useEffect(() => { if (!user) setName(localStorage.getItem("gf-editor-name") || ""); }, [user]);
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(`/api/m/${token}`, { cache: "no-store" });
+      const res = await fetch(endpoint, { cache: "no-store" });
       const data = await res.json();
       if (!res.ok) { setLoadErr(data.error || "Could not load the board."); return; }
       setRows(data.machines); setLoadErr(null);
     } catch { setLoadErr("Network error."); }
-  }, [token]);
+  }, [endpoint]);
 
-  useEffect(() => {
-    load();
-    const t = setInterval(load, 20000); // keep the board fresh for everyone
-    return () => clearInterval(t);
-  }, [load]);
+  useEffect(() => { load(); const t = setInterval(load, 20000); return () => clearInterval(t); }, [load]);
 
   async function act(id: string, action: "claim" | "release") {
-    if (action === "claim" && !name.trim()) { nameRef.current?.focus(); return; }
+    if (!user && action === "claim" && !name.trim()) { nameRef.current?.focus(); return; }
     setBusy(id);
     try {
-      const res = await fetch(`/api/m/${token}`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, action, name: name.trim() }),
-      });
+      const body = user ? { id, action } : { id, action, name: name.trim() };
+      const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const data = await res.json();
       if (res.ok) setRows(data.machines);
     } finally { setBusy(null); }
   }
 
   function saveName(v: string) { setName(v); localStorage.setItem("gf-editor-name", v); }
+  const isMine = (s: MachineStatus) => (user ? s.current?.email === user.email : !!s.current && s.current.name === name.trim());
 
   if (loadErr) return <p className="text-fire">{loadErr}</p>;
-
-  const mine = rows.find((m) => m.status.current?.name && m.status.current.name === name.trim());
+  const mine = rows.find((m) => isMine(m.status));
 
   return (
     <div className="space-y-5">
-      <div className="gf-card flex flex-wrap items-center gap-3 p-4">
-        <label className="text-xs uppercase tracking-wide text-steel">Your name</label>
-        <input ref={nameRef} value={name} onChange={(e) => saveName(e.target.value)} placeholder="e.g. Nate" className="flex-1 rounded-sm border border-white/15 bg-black px-3 py-2 text-sm outline-none focus:border-glass" />
-        {mine && <span className="gf-chip" style={{ color: "#2FBF71", borderColor: "rgba(47,191,113,0.4)" }}>On {mine.name}</span>}
-      </div>
+      {user ? (
+        <div className="gf-card flex flex-wrap items-center gap-3 p-4 text-sm">
+          <span className="text-steel">Signed in as</span>
+          <b className="text-snow">{user.name}</b>
+          {mine && <span className="gf-chip" style={{ color: "#2FBF71", borderColor: "rgba(47,191,113,0.4)" }}>On {mine.name}</span>}
+        </div>
+      ) : (
+        <div className="gf-card flex flex-wrap items-center gap-3 p-4">
+          <label className="text-xs uppercase tracking-wide text-steel">Your name</label>
+          <input ref={nameRef} value={name} onChange={(e) => saveName(e.target.value)} placeholder="e.g. Nate" className="flex-1 rounded-sm border border-white/15 bg-black px-3 py-2 text-sm outline-none focus:border-glass" />
+          {mine && <span className="gf-chip" style={{ color: "#2FBF71", borderColor: "rgba(47,191,113,0.4)" }}>On {mine.name}</span>}
+        </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {rows.map((m) => {
           const cur = m.status.current;
-          const isMe = !!cur && cur.name === name.trim();
+          const me = isMine(m.status);
           return (
             <div key={m.id} className="gf-card flex flex-col p-5">
               <div className="flex items-start justify-between">
@@ -93,7 +96,7 @@ export default function MachineBoard({ token }: { token: string }) {
               </div>
 
               <div className="mt-3">
-                {isMe ? (
+                {me ? (
                   <button onClick={() => act(m.id, "release")} disabled={busy === m.id} className="gf-btn gf-btn-ghost w-full">{busy === m.id ? "…" : "Sign out"}</button>
                 ) : cur ? (
                   <button onClick={() => act(m.id, "claim")} disabled={busy === m.id} className="gf-btn gf-btn-ghost w-full">{busy === m.id ? "…" : "Take over"}</button>

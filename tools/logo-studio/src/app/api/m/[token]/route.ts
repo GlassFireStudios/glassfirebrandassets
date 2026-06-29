@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const board = await loadBoard();
   const now = new Date().toISOString();
   const status = getStatus(board, machine.id);
-  board.machines[machine.id] = body.action === "release" ? release(status, now) : claim(status, name, now);
+  board.machines[machine.id] = body.action === "release" ? release(status, now) : claim(status, { name }, now);
 
   try {
     await commitChanges(

@@ -23,11 +23,14 @@
       "history": []
     },
     "shepherd": {
-      "current": {
-        "name": "Jacob",
-        "since": "2026-06-29T16:49:12.871Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Jacob",
+          "start": "2026-06-29T16:49:12.871Z",
+          "end": "2026-06-29T20:35:29.690Z"
+        }
+      ]
     },
     "inara": {
       "current": {

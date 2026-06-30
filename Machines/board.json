@@ -81,11 +81,14 @@
       ]
     },
     "kaylee": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-06-29T23:15:37.288Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Graves",
+          "start": "2026-06-29T23:15:37.288Z",
+          "end": "2026-06-30T00:48:19.540Z"
+        }
+      ]
     }
   }
 }

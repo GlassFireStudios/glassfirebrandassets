@@ -31,12 +31,14 @@
       ]
     },
     "river": {
-      "current": {
-        "name": "Zaq!",
-        "since": "2026-06-29T16:30:39.055Z",
-        "warnedAt": "2026-06-30T01:00:37.308Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Zaq!",
+          "start": "2026-06-29T16:30:39.055Z",
+          "end": "2026-06-30T02:00:13.422Z"
+        }
+      ]
     },
     "shepherd": {
       "current": {

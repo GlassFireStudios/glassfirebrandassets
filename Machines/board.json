@@ -82,7 +82,10 @@
       ]
     },
     "inara": {
-      "current": null,
+      "current": {
+        "name": "Reilly",
+        "since": "2026-06-30T13:22:17.339Z"
+      },
       "history": [
         {
           "name": "Reilly",

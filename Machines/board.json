@@ -1,11 +1,13 @@
 {
   "machines": {
     "wash": {
-      "current": {
-        "name": "Reilly",
-        "since": "2026-06-30T18:54:27.213Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Reilly",
+          "start": "2026-06-30T18:54:27.213Z",
+          "end": "2026-06-30T19:11:25.392Z"
+        },
         {
           "name": "Graves",
           "start": "2026-06-29T23:00:27.262Z",

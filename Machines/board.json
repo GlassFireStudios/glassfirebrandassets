@@ -31,7 +31,10 @@
       ]
     },
     "river": {
-      "current": null,
+      "current": {
+        "name": "Jacob",
+        "since": "2026-06-30T12:50:07.547Z"
+      },
       "history": [
         {
           "name": "Reilly",

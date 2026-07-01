@@ -197,7 +197,10 @@
       ]
     },
     "kaylee": {
-      "current": null,
+      "current": {
+        "name": "Graves",
+        "since": "2026-07-01T23:30:11.149Z"
+      },
       "history": [
         {
           "name": "Nate",

@@ -1,7 +1,10 @@
 {
   "machines": {
     "wash": {
-      "current": null,
+      "current": {
+        "name": "Nate",
+        "since": "2026-07-02T14:13:44.405Z"
+      },
       "history": [
         {
           "name": "Nate",

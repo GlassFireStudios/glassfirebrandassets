@@ -1,6 +1,6 @@
 {
   "generator": "glassfire-logo-studio",
-  "updatedAt": "2026-06-24T01:32:50.232Z",
+  "updatedAt": "2026-07-03T05:28:58.095Z",
   "clients": [
     {
       "name": "Apple",
@@ -25,6 +25,30 @@
         "height": 50
       },
       "addedAt": "2026-06-21T04:06:31.214Z"
+    },
+    {
+      "name": "Champion",
+      "slug": "champion",
+      "domain": "champion.com.au",
+      "alt": "Champion logo — GlassFire client",
+      "title": "Champion logo",
+      "source": "brandfetch",
+      "sourceUrl": "https://cdn.brandfetch.io/id3-aE1Nrn/w/240/h/240/theme/dark/icon.jpeg?c=1bxnsddaxgz1uxpuhj5cvcfn9ofa-dCSlgl",
+      "variants": [
+        "color",
+        "white",
+        "black"
+      ],
+      "sizes": [
+        "@1x",
+        "@2x",
+        "@3x"
+      ],
+      "box": {
+        "width": 150,
+        "height": 50
+      },
+      "addedAt": "2026-07-03T05:28:55.278Z"
     },
     {
       "name": "Chick-fil-A",

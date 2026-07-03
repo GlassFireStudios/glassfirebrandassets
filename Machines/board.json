@@ -128,7 +128,8 @@
     "shepherd": {
       "current": {
         "name": "Alyssa",
-        "since": "2026-07-03T10:49:10.480Z"
+        "since": "2026-07-03T10:49:10.480Z",
+        "warnedAt": "2026-07-03T19:00:16.387Z"
       },
       "history": [
         {

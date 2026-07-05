@@ -126,12 +126,13 @@
       ]
     },
     "shepherd": {
-      "current": {
-        "name": "Alyssa",
-        "since": "2026-07-05T13:17:40.795Z",
-        "warnedAt": "2026-07-05T22:00:26.304Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Alyssa",
+          "start": "2026-07-05T13:17:40.795Z",
+          "end": "2026-07-05T23:00:40.281Z"
+        },
         {
           "name": "Alyssa",
           "start": "2026-07-04T01:03:31.530Z",

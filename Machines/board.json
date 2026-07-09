@@ -136,7 +136,10 @@
       ]
     },
     "shepherd": {
-      "current": null,
+      "current": {
+        "name": "Jacob",
+        "since": "2026-07-09T18:15:49.847Z"
+      },
       "history": [
         {
           "name": "Jacob",

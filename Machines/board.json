@@ -375,11 +375,13 @@
       ]
     },
     "kaylee": {
-      "current": {
-        "name": "Alyssa",
-        "since": "2026-07-10T17:53:08.438Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Alyssa",
+          "start": "2026-07-10T17:53:08.438Z",
+          "end": "2026-07-10T17:58:38.624Z"
+        },
         {
           "name": "Zaq",
           "start": "2026-07-09T17:09:33.397Z",

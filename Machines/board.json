@@ -148,7 +148,8 @@
     "shepherd": {
       "current": {
         "name": "Jacob",
-        "since": "2026-07-09T18:15:49.847Z"
+        "since": "2026-07-09T18:15:49.847Z",
+        "warnedAt": "2026-07-10T03:00:17.630Z"
       },
       "history": [
         {
@@ -354,12 +355,13 @@
       ]
     },
     "kaylee": {
-      "current": {
-        "name": "Zaq",
-        "since": "2026-07-09T17:09:33.397Z",
-        "warnedAt": "2026-07-10T02:00:58.491Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Zaq",
+          "start": "2026-07-09T17:09:33.397Z",
+          "end": "2026-07-10T03:00:17.630Z"
+        },
         {
           "name": "Graves",
           "start": "2026-07-01T23:30:11.149Z",

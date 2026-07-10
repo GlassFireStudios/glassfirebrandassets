@@ -16,10 +16,22 @@
       "alt": "Chick-fil-A logo — GlassFire client"
     },
     {
+      "name": "Chicken Salad Chick",
+      "url": "Client Logos/Chicken Salad Chick/chicken-salad-chick-white.png",
+      "colorUrl": "Client Logos/Chicken Salad Chick/chicken-salad-chick-color.png",
+      "alt": "Chicken Salad Chick logo — GlassFire client"
+    },
+    {
       "name": "Coca-Cola",
       "url": "Client Logos/Coca-Cola/coca-cola-white.png",
       "colorUrl": "Client Logos/Coca-Cola/coca-cola-color.png",
       "alt": "Coca-Cola logo"
+    },
+    {
+      "name": "CVS Pharmacy",
+      "url": "Client Logos/CVS Pharmacy/cvs-pharmacy-white.png",
+      "colorUrl": "Client Logos/CVS Pharmacy/cvs-pharmacy-color.png",
+      "alt": "CVS Pharmacy logo — GlassFire client"
     },
     {
       "name": "Drone Racing League",
@@ -28,16 +40,10 @@
       "alt": "Drone Racing League logo — GlassFire client"
     },
     {
-      "name": "Dunkman",
-      "url": "Client Logos/Dunkman/dunkman-white.png",
-      "colorUrl": "Client Logos/Dunkman/dunkman-color.png",
-      "alt": "Dunkman logo — GlassFire client"
-    },
-    {
-      "name": "Enhanced Games",
-      "url": "Client Logos/Enhanced Games/enhanced-games-white.png",
-      "colorUrl": "Client Logos/Enhanced Games/enhanced-games-color.png",
-      "alt": "Enhanced Games logo — GlassFire client"
+      "name": "FedEx",
+      "url": "Client Logos/FedEx/fedex-white.png",
+      "colorUrl": "Client Logos/FedEx/fedex-color.png",
+      "alt": "FedEx logo — GlassFire client"
     },
     {
       "name": "Fondation Ronald McDonald",
@@ -58,6 +64,12 @@
       "alt": "High Point University logo"
     },
     {
+      "name": "HP",
+      "url": "Client Logos/HP/hp-white.png",
+      "colorUrl": "Client Logos/HP/hp-color.png",
+      "alt": "HP logo — GlassFire client"
+    },
+    {
       "name": "Intuit",
       "url": "Client Logos/Intuit/intuit-white.png",
       "colorUrl": "Client Logos/Intuit/intuit-color.png",
@@ -70,10 +82,28 @@
       "alt": "Ladder logo — GlassFire client"
     },
     {
+      "name": "Lenovo",
+      "url": "Client Logos/Lenovo/lenovo-white.png",
+      "colorUrl": "Client Logos/Lenovo/lenovo-color.png",
+      "alt": "Lenovo logo — GlassFire client"
+    },
+    {
+      "name": "NAACP",
+      "url": "Client Logos/NAACP/naacp-white.png",
+      "colorUrl": "Client Logos/NAACP/naacp-color.png",
+      "alt": "NAACP logo — GlassFire client"
+    },
+    {
       "name": "National Hockey League (NHL)",
       "url": "Client Logos/National Hockey League (NHL)/national-hockey-league-nhl-white.png",
       "colorUrl": "Client Logos/National Hockey League (NHL)/national-hockey-league-nhl-color.png",
       "alt": "National Hockey League (NHL) logo — GlassFire client"
+    },
+    {
+      "name": "NCAA",
+      "url": "Client Logos/NCAA/ncaa-white.png",
+      "colorUrl": "Client Logos/NCAA/ncaa-color.png",
+      "alt": "NCAA logo — GlassFire client"
     },
     {
       "name": "NFL",
@@ -94,6 +124,12 @@
       "alt": "Samsung logo"
     },
     {
+      "name": "Sierra Club",
+      "url": "Client Logos/Sierra Club/sierra-club-white.png",
+      "colorUrl": "Client Logos/Sierra Club/sierra-club-color.png",
+      "alt": "Sierra Club logo — GlassFire client"
+    },
+    {
       "name": "University of Kentucky",
       "url": "Client Logos/University of Kentucky/university-of-kentucky-white.png",
       "colorUrl": "Client Logos/University of Kentucky/university-of-kentucky-color.png",
@@ -106,6 +142,12 @@
       "alt": "Volvo logo"
     },
     {
+      "name": "Walmart",
+      "url": "Client Logos/Walmart/walmart-white.png",
+      "colorUrl": "Client Logos/Walmart/walmart-color.png",
+      "alt": "Walmart logo — GlassFire client"
+    },
+    {
       "name": "YouTube Music",
       "url": "Client Logos/YouTube Music/youtube-music-white.png",
       "colorUrl": "Client Logos/YouTube Music/youtube-music-color.png",
@@ -115,10 +157,10 @@
   "options": {
     "height": 44,
     "gap": 72,
-    "duration": 63,
+    "duration": 40,
     "direction": "left",
     "hoverStyle": "none",
-    "pauseOnHover": false,
+    "pauseOnHover": true,
     "background": "transparent",
     "edgeFade": true,
     "padding": 24,
@@ -128,5 +170,5 @@
     "variant": "white"
   },
   "cdnBase": "https://brandcdn.glassfire.co",
-  "updatedAt": "2026-06-22T02:08:34.751Z"
+  "updatedAt": "2026-07-10T07:52:22.086Z"
 }

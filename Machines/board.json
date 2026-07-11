@@ -81,13 +81,11 @@
       ]
     },
     "river": {
-      "current": null,
+      "current": {
+        "name": "Jacob",
+        "since": "2026-07-11T19:41:31.550Z"
+      },
       "history": [
-        {
-          "name": "Jacob",
-          "start": "2026-07-11T19:41:31.550Z",
-          "end": "2026-07-11T19:54:54.712Z"
-        },
         {
           "name": "Jacob",
           "start": "2026-07-11T17:22:52.996Z",
@@ -181,7 +179,10 @@
       ]
     },
     "shepherd": {
-      "current": null,
+      "current": {
+        "name": "Jacob",
+        "since": "2026-07-11T19:54:56.579Z"
+      },
       "history": [
         {
           "name": "Alyssa",

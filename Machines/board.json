@@ -8,11 +8,14 @@
       "history": []
     },
     "shepherd": {
-      "current": {
-        "name": "Jacob",
-        "since": "2026-07-13T02:24:03.482Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Jacob",
+          "start": "2026-07-13T02:24:03.482Z",
+          "end": "2026-07-13T02:24:07.591Z"
+        }
+      ]
     }
   }
 }

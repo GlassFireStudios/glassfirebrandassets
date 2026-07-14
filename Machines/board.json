@@ -1,11 +1,13 @@
 {
   "machines": {
     "kaylee": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-07-14T15:57:19.251Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Graves",
+          "start": "2026-07-14T15:57:19.251Z",
+          "end": "2026-07-14T20:25:51.204Z"
+        },
         {
           "name": "Graves",
           "start": "2026-07-14T01:45:47.978Z",

@@ -26,7 +26,8 @@
     "shepherd": {
       "current": {
         "name": "Jacob",
-        "since": "2026-07-14T14:44:53.901Z"
+        "since": "2026-07-14T14:44:53.901Z",
+        "warnedAt": "2026-07-14T23:00:18.271Z"
       },
       "history": [
         {
@@ -80,12 +81,14 @@
       ]
     },
     "wash": {
-      "current": {
-        "name": "Nate",
-        "since": "2026-07-14T13:44:00.709Z",
-        "warnedAt": "2026-07-14T22:00:12.593Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Nate",
+          "start": "2026-07-14T13:44:00.709Z",
+          "end": "2026-07-14T23:00:18.271Z"
+        }
+      ]
     }
   }
 }

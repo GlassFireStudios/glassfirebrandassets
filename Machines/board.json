@@ -31,11 +31,13 @@
       ]
     },
     "shepherd": {
-      "current": {
-        "name": "Jacob",
-        "since": "2026-07-15T16:42:30.965Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Jacob",
+          "start": "2026-07-15T16:42:30.965Z",
+          "end": "2026-07-15T20:34:14.771Z"
+        },
         {
           "name": "Jacob",
           "start": "2026-07-14T14:44:53.901Z",

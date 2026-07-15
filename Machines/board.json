@@ -100,11 +100,13 @@
       ]
     },
     "wash": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-07-15T19:12:22.057Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Graves",
+          "start": "2026-07-15T19:12:22.057Z",
+          "end": "2026-07-15T20:02:47.344Z"
+        },
         {
           "name": "Nate",
           "start": "2026-07-14T13:44:00.709Z",

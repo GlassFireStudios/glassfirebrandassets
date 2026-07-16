@@ -84,12 +84,13 @@
       ]
     },
     "river": {
-      "current": {
-        "name": "Zaq",
-        "since": "2026-07-15T16:55:37.613Z",
-        "warnedAt": "2026-07-16T01:01:25.604Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Zaq",
+          "start": "2026-07-15T16:55:37.613Z",
+          "end": "2026-07-16T02:01:03.480Z"
+        },
         {
           "name": "Alyssa",
           "start": "2026-07-14T17:25:33.889Z",

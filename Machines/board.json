@@ -1,7 +1,10 @@
 {
   "machines": {
     "kaylee": {
-      "current": null,
+      "current": {
+        "name": "Graves",
+        "since": "2026-07-16T19:51:32.808Z"
+      },
       "history": [
         {
           "name": "Graves",

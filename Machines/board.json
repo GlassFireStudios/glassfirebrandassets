@@ -18,11 +18,14 @@
       "history": []
     },
     "wash": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-07-16T19:42:55.800Z"
-      },
-      "history": []
+      "current": null,
+      "history": [
+        {
+          "name": "Graves",
+          "start": "2026-07-16T19:42:55.800Z",
+          "end": "2026-07-16T19:48:49.707Z"
+        }
+      ]
     }
   }
 }

@@ -18,7 +18,8 @@
     "inara": {
       "current": {
         "name": "Reilly",
-        "since": "2026-07-16T21:14:37.450Z"
+        "since": "2026-07-16T21:14:37.450Z",
+        "warnedAt": "2026-07-17T06:01:12.591Z"
       },
       "history": [
         {

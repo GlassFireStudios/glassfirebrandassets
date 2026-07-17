@@ -3,7 +3,8 @@
     "kaylee": {
       "current": {
         "name": "Graves",
-        "since": "2026-07-16T19:51:32.808Z"
+        "since": "2026-07-16T19:51:32.808Z",
+        "warnedAt": "2026-07-17T04:00:38.581Z"
       },
       "history": [
         {

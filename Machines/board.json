@@ -16,12 +16,13 @@
       ]
     },
     "inara": {
-      "current": {
-        "name": "Reilly",
-        "since": "2026-07-16T21:14:37.450Z",
-        "warnedAt": "2026-07-17T06:01:12.591Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Reilly",
+          "start": "2026-07-16T21:14:37.450Z",
+          "end": "2026-07-17T07:00:39.690Z"
+        },
         {
           "name": "Reilly",
           "start": "2026-07-16T19:38:57.412Z",

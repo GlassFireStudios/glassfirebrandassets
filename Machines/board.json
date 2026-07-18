@@ -23,7 +23,8 @@
     "inara": {
       "current": {
         "name": "Graves",
-        "since": "2026-07-17T23:25:31.922Z"
+        "since": "2026-07-17T23:25:31.922Z",
+        "warnedAt": "2026-07-18T08:00:32.344Z"
       },
       "history": [
         {

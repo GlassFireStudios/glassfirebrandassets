@@ -26,12 +26,13 @@
       ]
     },
     "inara": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-07-20T17:32:48.373Z",
-        "warnedAt": "2026-07-21T02:00:23.464Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Graves",
+          "start": "2026-07-20T17:32:48.373Z",
+          "end": "2026-07-21T03:00:23.639Z"
+        },
         {
           "name": "Graves",
           "start": "2026-07-19T22:14:54.363Z",
@@ -85,12 +86,13 @@
       ]
     },
     "river": {
-      "current": {
-        "name": "Zaq",
-        "since": "2026-07-20T17:20:39.270Z",
-        "warnedAt": "2026-07-21T02:00:23.464Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Zaq",
+          "start": "2026-07-20T17:20:39.270Z",
+          "end": "2026-07-21T03:00:23.639Z"
+        },
         {
           "name": "Alyssa",
           "start": "2026-07-17T00:31:54.949Z",

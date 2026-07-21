@@ -61,7 +61,8 @@
     "wash": {
       "current": {
         "name": "Reilly",
-        "since": "2026-07-20T15:39:28.786Z"
+        "since": "2026-07-20T15:39:28.786Z",
+        "warnedAt": "2026-07-21T00:01:16.750Z"
       },
       "history": [
         {

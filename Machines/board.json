@@ -31,7 +31,10 @@
       ]
     },
     "inara": {
-      "current": null,
+      "current": {
+        "name": "Nate",
+        "since": "2026-07-23T13:36:58.052Z"
+      },
       "history": [
         {
           "name": "Reilly",

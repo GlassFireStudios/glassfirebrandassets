@@ -114,11 +114,13 @@
       ]
     },
     "river": {
-      "current": {
-        "name": "Reilly",
-        "since": "2026-07-23T14:27:30.794Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Reilly",
+          "start": "2026-07-23T14:27:30.794Z",
+          "end": "2026-07-23T14:28:24.626Z"
+        },
         {
           "name": "Zaq",
           "start": "2026-07-22T13:57:09.682Z",

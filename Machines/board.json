@@ -86,12 +86,13 @@
       ]
     },
     "wash": {
-      "current": {
-        "name": "Reilly",
-        "since": "2026-07-27T16:06:17.930Z",
-        "warnedAt": "2026-07-28T01:01:29.198Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Reilly",
+          "start": "2026-07-27T16:06:17.930Z",
+          "end": "2026-07-28T01:47:55.258Z"
+        },
         {
           "name": "Reilly",
           "start": "2026-07-26T16:04:18.255Z",

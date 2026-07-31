@@ -184,11 +184,13 @@
       ]
     },
     "river": {
-      "current": {
-        "name": "Alyssa",
-        "since": "2026-07-31T00:34:55.396Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Alyssa",
+          "start": "2026-07-31T00:34:55.396Z",
+          "end": "2026-07-31T02:00:34.422Z"
+        },
         {
           "name": "Zaq",
           "start": "2026-07-30T13:03:37.110Z",

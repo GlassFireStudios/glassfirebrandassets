@@ -41,7 +41,10 @@
       ]
     },
     "inara": {
-      "current": null,
+      "current": {
+        "name": "Graves",
+        "since": "2026-08-01T14:32:54.108Z"
+      },
       "history": [
         {
           "name": "Zaq",

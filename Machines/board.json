@@ -41,11 +41,13 @@
       ]
     },
     "inara": {
-      "current": {
-        "name": "Graves",
-        "since": "2026-08-04T02:28:27.991Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Graves",
+          "start": "2026-08-04T02:28:27.991Z",
+          "end": "2026-08-04T05:20:35.984Z"
+        },
         {
           "name": "Graves",
           "start": "2026-08-03T22:05:11.924Z",

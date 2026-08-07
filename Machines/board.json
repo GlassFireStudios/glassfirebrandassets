@@ -226,7 +226,10 @@
       ]
     },
     "river": {
-      "current": null,
+      "current": {
+        "name": "Zaq",
+        "since": "2026-08-07T18:12:34.556Z"
+      },
       "history": [
         {
           "name": "Zaq",

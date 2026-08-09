@@ -328,7 +328,8 @@
     "shepherd": {
       "current": {
         "name": "Jacob",
-        "since": "2026-08-08T15:24:20.017Z"
+        "since": "2026-08-08T15:24:20.017Z",
+        "warnedAt": "2026-08-09T00:00:44.751Z"
       },
       "history": [
         {

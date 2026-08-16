@@ -1,12 +1,13 @@
 {
   "machines": {
     "kaylee": {
-      "current": {
-        "name": "Nate Glass",
-        "since": "2026-08-15T20:11:15.610Z",
-        "warnedAt": "2026-08-16T05:00:02.404Z"
-      },
+      "current": null,
       "history": [
+        {
+          "name": "Nate Glass",
+          "start": "2026-08-15T20:11:15.610Z",
+          "end": "2026-08-16T06:01:39.201Z"
+        },
         {
           "name": "Nate",
           "start": "2026-08-11T18:41:45.878Z",

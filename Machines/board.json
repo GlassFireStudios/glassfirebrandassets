@@ -3,7 +3,8 @@
     "kaylee": {
       "current": {
         "name": "Nate Glass",
-        "since": "2026-08-15T20:11:15.610Z"
+        "since": "2026-08-15T20:11:15.610Z",
+        "warnedAt": "2026-08-16T05:00:02.404Z"
       },
       "history": [
         {

@@ -1,7 +1,10 @@
 {
   "machines": {
     "kaylee": {
-      "current": null,
+      "current": {
+        "name": "Brinson",
+        "since": "2026-08-18T18:12:56.319Z"
+      },
       "history": [
         {
           "name": "Nate Glass",

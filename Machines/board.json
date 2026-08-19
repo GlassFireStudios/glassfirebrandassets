@@ -266,7 +266,10 @@
       ]
     },
     "river": {
-      "current": null,
+      "current": {
+        "name": "Brinson",
+        "since": "2026-08-19T13:14:54.802Z"
+      },
       "history": [
         {
           "name": "Zaq",

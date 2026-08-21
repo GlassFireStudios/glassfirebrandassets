@@ -26,6 +26,10 @@ export function characterImagePath(id: string): string { return `Machines/charac
 
 /** TEMPORARY: current project per machine, shown as a corner flag on the
  *  tracker. Remove this map (and the ribbon in MachineBoard) when it's done. */
+/** TEMPORARY notice banner on the tracker; set to null to hide. */
+export const TRACKER_NOTICE: string | null =
+  "On location: Wash & Shepherd are at Dunkman through Aug 26 — every machine is back at the studio after that.";
+
 export interface MachineProject { label: string; color: string }
 export const MACHINE_PROJECTS: Record<string, MachineProject> = {
   kaylee: { label: "Culture Root", color: "#EE2750" },

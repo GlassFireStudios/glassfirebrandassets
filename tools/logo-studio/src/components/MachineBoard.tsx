@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { MACHINE_PROJECTS, type Machine, type MachineStatus } from "@/lib/machines";
+import { MACHINE_PROJECTS, TRACKER_NOTICE, type Machine, type MachineStatus } from "@/lib/machines";
 
 type MachineRow = Machine & { status: MachineStatus };
 
@@ -65,6 +65,13 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
           <label className="text-xs uppercase tracking-wide text-steel">Your name</label>
           <input ref={nameRef} value={name} onChange={(e) => saveName(e.target.value)} placeholder="e.g. Nate" className="flex-1 rounded-sm border border-white/15 bg-black px-3 py-2 text-sm outline-none focus:border-glass" />
           {mine && <span className="gf-chip" style={{ color: "#2FBF71", borderColor: "rgba(47,191,113,0.4)" }}>On {mine.name}</span>}
+        </div>
+      )}
+
+      {TRACKER_NOTICE && (
+        <div className="flex items-start gap-2 rounded-sm border border-glass/30 bg-glass/[0.06] px-4 py-2.5 text-sm text-fog">
+          <span aria-hidden>📍</span>
+          <span>{TRACKER_NOTICE}</span>
         </div>
       )}
 

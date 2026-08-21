@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import type { Machine, MachineStatus } from "@/lib/machines";
+import { MACHINE_PROJECTS, type Machine, type MachineStatus } from "@/lib/machines";
 
 type MachineRow = Machine & { status: MachineStatus };
 
@@ -72,8 +72,15 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
         {rows.map((m) => {
           const cur = m.status.current;
           const me = isMine(m.status);
+          const proj = MACHINE_PROJECTS[m.id];
           return (
-            <div key={m.id} className="gf-card flex flex-col p-5">
+            <div key={m.id} className="gf-card relative flex flex-col overflow-hidden p-5">
+              {/* TEMPORARY project corner flag */}
+              {proj && (
+                <div className="pointer-events-none absolute right-[-46px] top-[20px] w-[150px] rotate-45 select-none py-1 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-white shadow-md" style={{ background: proj.color }}>
+                  {proj.label}
+                </div>
+              )}
               <div className="flex items-start justify-between">
                 <div>
                   {user ? (
@@ -81,9 +88,8 @@ export default function MachineBoard({ endpoint, user }: { endpoint: string; use
                   ) : (
                     <h3 className="text-lg font-extrabold uppercase tracking-tight">{m.name}</h3>
                   )}
-                  <p className="text-xs text-steel">{m.role}</p>
+                  <p className="text-xs text-steel">{m.role} · {m.kind}</p>
                 </div>
-                <span className="gf-chip">{m.kind}</span>
               </div>
 
               <dl className="mt-3 space-y-1 text-xs text-fog">

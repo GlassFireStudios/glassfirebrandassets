@@ -24,6 +24,17 @@ export const MACHINES: Machine[] = [
 /** Repo path for a character portrait (upload these to light up the page). */
 export function characterImagePath(id: string): string { return `Machines/characters/${id}.jpg`; }
 
+/** TEMPORARY: current project per machine, shown as a corner flag on the
+ *  tracker. Remove this map (and the ribbon in MachineBoard) when it's done. */
+export interface MachineProject { label: string; color: string }
+export const MACHINE_PROJECTS: Record<string, MachineProject> = {
+  kaylee: { label: "Culture Root", color: "#EE2750" },
+  inara: { label: "Culture Root", color: "#EE2750" },
+  river: { label: "Culture Root", color: "#EE2750" },
+  wash: { label: "Dunkman", color: "#00A8E4" },
+  shepherd: { label: "Dunkman", color: "#00A8E4" },
+};
+
 export interface Session { name: string; start: string; end: string }
 export interface Occupant { name: string; email?: string; since: string; warnedAt?: string }
 export interface MachineStatus { current: Occupant | null; history: Session[] }

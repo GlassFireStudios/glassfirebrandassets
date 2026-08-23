@@ -1,0 +1,6 @@
+
+# Machine tracker state moved to Supabase (brandstudio schema), 2026-08-22.
+# These were committed to a PUBLIC repo: board.json published named presence
+# history, _access.json published the token that gates /m/. Never again.
+Machines/board.json
+Machines/_access.json
